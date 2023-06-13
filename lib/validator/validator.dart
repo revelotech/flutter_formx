@@ -1,16 +1,16 @@
 import 'package:flutter_form_builder/validator/validator_result.dart';
 
-///[Validator] is an abstract class that will allow you to create whatever
+/// [Validator] is an abstract class that will allow you to create whatever
 /// validation you need, always returning the same [ValidatorResult] object.
 /// [T] stands for the type used to identify the fields such as a custom
 /// object or a string.
 abstract class Validator<T> {
-  /// This is the method that will be called when validating the
-  /// field, it should be overridden by every validator
+  /// Called by the FormBuilder to on each field.
+  ///
+  /// This should be overridden by each validator that extends this class.
   Future<ValidatorResult> validate(T value);
 
-  /// This is a helper method to return a validation result as a Future,
-  /// considering you might need asynchronous validations
+  /// Returns a validation result as a Future to avoid verbosity
   Future<ValidatorResult> result({
     required bool isValid,
     required String? errorMessage,
