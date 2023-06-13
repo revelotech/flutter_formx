@@ -27,7 +27,7 @@ For example, say you want to build a form to collect the first name, last name a
     import 'package:flutter_form_builder/flutter_form_builder.dart';
     ```
 
-3. Apply the mixin to your view model, specifying the type.
+3. Apply the mixin to your mobx store, specifying the type.
     ```dart
     class ExamplePageViewModel extends _ExamplePageViewModelBase with _$ExamplePageViewModel {
       ExamplePageViewModel();
