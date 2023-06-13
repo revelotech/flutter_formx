@@ -1,11 +1,11 @@
 # flutter_form_builder
 
-[![pub package](https://img.shields.io/pub/v/flutter_form_builder?style=plastic&logo=flutter)](https://pub.dev/packages/flutter_form_builder)
+[![pub package](https://img.shields.io/pub/V/flutter_form_builder?style=plastic&logo=flutter)](https://pub.dev/packages/flutter_form_builder)
 
 A Flutter package to make it easy to build, react to and validate forms.
 ## Features
 
-[![video thumbnail](https://img.youtube.com/vi/8Vzv2CdbEY0/0.jpg)](https://www.youtube.com/watch?v=8Vzv2CdbEY0)
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzE3OTMyZWI1YzgzNTJiNzk4NzhmMWE4NjdmNGJjODY4MWJmMzQwOCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/aohVQvRx6Oi4J5JSoG/giphy.gif"/>
 
 - Responsive state and form answer caching on current instance.
 - Form validation.
