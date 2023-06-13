@@ -52,34 +52,6 @@ void main() {
     expect(result == FormItem.from(value: '123', validators: const []), true);
   });
 
-  group('when applyValidationResult is called ', () {
-    test(
-        'and error is not null then it should return a '
-        'new FormItem with the new error', () {
-      final item = instantiate();
-
-      final result = item.applyValidationResult('error', false);
-
-      expect(item == result, false);
-      expect(result.errorMessage, 'error');
-    });
-
-    test(
-        'and error is null then it should return a '
-        'new FormItem with errorMessage null', () {
-      final item = instantiate();
-
-      final result = item.applyValidationResult('error', false);
-
-      expect(item == result, false);
-      expect(result.errorMessage, 'error');
-
-      final result2 = item.applyValidationResult(null, false);
-      expect(result == result2, false);
-      expect(result2.errorMessage, null);
-    });
-  });
-
   group('when validateItem is called', () {
     test('then it should validate with all the validators inside it', () async {
       final item = instantiate(

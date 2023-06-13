@@ -38,15 +38,6 @@ class FormItem<V> {
         onValidationError: onValidationError,
       );
 
-  FormItem<V> applyValidationResult(String? errorMessage, bool isValid) =>
-      FormItem._(
-        value: value,
-        validators: validators,
-        errorMessage: errorMessage,
-        isValid: isValid,
-        onValidationError: onValidationError,
-      );
-
   Future<FormItem<V>> validateItem({
     bool softValidation = false,
   }) {
@@ -60,12 +51,21 @@ class FormItem<V> {
         orElse: () => ValidatorResult.success(),
       );
       final errorMessage = softValidation ? null : validation.errorMessage;
-      return applyValidationResult(errorMessage, validation.isValid);
+      return _applyValidationResult(errorMessage, validation.isValid);
     }).catchError((e, stackTrace) {
       onValidationError?.call();
-      return applyValidationResult(null, true);
+      return _applyValidationResult(null, true);
     });
   }
+
+  FormItem<V> _applyValidationResult(String? errorMessage, bool isValid) =>
+      FormItem._(
+        value: value,
+        validators: validators,
+        errorMessage: errorMessage,
+        isValid: isValid,
+        onValidationError: onValidationError,
+      );
 
   @override
   int get hashCode =>
