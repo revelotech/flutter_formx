@@ -5,7 +5,7 @@
 A Flutter package to make it easy to build, react to and validate forms.
 ## Features
 
-<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYzE3OTMyZWI1YzgzNTJiNzk4NzhmMWE4NjdmNGJjODY4MWJmMzQwOCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/aohVQvRx6Oi4J5JSoG/giphy.gif"/>
+![Working form gif](https://github.com/revelojobs/flutter_form_builder/assets/20102814/888295d6-d45a-44db-a467-02e742845d7d)
 
 - Responsive state and form answer caching on current instance.
 - Form validation.
