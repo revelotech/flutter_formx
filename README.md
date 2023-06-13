@@ -11,6 +11,10 @@ A Flutter package to make it easy to build, react to and validate forms.
 - Form validation.
 - Abstract ValidationResult and Validator classes to help you integrate with form builder and make your own validations.
 
+## ⚠ Caveats and limitations
+
+This library is designed to work with mobx as its state management provider. It does not support Bloc, Provider or GetX as of yet.
+
 ## Form Classes
 
 ### FormBuilder
