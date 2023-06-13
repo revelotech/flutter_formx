@@ -3,11 +3,19 @@ import 'dart:ui';
 import 'package:flutter_form_builder/validator/validator.dart';
 import 'package:flutter_form_builder/validator/validator_result.dart';
 
+/// [FormItem] is a class used by FormBuilder to handle each field in the form,
+/// where [V] stands for the type used as the value of the form field.
 class FormItem<V> {
+  /// The value of the field, typed V
   final V? value;
   final List<Validator> validators;
   final String? errorMessage;
+
+  /// The function to call when the field is invalid
   final VoidCallback? onValidationError;
+
+  /// The state of the field, valid or invalid - it will always start
+  /// as invalid until the first validation happens
   final bool isValid;
 
   const FormItem._({
@@ -18,6 +26,8 @@ class FormItem<V> {
     this.onValidationError,
   });
 
+  /// Constructor - Notice you can't set isValid from the start,
+  /// it will always start as invalid until the first validation happens
   factory FormItem.from({
     required V? value,
     required List<Validator> validators,
@@ -30,6 +40,7 @@ class FormItem<V> {
     );
   }
 
+  /// Updates the value of the field, maintaining all other properties
   FormItem<V> updateValue(V newValue) => FormItem._(
         value: newValue,
         validators: validators,
@@ -38,6 +49,9 @@ class FormItem<V> {
         onValidationError: onValidationError,
       );
 
+  /// Validates the field, it will iterate through all validators in order and
+  /// return a new FormItem<V> applying the validation result's isValid and
+  /// errorMessage properties
   Future<FormItem<V>> validateItem({
     bool softValidation = false,
   }) {

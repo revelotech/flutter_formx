@@ -1,5 +1,8 @@
 class ValidatorResult {
+  /// The state of the field, valid or invalid
   final bool isValid;
+
+  /// The error message of the field
   final String? errorMessage;
 
   const ValidatorResult({
@@ -7,13 +10,12 @@ class ValidatorResult {
     this.errorMessage,
   });
 
+  /// This is a helper method to return a successful validation result
   factory ValidatorResult.success() => const ValidatorResult(isValid: true);
 
   @override
   int get hashCode => Object.hash(isValid, errorMessage);
 
-  // You should generally implement operator `==` if you
-  // override `hashCode`.
   @override
   bool operator ==(Object other) {
     return other is ValidatorResult &&
