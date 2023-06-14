@@ -151,9 +151,9 @@ class EmailValidator extends Validator<String?> {
 }
 
 ```
-### Tip:
-> **Note**
-> We recommend avoiding implementing more than one validation in each validator. If the field must be required and an email, add two validators, such as [RequiredValidator(), EmailValidator()]. This way you can reuse the email validator if this field ever becomes optional.
+
+> **Note**<br/>
+> We recommend avoiding implementing more than one validation in each validator. If the field must be required and a valid email, add two validators, such as [RequiredValidator(), EmailValidator()]. This way you can reuse the email validator if this field ever becomes optional.
 
 ## Testing
 
