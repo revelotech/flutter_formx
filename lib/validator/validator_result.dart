@@ -1,3 +1,4 @@
+/// [ValidatorResult] is a helper class designed to help [Validator] implementations always return the same object type.
 class ValidatorResult {
   /// The state of the field, valid or invalid
   final bool isValid;
@@ -5,6 +6,7 @@ class ValidatorResult {
   /// The error message of the field
   final String? errorMessage;
 
+  /// This is the constructor of the class
   const ValidatorResult({
     required this.isValid,
     this.errorMessage,
