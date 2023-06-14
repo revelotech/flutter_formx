@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder_example/presentation/example_page_view_model.dart';
+import 'package:mobx_form_builder_example/presentation/example_page_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ExamplePage extends StatefulWidget {

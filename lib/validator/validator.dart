@@ -1,4 +1,4 @@
-import 'package:flutter_form_builder/validator/validator_result.dart';
+import 'package:mobx_form_builder/validator/validator_result.dart';
 
 ///[Validator] is an abstract class that will allow you to create whatever
 /// validation you need, always returning the same [ValidatorResult] object.

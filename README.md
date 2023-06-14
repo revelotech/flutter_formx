@@ -20,11 +20,11 @@ This library is designed to work with mobx as its state management provider. It 
 
 For example, say you want to build a form to collect the first name, last name and email from your user.
 
-1. Add the `flutter_form_builder` package to your [pubspec dependencies](https://pub.dev/packages/flutter_form_builder/install).
+1. Add the `mobx_form_builder` package to your [pubspec dependencies](https://pub.dev/packages/mobx_form_builder/install).
 
-2. Import `flutter_form_builder`.
+2. Import `mobx_form_builder`.
     ```dart
-    import 'package:flutter_form_builder/flutter_form_builder.dart';
+    import 'package:mobx_form_builder/mobx_form_builder.dart';
     ```
 
 3. Apply the mixin to your view model, specifying the type.
@@ -125,4 +125,4 @@ For example, say you want to build a form to collect the first name, last name a
 
 ## Testing
 
-See [example/test](https://github.com/revelojobs/flutter_form_builder/tree/main/test/form) for testing examples.
+See [example/test](https://github.com/revelojobs/mobx_form_builder/tree/main/test/form) for testing examples.

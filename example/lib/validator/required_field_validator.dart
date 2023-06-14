@@ -1,4 +1,4 @@
-import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:mobx_form_builder/mobx_form_builder.dart';
 
 class RequiredFieldValidator extends Validator<dynamic> {
   RequiredFieldValidator();

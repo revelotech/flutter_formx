@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_form_builder_example/validator/required_field_validator.dart';
+import 'package:mobx_form_builder/mobx_form_builder.dart';
+import 'package:mobx_form_builder_example/validator/required_field_validator.dart';
 import 'package:mobx/mobx.dart';
 
 part 'example_page_view_model.g.dart';
