@@ -1,3 +1,2 @@
 ## 0.0.1
-
-* TODO: Describe initial release.
+- Initial version, includes FormBuilder mixin, FormItem class, Validator class and ValidatorResult class.
