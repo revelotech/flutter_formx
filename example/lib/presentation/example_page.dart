@@ -131,7 +131,7 @@ class _ExamplePageState extends State<ExamplePage> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          Text('First Name: ${_viewModel.getFieldValue('firstName')}'),
+                          Text('First Name: ${_viewModel.firstName}'),
                           const SizedBox(height: 14),
                           Text('Last Name: ${_viewModel.lastName}'),
                           const SizedBox(height: 14),
