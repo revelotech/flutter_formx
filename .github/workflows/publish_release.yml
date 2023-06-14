@@ -1,0 +1,14 @@
+name: (automatic) Publish Release
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'main'
+jobs:
+  publish:
+    if:  startsWith(github.head_ref, 'release-**') && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dart-lang/setup-dart/.github/workflows/publish.yml@main

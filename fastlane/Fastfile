@@ -1,0 +1,119 @@
+Dir.chdir('..') do
+  WORKING_DIR = Dir.pwd
+  UPDATE_TYPES = %i[major minor patch]
+  PUBSPEC_FILENAME = 'pubspec.yaml'
+  PUBSPEC_PATH = File.join(WORKING_DIR, PUBSPEC_FILENAME)
+  CHANGELOG_FILENAME = 'CHANGELOG.md'
+  CHANGELOG_PATH = File.join(WORKING_DIR, CHANGELOG_FILENAME)
+end
+
+desc 'Start Release Mobx Form Builder'
+lane :start_release_mobx_form_builder do |options|
+  go_to_branch_and_pull('main')
+  git_authenticate
+
+  update_type = nil
+
+  if UI.interactive? && !options.key?(:update_type)
+    update_type = UI.select "What's the update type?:", UPDATE_TYPES
+  else
+    option = options[:update_type].to_i
+    update_type = UPDATE_TYPES[option].to_sym
+  end
+
+  begin
+    new_version_name = bump_everest_version(update_type)
+    update_changelog(release_name: "v#{new_version_name}", file_path: CHANGELOG_PATH)
+    tag_name = "v#{new_version_name}"
+    add_git_tag(tag: tag_name)
+    sh 'git push --tags'
+    create_github_release(tag_name)
+    git_create_branch(branch_name: "release-#{new_version_name}")
+    commit_version_and_changelog
+    entries = get_entries_from_changelog(version_name: "v#{new_version_name}", file_path: CHANGELOG_PATH)
+
+    create_pull_request(
+      api_token: ENV['API_TOKEN_GITHUB'],
+      repo: ENV['GITHUB_REPOSITORY'],
+      title: "Release #{new_version_name}",
+      base: 'main',
+      body: entries.join("\n")
+    )
+  rescue StandardError => e
+    UI.error e
+  end
+end
+
+def get_bump_version(type, current_version_name)
+  build_type = UPDATE_TYPES.index(type)
+  splitted_version = current_version_name.split('.')
+  bumped_version = []
+
+  if build_type == 0
+    bumped_version[0] = (splitted_version[0].to_i + 1).to_s
+    bumped_version[1] = '0'
+    bumped_version[2] = '0'
+  elsif build_type == 1
+    bumped_version[0] = splitted_version[0]
+    bumped_version[1] = (splitted_version[1].to_i + 1).to_s
+    bumped_version[2] = '0'
+  else
+    bumped_version[0] = splitted_version[0]
+    bumped_version[1] = splitted_version[1]
+    bumped_version[2] = (splitted_version[2].to_i + 1).to_s
+  end
+
+  bumped_version.join('.')
+end
+
+def git_authenticate
+  sh 'git config --global user.email "'{ENV['USER_EMAIL_GITHUB']}'"'
+  sh 'git config --global user.name "'{ENV['USER_NAME_GITHUB']}'"'
+  sh "git remote set-url origin https://x-access-token:#{ENV['API_TOKEN_GITHUB']}@github.com/revelojobs/mobx_form_builder"
+end
+
+def go_to_branch_and_pull(branch_name)
+  sh('git fetch && git checkout ' + branch_name + ' && git pull')
+end
+
+def get_current_version
+  text = File.read(PUBSPEC_PATH)
+
+  current_version = text.match(/version:\s+(\d+\.\d+\.\d+)/)
+  {
+    version_name: current_version[1]
+  }
+end
+
+def bump_everest_version(update_type)
+  text = File.read(PUBSPEC_PATH)
+
+  current_version_match = text.match(/version:\s+(\d+\.\d+\.\d+)/)
+  current_version_name = current_version_match[1]
+
+  new_version_name = get_bump_version(update_type, current_version_name)
+
+  UI.important "\n\nBumping version from #{current_version_name} to #{new_version_name}\n"
+
+  new_contents = text.sub(/^(version:\s+)#{current_version_name}/, "\\1#{new_version_name}")
+  File.write(PUBSPEC_PATH, new_contents)
+
+  new_version_name
+end
+
+def commit_version_and_changelog
+  git_commit(path: PUBSPEC_PATH, message: 'Version Bump')
+  git_commit(path: CHANGELOG_PATH, message: 'Updates CHANGELOG')
+  push_to_git_remote
+end
+
+def create_github_release(tag_name)
+  changelog_description = get_changelog(version: tag_name)
+  set_github_release(
+    repository_name: ENV['GITHUB_REPOSITORY'],
+    api_token: ENV['API_TOKEN_GITHUB'],
+    name: "Release #{tag_name}",
+    tag_name: tag_name,
+    description: changelog_description
+  )
+end
