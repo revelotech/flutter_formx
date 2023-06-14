@@ -24,9 +24,16 @@ jobs:
             build-pubspec-
       - run: flutter pub get
       - run: flutter pub run build_runner build --delete-conflicting-outputs
-      - working-directory: ./example/
+      - name: "[Example] Pub get"
+        working-directory: ./example
         run: flutter pub get
-      - working-directory: ./example/
+      - name: "[Example] Build"
+        working-directory: ./example
         run: flutter pub run build_runner build --delete-conflicting-outputs
-      - run: flutter analyze
-      - run: flutter test
+      - name: "[Example] Linter"
+        working-directory: ./example
+        run: flutter analyze
+      - name: "[Lib] Linter"
+        run: flutter analyze
+      - name: "[Lib] Test"
+        run: flutter test
