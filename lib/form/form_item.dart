@@ -3,21 +3,9 @@ import 'dart:ui';
 import 'package:mobx_form_builder/validator/validator.dart';
 import 'package:mobx_form_builder/validator/validator_result.dart';
 
-/// [FormItem] is a class used by FormBuilder to handle each field in the form,
+/// [FormItem] is an immutable class used by FormBuilder to handle each field in the form,
 /// where [V] stands for the type used as the value of the form field.
 class FormItem<V> {
-  /// The value of the field, typed V
-  final V? value;
-  final List<Validator> validators;
-  final String? errorMessage;
-
-  /// The function to call when the field is invalid
-  final VoidCallback? onValidationError;
-
-  /// The state of the field, valid or invalid - it will always start
-  /// as invalid until the first validation happens
-  final bool isValid;
-
   const FormItem._({
     required this.value,
     required this.validators,
@@ -40,6 +28,22 @@ class FormItem<V> {
     );
   }
 
+  /// The value of the field, typed V
+  final V? value;
+
+  /// The list of validators applied to the field
+  final List<Validator> validators;
+
+  /// The error message returned by the first validator that fails
+  final String? errorMessage;
+
+  /// The function callback when the field validation throws an exception
+  final VoidCallback? onValidationError;
+
+  /// The state of the field, valid or invalid. It will always start
+  /// as invalid until the first validation happens
+  final bool isValid;
+
   /// Updates the value of the field, maintaining all other properties
   FormItem<V> updateValue(V newValue) => FormItem._(
         value: newValue,
@@ -49,7 +53,9 @@ class FormItem<V> {
         onValidationError: onValidationError,
       );
 
-  /// Validates the field, it will iterate through all validators in order and
+  /// Validates the field.
+  ///
+  /// It will iterate through all validators in order and
   /// return a new FormItem<V> applying the validation result's isValid and
   /// errorMessage properties
   Future<FormItem<V>> validateItem({
@@ -82,11 +88,14 @@ class FormItem<V> {
       );
 
   @override
-  int get hashCode =>
-      Object.hash(value, validators, errorMessage, isValid, onValidationError);
+  int get hashCode => Object.hash(
+        value,
+        validators,
+        errorMessage,
+        isValid,
+        onValidationError,
+      );
 
-  // You should generally implement operator `==` if you
-  // override `hashCode`.
   @override
   bool operator ==(Object other) {
     return other is FormItem &&
