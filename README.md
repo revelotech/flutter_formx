@@ -117,10 +117,7 @@ flutter pub run build_runner build
 You can create any kind of validator needed specifically for your needs and according to the field type you have. We've included the `RequiredFieldValidator`, but feel free to create more in your project as you need.
 
 ### Create your own validators
-You can do that by creating a class that extends the `Validator` class.
-
-### Tip:
-*We recommend avoiding implementing more than one validation in each validator. If the field must be required and an email, add two validators, such as [RequiredValidator(), EmailValidator()]. This way you can reuse the email validator if this field ever becomes optional.
+You can do that by creating a class that extends the `Validator` class. See example below:
 
 Example:
 
@@ -154,6 +151,9 @@ class EmailValidator extends Validator<String?> {
 }
 
 ```
+### Tip:
+> **Note**
+> We recommend avoiding implementing more than one validation in each validator. If the field must be required and an email, add two validators, such as [RequiredValidator(), EmailValidator()]. This way you can reuse the email validator if this field ever becomes optional.
 
 ## Testing
 
