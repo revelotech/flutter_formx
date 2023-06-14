@@ -13,7 +13,7 @@ abstract class _ExamplePageViewModelBase with Store, FormBuilder<String> {
   _ExamplePageViewModelBase();
 
   @alwaysNotify
-  bool showSuccessDialog = false;
+  bool showSuccessInfo = false;
 
   @observable
   String? validationError;
@@ -67,7 +67,7 @@ abstract class _ExamplePageViewModelBase with Store, FormBuilder<String> {
   void submitForm() {
     validateForm();
     if (isFormValid) {
-      showSuccessDialog = true;
+      showSuccessInfo = true;
     } else {
       validationError = 'Validation error!';
     }
