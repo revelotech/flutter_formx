@@ -1,4 +1,4 @@
-name: Create tag and publish
+name: Create tag and release
 
 on:
   workflow_dispatch:
@@ -25,6 +25,3 @@ jobs:
           GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
         run: |
           bundle exec fastlane create_tag_and_release_on_git
-  publish:
-    needs: create_tag
-    uses: ./.github/workflows/publish_release.yml
