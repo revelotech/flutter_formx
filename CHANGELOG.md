@@ -1,4 +1,6 @@
 ## Changelog
+
+## v0.0.3
 - Test release workflow
 
 ## v0.0.2
