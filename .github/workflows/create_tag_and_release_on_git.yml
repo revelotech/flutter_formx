@@ -1,4 +1,4 @@
-name: (automatic) Finish Release
+name: (automatic) Create tag and release on Git
 
 on:
   pull_request:
@@ -24,4 +24,4 @@ jobs:
           USER_EMAIL_GITHUB: ${{ secrets.USER_EMAIL_GITHUB }}
           GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
         run: |
-          bundle exec fastlane finish_release_mobx_form_builder
+          bundle exec fastlane create_tag_and_release_on_git
