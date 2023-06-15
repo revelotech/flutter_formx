@@ -8,7 +8,7 @@ on:
       - 'main'
 jobs:
   create_tag:
-    if:  startsWith(github.head_ref, 'release-') && github.event.pull_request.merged == true
+    if: startsWith(github.head_ref, 'release-') && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
