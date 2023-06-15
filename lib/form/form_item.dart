@@ -6,6 +6,22 @@ import 'package:mobx_form_builder/validator/validator_result.dart';
 /// [FormItem] is an immutable class used by FormBuilder to handle each field in the form,
 /// where [V] stands for the type used as the value of the form field.
 class FormItem<V> {
+  /// The value of the field, typed V
+  final V? value;
+
+  /// The list of validators to be applied to the field
+  final List<Validator> validators;
+
+  /// The error message of the field
+  final String? errorMessage;
+
+  /// The function to call when the field is invalid
+  final VoidCallback? onValidationError;
+
+  /// The state of the field, valid or invalid - it will always start
+  /// as invalid until the first validation happens
+  final bool isValid;
+
   const FormItem._({
     required this.value,
     required this.validators,
@@ -27,22 +43,6 @@ class FormItem<V> {
       onValidationError: onValidationError,
     );
   }
-
-  /// The value of the field, typed V
-  final V? value;
-
-  /// The list of validators applied to the field
-  final List<Validator> validators;
-
-  /// The error message returned by the first validator that fails
-  final String? errorMessage;
-
-  /// The function callback when the field validation throws an exception
-  final VoidCallback? onValidationError;
-
-  /// The state of the field, valid or invalid. It will always start
-  /// as invalid until the first validation happens
-  final bool isValid;
 
   /// Updates the value of the field, maintaining all other properties
   FormItem<V> updateValue(V newValue) => FormItem._(

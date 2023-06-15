@@ -16,9 +16,11 @@ import 'package:mobx/mobx.dart';
 /// value [isFormValid] to show a submit button as enabled or disabled and verify the status of the
 /// form.
 mixin FormBuilder<T> {
+  /// The map of fields, along with all of their properties
   @observable
   final ObservableMap<T, FormItem> inputMap = <T, FormItem>{}.asObservable();
 
+  /// The computed value of the form, true if all fields are valid, false otherwise
   @computed
   bool get isFormValid => inputMap.values.every((element) => element.isValid);
 
@@ -31,11 +33,13 @@ mixin FormBuilder<T> {
     return validateForm(softValidation: true);
   }
 
+  /// Updates the value of the field and validates it, updating the computed variable [isFormValid]
   @action
   Future<void> updateAndValidateField(dynamic newValue, T type) async {
     inputMap[type] = await inputMap[type]!.updateValue(newValue).validateItem();
   }
 
+  /// Updates the value of the field without validating it, this does not update the computed variable [isFormValid]
   @action
   void updateField(dynamic newValue, T type) {
     inputMap[type] = inputMap[type]!.updateValue(newValue);
@@ -55,7 +59,9 @@ mixin FormBuilder<T> {
     return isFormValid;
   }
 
+  /// Returns the value of the field
   V getFieldValue<V>(dynamic key) => inputMap[key]?.value as V;
 
+  /// Returns the error message of the field
   String? getFieldErrorMessage(dynamic key) => inputMap[key]?.errorMessage;
 }
