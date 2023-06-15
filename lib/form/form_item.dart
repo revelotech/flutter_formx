@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:mobx_form_builder/validator/validator.dart';
 import 'package:mobx_form_builder/validator/validator_result.dart';
 
-/// [FormItem] is a class used by FormBuilder to handle each field in the form,
+/// [FormItem] is an immutable class used by FormBuilder to handle each field in the form,
 /// where [V] stands for the type used as the value of the form field.
 class FormItem<V> {
   /// The value of the field, typed V
@@ -53,7 +53,9 @@ class FormItem<V> {
         onValidationError: onValidationError,
       );
 
-  /// Validates the field, it will iterate through all validators in order and
+  /// Validates the field.
+  ///
+  /// It will iterate through all validators in order and
   /// return a new FormItem<V> applying the validation result's isValid and
   /// errorMessage properties
   Future<FormItem<V>> validateItem({
@@ -86,11 +88,14 @@ class FormItem<V> {
       );
 
   @override
-  int get hashCode =>
-      Object.hash(value, validators, errorMessage, isValid, onValidationError);
+  int get hashCode => Object.hash(
+        value,
+        validators,
+        errorMessage,
+        isValid,
+        onValidationError,
+      );
 
-  // You should generally implement operator `==` if you
-  // override `hashCode`.
   @override
   bool operator ==(Object other) {
     return other is FormItem &&

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:mobx_form_builder/mobx_form_builder.dart';
-import 'package:mobx_form_builder_example/validator/required_field_validator.dart';
 import 'package:mobx/mobx.dart';
+import 'package:mobx_form_builder/mobx_form_builder.dart';
 
 part 'example_page_view_model.g.dart';
 
@@ -41,16 +40,12 @@ abstract class _ExamplePageViewModelBase with Store, FormBuilder<String> {
     setupForm({
       'firstName': FormItem<String?>.from(
         value: null,
-        validators: [
-          RequiredFieldValidator(),
-        ],
+        validators: [RequiredFieldValidator('First name is required')],
         onValidationError: _logValidationError,
       ),
       'lastName': FormItem<String?>.from(
         value: null,
-        validators: [
-          RequiredFieldValidator(),
-        ],
+        validators: [RequiredFieldValidator('Last name is required')],
         onValidationError: _logValidationError,
       ),
       'email': FormItem<String?>.from(
