@@ -4,9 +4,13 @@ on:
   workflow_dispatch:
 jobs:
   create_tag:
-    if: startsWith(github.head_ref, 'release-') && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
+      - if: github.ref != 'refs/heads/main'
+        name: Check valid branch
+        run: |
+          echo "Branch must be 'main' to run this workflow"
+          exit 1
       - uses: actions/checkout@v3
       - name: Set up Ruby 3.1
         uses: ruby/setup-ruby@v1
