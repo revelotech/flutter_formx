@@ -1,4 +1,4 @@
-name: Mobx Form Builder - Start Release
+name: 1. Start release process
 
 on:
   workflow_dispatch:
