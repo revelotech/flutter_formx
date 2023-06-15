@@ -32,13 +32,8 @@ flutter pub run build_runner build
 
 ## Usage
 
-1. Add the `mobx_form_builder` package to your [pubspec dependencies](https://pub.dev/packages/flutter_form_builder/install).
-
-<<<<<<< HEAD
 1. Add the `mobx_form_builder` package to your [pubspec dependencies](https://pub.dev/packages/mobx_form_builder/install).
 
-=======
->>>>>>> @{-1}
 2. Import `mobx_form_builder`.
     ```dart
     import 'package:mobx_form_builder/mobx_form_builder.dart';
