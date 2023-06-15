@@ -1,4 +1,4 @@
-import 'package:flutter_form_builder/form/form_item.dart';
+import 'package:mobx_form_builder/form/form_item.dart';
 import 'package:mobx/mobx.dart';
 
 /// [FormBuilder] is a helper class to handle forms. [T] stands for the type used to identify the fields
