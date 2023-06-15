@@ -1,6 +1,6 @@
 name: mobx_form_builder
 description: Mobx Form Builder provides an easy way of dealing with forms and their states without creating a lot of boilerplate code.
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/revelojobs/mobx_form_builder
 repository: https://github.com/revelojobs/mobx_form_builder
 issue_tracker: https://github.com/revelojobs/mobx_form_builder/issues
