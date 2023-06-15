@@ -1,28 +1,10 @@
-name: (automatic) Publish Release
+name: (automatic) Publish Release to pub.dev
 
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - 'main'
+  push:
+    tags:
+    - 'v[0-9]+.[0-9]+.[0-9]+*'
+
 jobs:
   publish:
-    if:  startsWith(github.head_ref, 'release-**') && github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Ruby 3.1
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1
-          bundler-cache: true
-      - name: Fastlane finish release Mobx Form Builder
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GLOBAL_GITHUB_ACCESS_TOKEN }}
-          USER_NAME_GITHUB: ${{ secrets.USER_NAME_GITHUB }}
-          USER_EMAIL_GITHUB: ${{ secrets.USER_EMAIL_GITHUB }}
-          GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
-        run: |
-          bundle exec fastlane finish_release_mobx_form_builder
-      - uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1.5.0
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1.5.0
