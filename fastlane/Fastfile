@@ -42,15 +42,9 @@ end
 
 desc 'Create tag and release on Git'
 lane :create_tag_and_release_on_git do |_options|
-  go_to_branch_and_pull('main')
-  git_authenticate
-
   begin
     version_name = get_project_version
-
     tag_name = "v#{version_name}"
-    add_git_tag(tag: tag_name)
-    sh 'git push --tags'
     create_github_release(tag_name)
   rescue StandardError => e
     UI.error e
@@ -121,11 +115,5 @@ end
 
 def create_github_release(tag_name)
   changelog_description = get_changelog(version: tag_name)
-  set_github_release(
-    repository_name: ENV['GITHUB_REPOSITORY'],
-    api_token: ENV['API_TOKEN_GITHUB'],
-    name: "Release #{tag_name}",
-    tag_name: tag_name,
-    description: changelog_description
-  )
+  sh "gh release create #{tag_name} --title \"Release #{tag_name}\" --notes \"#{changelog_description}\""
 end
