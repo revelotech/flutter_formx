@@ -1,11 +1,7 @@
-name: (automatic) Finish release publication
+name: Create tag and publish
 
 on:
-  pull_request:
-    types:
-      - closed
-    branches:
-      - 'main'
+  workflow_dispatch:
 jobs:
   create_tag:
     if: startsWith(github.head_ref, 'release-') && github.event.pull_request.merged == true
