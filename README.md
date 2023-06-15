@@ -6,7 +6,7 @@ A Flutter package to make it easy to build, react to and validate forms using [M
 
 ## Features
 
-![Working form gif](https://github.com/revelojobs/mobx_form_builder/assets/1608564/2a7a9807-a5f0-4bee-a05d-8e658fc93a7a)
+![Working form gif](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTJkYTFkNzEwYTkxYzMxYmIwZjUwYTQ5Yzk1OTAzZGNkZTA3Y2FlMCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/gUe4YOKOGx8raKVdsO/giphy.gif)
 
 - Responsive state and form answer caching on current instance.
 - Form validation.
