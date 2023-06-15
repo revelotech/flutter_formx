@@ -11,8 +11,6 @@ jobs:
         run: |
           echo "Branch must be 'main' to run this workflow"
           exit 1
-      - env:
-          GITHUB_TOKEN: ${{ secrets.GLOBAL_GITHUB_ACCESS_TOKEN }}
       - uses: actions/checkout@v3
       - name: Set up Ruby 3.1
         uses: ruby/setup-ruby@v1
@@ -21,6 +19,7 @@ jobs:
           bundler-cache: true
       - name: Fastlane create tag and release on git
         env:
+          GITHUB_TOKEN: ${{ secrets.GLOBAL_GITHUB_ACCESS_TOKEN }}
           API_TOKEN_GITHUB: ${{ secrets.GLOBAL_GITHUB_ACCESS_TOKEN }}
           USER_NAME_GITHUB: ${{ secrets.USER_NAME_GITHUB }}
           USER_EMAIL_GITHUB: ${{ secrets.USER_EMAIL_GITHUB }}
