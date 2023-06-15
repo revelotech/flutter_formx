@@ -62,7 +62,7 @@ module Fastlane
         ['douglas.iacovelli']
       end
 
-      def self.is_supported?(_platform)
+      def self.is_supported?(platform)
         true
       end
     end
