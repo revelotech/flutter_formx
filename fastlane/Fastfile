@@ -24,10 +24,6 @@ lane :start_release_mobx_form_builder do |options|
   begin
     new_version_name = bump_everest_version(update_type)
     update_changelog(release_name: "v#{new_version_name}", file_path: CHANGELOG_PATH)
-    tag_name = "v#{new_version_name}"
-    add_git_tag(tag: tag_name)
-    sh 'git push --tags'
-    create_github_release(tag_name)
     git_create_branch(branch_name: "release-#{new_version_name}")
     commit_version_and_changelog
     entries = get_entries_from_changelog(version_name: "v#{new_version_name}", file_path: CHANGELOG_PATH)
@@ -39,6 +35,23 @@ lane :start_release_mobx_form_builder do |options|
       base: 'main',
       body: entries.join("\n")
     )
+  rescue StandardError => e
+    UI.error e
+  end
+end
+
+desc 'Finish Release Mobx Form Builder'
+lane :finish_release_mobx_form_builder do |_options|
+  go_to_branch_and_pull('main')
+  git_authenticate
+
+  begin
+    version_name = get_project_version
+
+    tag_name = "v#{version_name}"
+    add_git_tag(tag: tag_name)
+    sh 'git push --tags'
+    create_github_release(tag_name)
   rescue StandardError => e
     UI.error e
   end
@@ -67,22 +80,15 @@ def get_bump_version(type, current_version_name)
 end
 
 def git_authenticate
-  sh 'git config --global user.email "'{ENV['USER_EMAIL_GITHUB']}'"'
-  sh 'git config --global user.name "'{ENV['USER_NAME_GITHUB']}'"'
+  user_email = ENV['USER_EMAIL_GITHUB']
+  user_name = ENV['USER_NAME_GITHUB']
+  sh "git config --global user.email \"#{user_email}\" "
+  sh "git config --global user.name \"#{user_name}\""
   sh "git remote set-url origin https://x-access-token:#{ENV['API_TOKEN_GITHUB']}@github.com/revelojobs/mobx_form_builder"
 end
 
 def go_to_branch_and_pull(branch_name)
-  sh('git fetch && git checkout ' + branch_name + ' && git pull')
-end
-
-def get_current_version
-  text = File.read(PUBSPEC_PATH)
-
-  current_version = text.match(/version:\s+(\d+\.\d+\.\d+)/)
-  {
-    version_name: current_version[1]
-  }
+  sh("git fetch && git checkout #{branch_name} && git pull")
 end
 
 def bump_everest_version(update_type)
@@ -99,6 +105,13 @@ def bump_everest_version(update_type)
   File.write(PUBSPEC_PATH, new_contents)
 
   new_version_name
+end
+
+def get_project_version
+  text = File.read(PUBSPEC_PATH)
+
+  current_version_match = text.match(/version:\s+(\d+\.\d+\.\d+)/)
+  current_version_match[1]
 end
 
 def commit_version_and_changelog
