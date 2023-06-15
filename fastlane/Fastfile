@@ -22,7 +22,7 @@ lane :start_release_mobx_form_builder do |options|
   end
 
   begin
-    new_version_name = bump_everest_version(update_type)
+    new_version_name = bump_version(update_type)
     update_changelog(release_name: "v#{new_version_name}", file_path: CHANGELOG_PATH)
     git_create_branch(branch_name: "release-#{new_version_name}")
     commit_version_and_changelog
@@ -40,8 +40,8 @@ lane :start_release_mobx_form_builder do |options|
   end
 end
 
-desc 'Finish Release Mobx Form Builder'
-lane :finish_release_mobx_form_builder do |_options|
+desc 'Create tag and release on Git'
+lane :create_tag_and_release_on_git do |_options|
   go_to_branch_and_pull('main')
   git_authenticate
 
@@ -91,17 +91,16 @@ def go_to_branch_and_pull(branch_name)
   sh("git fetch && git checkout #{branch_name} && git pull")
 end
 
-def bump_everest_version(update_type)
+def bump_version(update_type)
   text = File.read(PUBSPEC_PATH)
 
-  current_version_match = text.match(/version:\s+(\d+\.\d+\.\d+)/)
-  current_version_name = current_version_match[1]
+  current_version = get_project_version
 
-  new_version_name = get_bump_version(update_type, current_version_name)
+  new_version_name = get_bump_version(update_type, current_version)
 
-  UI.important "\n\nBumping version from #{current_version_name} to #{new_version_name}\n"
+  UI.important "\n\nBumping version from #{current_version} to #{new_version_name}\n"
 
-  new_contents = text.sub(/^(version:\s+)#{current_version_name}/, "\\1#{new_version_name}")
+  new_contents = text.sub(/^(version:\s+)#{current_version}/, "\\1#{new_version_name}")
   File.write(PUBSPEC_PATH, new_contents)
 
   new_version_name
