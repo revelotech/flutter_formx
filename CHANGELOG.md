@@ -1,4 +1,5 @@
 ## Changelog
+- Test release workflow
 
 ## v0.0.2
 - [Fix] Fix issue with CI workflow for publishing to pub.dev.
