@@ -1,5 +1,5 @@
 ## Changelog
-- Make project depend on an older version of mobx
+- Reduce MobX minimal version to `2.1.0` to support more projects
 
 ## v0.0.3
 - Test release workflow
