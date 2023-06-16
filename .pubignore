@@ -20,6 +20,12 @@
 # is commented out by default.
 .vscode/
 
+# Fastlane related
+fastlane/
+
+# Github related
+.github/
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/
