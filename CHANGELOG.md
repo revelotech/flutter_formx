@@ -1,4 +1,5 @@
 ## Changelog
+- Make project depend on an older version of mobx
 
 ## v0.0.3
 - Test release workflow
