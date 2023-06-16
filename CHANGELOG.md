@@ -1,4 +1,6 @@
 ## Changelog
+
+## v1.0.0
 - Reduce MobX minimal version to `2.1.0` to support more projects
 
 ## v0.0.3
