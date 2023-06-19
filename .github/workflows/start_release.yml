@@ -22,11 +22,11 @@ jobs:
         with:
           ruby-version: 3.1
           bundler-cache: true
-      - name: Fastlane start release Mobx Form Builder
+      - name: Fastlane start release Flutter FormX
         env:
           API_TOKEN_GITHUB: ${{ secrets.GLOBAL_GITHUB_ACCESS_TOKEN }}
           USER_NAME_GITHUB: ${{ secrets.USER_NAME_GITHUB }}
           USER_EMAIL_GITHUB: ${{ secrets.USER_EMAIL_GITHUB }}
           GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
         run: |
-          bundle exec fastlane start_release_mobx_form_builder update_type:${{ github.event.inputs.update_type }}
+          bundle exec fastlane start_release_flutter_formx update_type:${{ github.event.inputs.update_type }}

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:mobx/mobx.dart';
-import 'package:mobx_form_builder/mobx_form_builder.dart';
+import 'package:flutter_formx/flutter_formx.dart';
 
 part 'example_page_view_model.g.dart';
 
@@ -9,7 +9,7 @@ class ExamplePageViewModel extends _ExamplePageViewModelBase
   ExamplePageViewModel();
 }
 
-abstract class _ExamplePageViewModelBase with Store, FormBuilder<String> {
+abstract class _ExamplePageViewModelBase with Store, FormX<String> {
   _ExamplePageViewModelBase();
 
   @alwaysNotify

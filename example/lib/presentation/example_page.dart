@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx_form_builder_example/presentation/example_page_view_model.dart';
+import 'package:flutter_formx_example/presentation/example_page_view_model.dart';
 
 class ExamplePage extends StatefulWidget {
   const ExamplePage({super.key});
@@ -30,7 +30,7 @@ class _ExamplePageState extends State<ExamplePage> {
               slivers: [
                 const SliverAppBar(
                   backgroundColor: Color(0xFF5AC2D7),
-                  title: Text('MobX Form Builder Example'),
+                  title: Text('Flutter FormX Example'),
                   systemOverlayStyle: SystemUiOverlayStyle.light,
                   bottom: PreferredSize(
                       preferredSize: Size.fromHeight(30),
@@ -145,10 +145,13 @@ class _ExamplePageState extends State<ExamplePage> {
                   hasScrollBody: false,
                   child: Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, bottom: 40),
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
-                      onPressed: _viewModel.isSubmitButtonEnabled ? _viewModel.submitForm : () {},
+                      onPressed: _viewModel.isSubmitButtonEnabled
+                          ? _viewModel.submitForm
+                          : () {},
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4.0),

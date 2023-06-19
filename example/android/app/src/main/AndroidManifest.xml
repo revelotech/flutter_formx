@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.revelo.mobx_form_builder_example">
+    package="com.revelo.flutter_formx_example">
    <application
-        android:label="mobx_form_builder_example"
+        android:label="flutter_formx_example"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
