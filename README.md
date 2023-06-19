@@ -6,7 +6,7 @@ A Flutter package to make it easy to build, react to and validate forms using [M
 
 ## Features
 
-![Working form gif](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTJkYTFkNzEwYTkxYzMxYmIwZjUwYTQ5Yzk1OTAzZGNkZTA3Y2FlMCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PWc/gUe4YOKOGx8raKVdsO/giphy.gif)
+![Working form gif](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDFud3NwMndseW9oOHdybHdjMDFueXd1OHkxOWVyenozM3pyOTM2eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/b9pjinlQTRQsFTVi9i/giphy.gif)
 
 - Responsive state and form answer caching on current instance.
 - Form validation.
