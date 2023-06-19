@@ -1,4 +1,4 @@
-package com.revelo.mobx_form_builder_example
+package com.revelo.flutter_formx_example
 
 import io.flutter.embedding.android.FlutterActivity
 

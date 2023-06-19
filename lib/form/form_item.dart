@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:mobx_form_builder/validator/validator.dart';
-import 'package:mobx_form_builder/validator/validator_result.dart';
+import 'package:flutter_formx/validator/validator.dart';
+import 'package:flutter_formx/validator/validator_result.dart';
 
 /// [FormItem] is an immutable class used by FormBuilder to handle each field in the form,
 /// where [V] stands for the type used as the value of the form field.

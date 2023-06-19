@@ -1,6 +1,6 @@
-# mobx_form_builder_example
+# flutter_formx_example
 
-Demonstrates how to use the mobx_form_builder plugin.
+Demonstrates how to use the flutter_formx plugin.
 
 ## Getting Started
 

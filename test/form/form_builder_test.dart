@@ -1,5 +1,5 @@
 import 'package:fake_async/fake_async.dart';
-import 'package:mobx_form_builder/mobx_form_builder.dart';
+import 'package:flutter_formx/flutter_formx.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

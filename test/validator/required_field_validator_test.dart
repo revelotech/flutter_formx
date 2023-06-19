@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobx_form_builder/validator/required_field_validator.dart';
+import 'package:flutter_formx/validator/required_field_validator.dart';
 
 void main() {
   late RequiredFieldValidator validator;

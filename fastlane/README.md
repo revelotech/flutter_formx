@@ -13,21 +13,21 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### start_release_mobx_form_builder
+### start_release_flutter_formx
 
 ```sh
-[bundle exec] fastlane start_release_mobx_form_builder
+[bundle exec] fastlane start_release_flutter_formx
 ```
 
-Start Release Mobx Form Builder
+Start Release Flutter FormX
 
-### finish_release_mobx_form_builder
+### finish_release_flutter_formx
 
 ```sh
-[bundle exec] fastlane finish_release_mobx_form_builder
+[bundle exec] fastlane finish_release_flutter_formx
 ```
 
-Finish Release Mobx Form Builder
+Finish Release Flutter FormX
 
 ----
 

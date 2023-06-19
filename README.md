@@ -1,6 +1,6 @@
-# mobx_form_builder
+# flutter_formx
 
-[![pub package](https://img.shields.io/pub/v/mobx_form_builder?style=plastic&logo=flutter)](https://pub.dev/packages/mobx_form_builder)
+[![pub package](https://img.shields.io/pub/v/flutter_formx?style=plastic&logo=flutter)](https://pub.dev/packages/flutter_formx)
 
 A Flutter package to make it easy to build, react to and validate forms using [MobX](https://pub.dev/packages/mobx).
 
@@ -32,11 +32,11 @@ flutter pub run build_runner build
 
 ## Usage
 
-1. Add the `mobx_form_builder` package to your [pubspec dependencies](https://pub.dev/packages/mobx_form_builder/install).
+1. Add the `flutter_formx` package to your [pubspec dependencies](https://pub.dev/packages/flutter_formx/install).
 
-2. Import `mobx_form_builder`.
+2. Import `flutter_formx`.
     ```dart
-    import 'package:mobx_form_builder/mobx_form_builder.dart';
+    import 'package:flutter_formx/flutter_formx.dart';
     ```
 
 3. Apply the mixin to your mobx store, specifying the type of the keys that will be used to retrieve each form field.
@@ -51,7 +51,7 @@ flutter pub run build_runner build
     ```
 
 
-3. As soon as the view is ready, make sure to call `setupForm` with a map of FormItems (an entry for each of the inputs):
+4. As soon as the view is ready, make sure to call `setupForm` with a map of FormItems (an entry for each of the inputs):
 - The keys of this map will be used to access each specific field and must be of the same type used on `FormBuilder<Type>` such as String, enum, int etc.
 - Create FormItems with the type of the input inside the `<>` and use the `FormItem.from` constructor.
 - When creating FormItems you should pass its initial value, its validators and `onValidationError` (if needed) to log any errors when validating.
@@ -80,7 +80,7 @@ flutter pub run build_runner build
   });
   ```
 
-4. Access the fields values and errors in the UI using `getFieldValue<T>(key)` and `getFieldErrorMessage<T>(key)`, either with computed mobx getters or using the FormBuilder's getters directly in the UI.
+5. Access the fields values and errors in the UI using `getFieldValue<T>(key)` and `getFieldErrorMessage<T>(key)`, either with computed mobx getters or using the FormBuilder's getters directly in the UI.
 
     ```dart
     /// using computed mobx getters on the store
@@ -96,14 +96,14 @@ flutter pub run build_runner build
     ),
     ```
 
-5. Update any field in the form using the inbuilt `updateAndValidateField` and `updateField` methods when the input is updated on your Widget.
+6. Update any field in the form using the inbuilt `updateAndValidateField` and `updateField` methods when the input is updated on your Widget.
     ```dart
     Future<void> updateFirstName(String? newValue) async {
       await updateAndValidateField(newValue, 'firstName');
     }
     ```
 
-6. Quick tip: always validate your entire form before submitting information to the server.
+7. Quick tip: always validate your entire form before submitting information to the server.
     ```dart
     @action
     Future<void> submitForm() async {
@@ -157,4 +157,4 @@ class EmailValidator extends Validator<String?> {
 
 ## Testing
 
-See [example/test](https://github.com/revelojobs/mobx_form_builder/tree/main/test/form) for testing examples.
+See [example/test](https://github.com/revelojobs/flutter_formx/tree/main/test/form) for testing examples.

@@ -7,8 +7,8 @@ Dir.chdir('..') do
   CHANGELOG_PATH = File.join(WORKING_DIR, CHANGELOG_FILENAME)
 end
 
-desc 'Start Release Mobx Form Builder'
-lane :start_release_mobx_form_builder do |options|
+desc 'Start Release Flutter FormX'
+lane :start_release_flutter_formx do |options|
   go_to_branch_and_pull('main')
   git_authenticate
 
@@ -78,7 +78,7 @@ def git_authenticate
   user_name = ENV['USER_NAME_GITHUB']
   sh "git config --global user.email \"#{user_email}\" "
   sh "git config --global user.name \"#{user_name}\""
-  sh "git remote set-url origin https://x-access-token:#{ENV['API_TOKEN_GITHUB']}@github.com/revelojobs/mobx_form_builder"
+  sh "git remote set-url origin https://x-access-token:#{ENV['API_TOKEN_GITHUB']}@github.com/revelojobs/flutter_formx"
 end
 
 def go_to_branch_and_pull(branch_name)
