@@ -9,7 +9,7 @@ class ExamplePageViewModel extends _ExamplePageViewModelBase
   ExamplePageViewModel();
 }
 
-abstract class _ExamplePageViewModelBase with Store, FormBuilder<String> {
+abstract class _ExamplePageViewModelBase with Store, FormX<String> {
   _ExamplePageViewModelBase();
 
   @alwaysNotify
