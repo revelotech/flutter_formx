@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter_formx/validator/validator.dart';
 import 'package:flutter_formx/validator/validator_result.dart';
 
-/// [FormItem] is an immutable class used by FormBuilder to handle each field in the form,
+/// [FormItem] is an immutable class used by FormX to handle each field in the form,
 /// where [V] stands for the type used as the value of the form field.
 class FormItem<V> {
   /// The value of the field, typed V
