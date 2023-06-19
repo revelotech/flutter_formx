@@ -1,7 +1,7 @@
 import 'package:flutter_formx/form/form_item.dart';
 import 'package:mobx/mobx.dart';
 
-/// [FormBuilder] is a helper class to handle forms. [T] stands for the type used to identify the fields
+/// [FormX] is a helper class to handle forms. [T] stands for the type used to identify the fields
 /// such as an enum or a string to later access each of its fields.
 ///
 /// The first step is to call [setupForm] with a map of the fields, their initial values and
@@ -15,7 +15,7 @@ import 'package:mobx/mobx.dart';
 /// The third and final step is to call [validateForm] to validate all fields and use the computed
 /// value [isFormValid] to show a submit button as enabled or disabled and verify the status of the
 /// form.
-mixin FormBuilder<T> {
+mixin FormX<T> {
   /// The map of fields, along with all of their properties
   @observable
   final ObservableMap<T, FormItem> inputMap = <T, FormItem>{}.asObservable();

@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 
 import 'form_builder_test.mocks.dart';
 
-class FormBuilderTest with FormBuilder<String> {}
+class FormXTest with FormX<String> {}
 
 class FirstValidator extends Validator<String?> {
   @override
@@ -35,7 +35,7 @@ void main() {
         .thenAnswer((_) async => ValidatorResult.success());
   });
 
-  FormBuilderTest instantiate() => FormBuilderTest();
+  FormXTest instantiate() => FormXTest();
 
   group('when setupForm is called', () {
     test('then it should setup inputMap with all the information', () {
@@ -91,7 +91,7 @@ void main() {
   });
 
   group('when user wants to update form field', () {
-    late FormBuilderTest testClass;
+    late FormXTest testClass;
 
     setUp(() {
       testClass = instantiate();
@@ -140,7 +140,7 @@ void main() {
   });
 
   group('when user wants to update and validate form field', () {
-    late FormBuilderTest testClass;
+    late FormXTest testClass;
 
     setUp(() {
       testClass = instantiate();
@@ -256,7 +256,7 @@ void main() {
   });
 
   group('when validateForm is called', () {
-    late FormBuilderTest testClass;
+    late FormXTest testClass;
 
     setUp(() {
       testClass = instantiate();
