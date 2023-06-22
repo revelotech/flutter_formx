@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:mobx/mobx.dart';
 import 'package:flutter_formx/flutter_formx.dart';
+import 'package:mobx/mobx.dart';
 
 part 'example_page_view_model.g.dart';
 
@@ -38,17 +38,21 @@ abstract class _ExamplePageViewModelBase with Store, FormX<String> {
 
   void onViewReady() {
     setupForm({
-      'firstName': FormItem<String?>.from(
+      'firstName': FormXField<String?>.from(
         value: null,
-        validators: [RequiredFieldValidator('First name is required')],
+        validators: [
+          RequiredFieldValidator('First name is required'),
+        ],
         onValidationError: _logValidationError,
       ),
-      'lastName': FormItem<String?>.from(
+      'lastName': FormXField<String?>.from(
         value: null,
-        validators: [RequiredFieldValidator('Last name is required')],
+        validators: [
+          RequiredFieldValidator('Last name is required'),
+        ],
         onValidationError: _logValidationError,
       ),
-      'email': FormItem<String?>.from(
+      'email': FormXField<String?>.from(
         value: null,
         validators: const [],
       ),

@@ -45,9 +45,9 @@ void main() {
         expect(testClass.inputMap.length, 0);
 
         testClass.setupForm({
-          'a': FormItem<String>.from(value: '', validators: const []),
-          'b': FormItem<String>.from(value: '', validators: const []),
-          'c': FormItem<String>.from(value: '', validators: const []),
+          'a': FormXField<String>.from(value: '', validators: const []),
+          'b': FormXField<String>.from(value: '', validators: const []),
+          'c': FormXField<String>.from(value: '', validators: const []),
         });
 
         async.elapse(const Duration(seconds: 1));
@@ -72,9 +72,9 @@ void main() {
         final testClass = instantiate();
 
         testClass.setupForm({
-          'a': FormItem<String>.from(value: '', validators: const []),
-          'b': FormItem<String>.from(value: '', validators: [firstValidator]),
-          'c': FormItem<String>.from(value: '', validators: const []),
+          'a': FormXField<String>.from(value: '', validators: const []),
+          'b': FormXField<String>.from(value: '', validators: [firstValidator]),
+          'c': FormXField<String>.from(value: '', validators: const []),
         });
 
         async.elapse(const Duration(seconds: 1));
@@ -97,15 +97,15 @@ void main() {
       testClass = instantiate();
 
       testClass.setupForm({
-        'a': FormItem<String>.from(
+        'a': FormXField<String>.from(
           value: '',
           validators: [
             firstValidator,
             secondValidator,
           ],
         ),
-        'b': FormItem<String>.from(value: '', validators: const []),
-        'c': FormItem<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
       });
     });
 
@@ -146,15 +146,15 @@ void main() {
       testClass = instantiate();
 
       testClass.setupForm({
-        'a': FormItem<String>.from(
+        'a': FormXField<String>.from(
           value: '',
           validators: [
             firstValidator,
             secondValidator,
           ],
         ),
-        'b': FormItem<String>.from(value: '', validators: const []),
-        'c': FormItem<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
       });
     });
 
@@ -262,12 +262,12 @@ void main() {
       testClass = instantiate();
 
       testClass.setupForm({
-        'a': FormItem<String>.from(value: '1', validators: [firstValidator]),
-        'b': FormItem<String>.from(
+        'a': FormXField<String>.from(value: '1', validators: [firstValidator]),
+        'b': FormXField<String>.from(
           value: '2',
           validators: [secondValidator],
         ),
-        'c': FormItem<String>.from(value: '3', validators: const []),
+        'c': FormXField<String>.from(value: '3', validators: const []),
       });
     });
 
@@ -300,8 +300,8 @@ void main() {
     final testClass = instantiate();
 
     testClass.setupForm({
-      'a': FormItem<String>.from(value: '1', validators: const []),
-      'b': FormItem<int>.from(value: 2, validators: const []),
+      'a': FormXField<String>.from(value: '1', validators: const []),
+      'b': FormXField<int>.from(value: 2, validators: const []),
     });
 
     final formValueA = testClass.getFieldValue<String>('a');
@@ -325,11 +325,11 @@ void main() {
     final testClass = instantiate();
 
     testClass.setupForm({
-      'a': FormItem<String>.from(
+      'a': FormXField<String>.from(
         value: '1',
         validators: [firstValidator],
       ),
-      'b': FormItem<int>.from(value: 2, validators: const []),
+      'b': FormXField<int>.from(value: 2, validators: const []),
     });
 
     await testClass.validateForm();
