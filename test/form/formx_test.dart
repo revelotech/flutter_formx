@@ -193,6 +193,54 @@ void main() {
 
     group('and field is not valid', () {
       test(
+          'with soft validation then it should not update the error map with an '
+          'error but isValid should be updated', () {
+        fakeAsync((async) {
+          // setting up valid form
+          testClass.updateAndValidateField(
+            '12',
+            'a',
+          );
+          testClass.updateAndValidateField(
+            '123',
+            'b',
+          );
+          testClass.updateAndValidateField(
+            '1234',
+            'c',
+          );
+          async.elapse(const Duration(milliseconds: 200));
+
+          expect(testClass.inputMap['a']!.errorMessage, null);
+          // Form is valid
+          expect(testClass.isFormValid, true);
+
+          when(secondValidator.validate('123')).thenAnswer(
+            (_) async => const ValidatorResult(
+              isValid: false,
+              errorMessage: 'invalid string',
+            ),
+          );
+
+          // update with soft validation
+          testClass.updateAndValidateField(
+            '123',
+            'a',
+            softValidation: true,
+          );
+
+          async.elapse(const Duration(milliseconds: 200));
+          // error is not updated
+          expect(
+            testClass.inputMap['a']!.errorMessage,
+            null,
+          );
+          // form is now invalid because there is an error, even though it won't show in the UI
+          expect(testClass.isFormValid, false);
+        });
+      });
+
+      test(
           'with invalid string then it '
           'should update the error map with an error', () {
         fakeAsync((async) {

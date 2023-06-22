@@ -33,10 +33,18 @@ mixin FormX<T> {
     return validateForm(softValidation: true);
   }
 
-  /// Updates the value of the field and validates it, updating the computed variable [isFormValid]
+  /// Updates the value of the field and validates it, updating the computed variable [isFormValid].
+  /// When [softValidation] is true, it doesn't add errors messages to the fields, but updates the
+  /// computed variable [isFormValid] which can be used to show a submit button as enabled or disabled
   @action
-  Future<void> updateAndValidateField(dynamic newValue, T type) async {
-    inputMap[type] = await inputMap[type]!.updateValue(newValue).validateItem();
+  Future<void> updateAndValidateField(
+    dynamic newValue,
+    T type, {
+    bool softValidation = false,
+  }) async {
+    inputMap[type] = await inputMap[type]!
+        .updateValue(newValue)
+        .validateItem(softValidation: softValidation);
   }
 
   /// Updates the value of the field without validating it, this does not update the computed variable [isFormValid]
