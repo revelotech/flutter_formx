@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_formx_example/presentation/example_page_view_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ExamplePage extends StatefulWidget {
   const ExamplePage({super.key});

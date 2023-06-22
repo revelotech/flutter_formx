@@ -1,4 +1,4 @@
-import 'package:flutter_formx/form/form_item.dart';
+import 'package:flutter_formx/src/form/form_x_field.dart';
 import 'package:mobx/mobx.dart';
 
 /// [FormX] is a helper class to handle forms. [T] stands for the type used to identify the fields
@@ -18,7 +18,7 @@ import 'package:mobx/mobx.dart';
 mixin FormX<T> {
   /// The map of fields, along with all of their properties
   @observable
-  final ObservableMap<T, FormItem> inputMap = <T, FormItem>{}.asObservable();
+  final ObservableMap<T, FormXField> inputMap = <T, FormXField>{}.asObservable();
 
   /// The computed value of the form, true if all fields are valid, false otherwise
   @computed
@@ -28,15 +28,23 @@ mixin FormX<T> {
   ///
   /// This method should be called when starting the viewModel and it already validates the form
   /// without applying any error messages.
-  Future<void> setupForm(Map<T, FormItem> inputs) {
+  Future<void> setupForm(Map<T, FormXField> inputs) {
     inputMap.addAll(inputs);
     return validateForm(softValidation: true);
   }
 
-  /// Updates the value of the field and validates it, updating the computed variable [isFormValid]
+  /// Updates the value of the field and validates it, updating the computed variable [isFormValid].
+  /// When [softValidation] is true, it doesn't add errors messages to the fields, but updates the
+  /// computed variable [isFormValid] which can be used to show a submit button as enabled or disabled
   @action
-  Future<void> updateAndValidateField(dynamic newValue, T type) async {
-    inputMap[type] = await inputMap[type]!.updateValue(newValue).validateItem();
+  Future<void> updateAndValidateField(
+    dynamic newValue,
+    T type, {
+    bool softValidation = false,
+  }) async {
+    inputMap[type] = await inputMap[type]!
+        .updateValue(newValue)
+        .validateItem(softValidation: softValidation);
   }
 
   /// Updates the value of the field without validating it, this does not update the computed variable [isFormValid]

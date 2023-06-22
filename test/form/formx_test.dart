@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'form_builder_test.mocks.dart';
+import 'formx_test.mocks.dart';
 
 class FormXTest with FormX<String> {}
 
@@ -45,9 +45,9 @@ void main() {
         expect(testClass.inputMap.length, 0);
 
         testClass.setupForm({
-          'a': FormItem<String>.from(value: '', validators: const []),
-          'b': FormItem<String>.from(value: '', validators: const []),
-          'c': FormItem<String>.from(value: '', validators: const []),
+          'a': FormXField<String>.from(value: '', validators: const []),
+          'b': FormXField<String>.from(value: '', validators: const []),
+          'c': FormXField<String>.from(value: '', validators: const []),
         });
 
         async.elapse(const Duration(seconds: 1));
@@ -72,9 +72,9 @@ void main() {
         final testClass = instantiate();
 
         testClass.setupForm({
-          'a': FormItem<String>.from(value: '', validators: const []),
-          'b': FormItem<String>.from(value: '', validators: [firstValidator]),
-          'c': FormItem<String>.from(value: '', validators: const []),
+          'a': FormXField<String>.from(value: '', validators: const []),
+          'b': FormXField<String>.from(value: '', validators: [firstValidator]),
+          'c': FormXField<String>.from(value: '', validators: const []),
         });
 
         async.elapse(const Duration(seconds: 1));
@@ -97,15 +97,15 @@ void main() {
       testClass = instantiate();
 
       testClass.setupForm({
-        'a': FormItem<String>.from(
+        'a': FormXField<String>.from(
           value: '',
           validators: [
             firstValidator,
             secondValidator,
           ],
         ),
-        'b': FormItem<String>.from(value: '', validators: const []),
-        'c': FormItem<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
       });
     });
 
@@ -146,15 +146,15 @@ void main() {
       testClass = instantiate();
 
       testClass.setupForm({
-        'a': FormItem<String>.from(
+        'a': FormXField<String>.from(
           value: '',
           validators: [
             firstValidator,
             secondValidator,
           ],
         ),
-        'b': FormItem<String>.from(value: '', validators: const []),
-        'c': FormItem<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
       });
     });
 
@@ -192,6 +192,54 @@ void main() {
     });
 
     group('and field is not valid', () {
+      test(
+          'with soft validation then it should not update the error map with an '
+          'error but isValid should be updated', () {
+        fakeAsync((async) {
+          // setting up valid form
+          testClass.updateAndValidateField(
+            '12',
+            'a',
+          );
+          testClass.updateAndValidateField(
+            '123',
+            'b',
+          );
+          testClass.updateAndValidateField(
+            '1234',
+            'c',
+          );
+          async.elapse(const Duration(milliseconds: 200));
+
+          expect(testClass.inputMap['a']!.errorMessage, null);
+          // Form is valid
+          expect(testClass.isFormValid, true);
+
+          when(secondValidator.validate('123')).thenAnswer(
+            (_) async => const ValidatorResult(
+              isValid: false,
+              errorMessage: 'invalid string',
+            ),
+          );
+
+          // update with soft validation
+          testClass.updateAndValidateField(
+            '123',
+            'a',
+            softValidation: true,
+          );
+
+          async.elapse(const Duration(milliseconds: 200));
+          // error is not updated
+          expect(
+            testClass.inputMap['a']!.errorMessage,
+            null,
+          );
+          // form is now invalid because there is an error, even though it won't show in the UI
+          expect(testClass.isFormValid, false);
+        });
+      });
+
       test(
           'with invalid string then it '
           'should update the error map with an error', () {
@@ -262,12 +310,12 @@ void main() {
       testClass = instantiate();
 
       testClass.setupForm({
-        'a': FormItem<String>.from(value: '1', validators: [firstValidator]),
-        'b': FormItem<String>.from(
+        'a': FormXField<String>.from(value: '1', validators: [firstValidator]),
+        'b': FormXField<String>.from(
           value: '2',
           validators: [secondValidator],
         ),
-        'c': FormItem<String>.from(value: '3', validators: const []),
+        'c': FormXField<String>.from(value: '3', validators: const []),
       });
     });
 
@@ -300,8 +348,8 @@ void main() {
     final testClass = instantiate();
 
     testClass.setupForm({
-      'a': FormItem<String>.from(value: '1', validators: const []),
-      'b': FormItem<int>.from(value: 2, validators: const []),
+      'a': FormXField<String>.from(value: '1', validators: const []),
+      'b': FormXField<int>.from(value: 2, validators: const []),
     });
 
     final formValueA = testClass.getFieldValue<String>('a');
@@ -325,11 +373,11 @@ void main() {
     final testClass = instantiate();
 
     testClass.setupForm({
-      'a': FormItem<String>.from(
+      'a': FormXField<String>.from(
         value: '1',
         validators: [firstValidator],
       ),
-      'b': FormItem<int>.from(value: 2, validators: const []),
+      'b': FormXField<int>.from(value: 2, validators: const []),
     });
 
     await testClass.validateForm();

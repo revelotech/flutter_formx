@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:flutter_formx/validator/validator.dart';
-import 'package:flutter_formx/validator/validator_result.dart';
+import 'package:flutter_formx/src/validator/validator.dart';
+import 'package:flutter_formx/src/validator/validator_result.dart';
 
-/// [FormItem] is an immutable class used by FormBuilder to handle each field in the form,
+/// [FormXField] is an immutable class used by FormX to handle each field in the form,
 /// where [V] stands for the type used as the value of the form field.
-class FormItem<V> {
+class FormXField<V> {
   /// The value of the field, typed V
   final V? value;
 
@@ -22,7 +22,7 @@ class FormItem<V> {
   /// as invalid until the first validation happens
   final bool isValid;
 
-  const FormItem._({
+  const FormXField._({
     required this.value,
     required this.validators,
     this.isValid = false,
@@ -32,12 +32,12 @@ class FormItem<V> {
 
   /// Constructor - Notice you can't set isValid from the start,
   /// it will always start as invalid until the first validation happens
-  factory FormItem.from({
+  factory FormXField.from({
     required V? value,
     required List<Validator> validators,
     VoidCallback? onValidationError,
   }) {
-    return FormItem._(
+    return FormXField._(
       value: value,
       validators: validators,
       onValidationError: onValidationError,
@@ -45,7 +45,7 @@ class FormItem<V> {
   }
 
   /// Updates the value of the field, maintaining all other properties
-  FormItem<V> updateValue(V newValue) => FormItem._(
+  FormXField<V> updateValue(V newValue) => FormXField._(
         value: newValue,
         validators: validators,
         errorMessage: errorMessage,
@@ -56,9 +56,9 @@ class FormItem<V> {
   /// Validates the field.
   ///
   /// It will iterate through all validators in order and
-  /// return a new FormItem<V> applying the validation result's isValid and
+  /// return a new FormXField<V> applying the validation result's isValid and
   /// errorMessage properties
-  Future<FormItem<V>> validateItem({
+  Future<FormXField<V>> validateItem({
     bool softValidation = false,
   }) {
     return Future.wait(
@@ -78,8 +78,8 @@ class FormItem<V> {
     });
   }
 
-  FormItem<V> _applyValidationResult(String? errorMessage, bool isValid) =>
-      FormItem._(
+  FormXField<V> _applyValidationResult(String? errorMessage, bool isValid) =>
+      FormXField._(
         value: value,
         validators: validators,
         errorMessage: errorMessage,
@@ -98,7 +98,7 @@ class FormItem<V> {
 
   @override
   bool operator ==(Object other) {
-    return other is FormItem &&
+    return other is FormXField &&
         other.value == value &&
         other.validators == validators &&
         other.errorMessage == errorMessage &&
