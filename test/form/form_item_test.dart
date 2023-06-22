@@ -32,24 +32,24 @@ void main() {
         .thenAnswer((_) async => ValidatorResult.success());
   });
 
-  FormItem<String> instantiate({
+  FormXField<String> instantiate({
     String? value,
     List<Validator>? validators,
   }) =>
-      FormItem<String>.from(
+      FormXField<String>.from(
         value: value ?? '',
         validators: validators ?? const [],
       );
 
   test(
       'when updateValue is called then it should return a '
-      'new FormItem with the new value keeping all other properties', () {
+      'new FormXField with the new value keeping all other properties', () {
     final item = instantiate();
 
     final result = item.updateValue('123');
 
     expect(item == result, false);
-    expect(result == FormItem.from(value: '123', validators: const []), true);
+    expect(result == FormXField.from(value: '123', validators: const []), true);
   });
 
   group('when validateItem is called', () {

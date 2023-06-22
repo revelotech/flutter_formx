@@ -51,29 +51,29 @@ flutter pub run build_runner build
     ```
 
 
-4. As soon as the view is ready, make sure to call `setupForm` with a map of FormItems (an entry for each of the inputs):
+4. As soon as the view is ready, make sure to call `setupForm` with a map of FormXFields (an entry for each of the inputs):
 - The keys of this map will be used to access each specific field and must be of the same type used on `FormX<Type>` such as String, enum, int etc.
-- Create FormItems with the type of the input inside the `<>` and use the `FormItem.from` constructor.
-- When creating FormItems you should pass its initial value, its validators and `onValidationError` (if needed) to log any errors when validating.
+- Create FormXFields with the type of the input inside the `<>` and use the `FormXField.from` constructor.
+- When creating FormXFields you should pass its initial value, its validators and `onValidationError` (if needed) to log any errors when validating.
 
   Example:
   ```dart
   setupForm({
-    'firstName': FormItem<String?>.from(
+    'firstName': FormXField<String?>.from(
       value: null,
       validators: [
         RequiredFieldValidator(...),
       ],
       onValidationError: _logValidationError,
     ),
-    'lastName': FormItem<String?>.from(
+    'lastName': FormXField<String?>.from(
       value: null,
       validators: [
         RequiredFieldValidator(...),
       ],
       onValidationError: _logValidationError,
     ),
-    'email': FormItem<String?>.from(
+    'email': FormXField<String?>.from(
       value: null,
       validators: const [],
     ),

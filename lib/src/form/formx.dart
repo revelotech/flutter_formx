@@ -1,4 +1,4 @@
-import 'package:flutter_formx/src/form/form_item.dart';
+import 'package:flutter_formx/src/form/form_x_field.dart';
 import 'package:mobx/mobx.dart';
 
 /// [FormX] is a helper class to handle forms. [T] stands for the type used to identify the fields
@@ -18,7 +18,7 @@ import 'package:mobx/mobx.dart';
 mixin FormX<T> {
   /// The map of fields, along with all of their properties
   @observable
-  final ObservableMap<T, FormItem> inputMap = <T, FormItem>{}.asObservable();
+  final ObservableMap<T, FormXField> inputMap = <T, FormXField>{}.asObservable();
 
   /// The computed value of the form, true if all fields are valid, false otherwise
   @computed
@@ -28,7 +28,7 @@ mixin FormX<T> {
   ///
   /// This method should be called when starting the viewModel and it already validates the form
   /// without applying any error messages.
-  Future<void> setupForm(Map<T, FormItem> inputs) {
+  Future<void> setupForm(Map<T, FormXField> inputs) {
     inputMap.addAll(inputs);
     return validateForm(softValidation: true);
   }
