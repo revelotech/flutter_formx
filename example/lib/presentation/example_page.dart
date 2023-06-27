@@ -24,12 +24,13 @@ class _ExamplePageState extends State<ExamplePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: const Color(0xFFF9FDFE),
         body: Observer(
           builder: (context) {
             return CustomScrollView(
               slivers: [
                 const SliverAppBar(
-                  backgroundColor: Color(0xFF5AC2D7),
+                  backgroundColor: Color(0xFF0C152C),
                   title: Text('Flutter FormX Example'),
                   systemOverlayStyle: SystemUiOverlayStyle.light,
                   bottom: PreferredSize(
@@ -41,54 +42,40 @@ class _ExamplePageState extends State<ExamplePage> {
                           child: Text(
                             'Powered by Revelo',
                             style: TextStyle(
-                              color: Color(0xFF3A7C92),
+                              color: Color(0xFF5AC2D7),
                               fontSize: 13,
                             ),
                           ),
                         ),
                       )),
                 ),
-                SliverToBoxAdapter(
+                const SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16.0,
-                      right: 16.0,
-                      top: 30,
-                      bottom: 16,
-                    ),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: 'First Name*',
-                        errorText: _viewModel.firstNameError,
-                        errorStyle: const TextStyle(
-                          color: Colors.red,
-                        ),
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      'Job application form',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
-                      onChanged: (value) {
-                        _viewModel.onValueChanged(
-                          fieldName: 'firstName',
-                          newValue: value,
-                        );
-                      },
                     ),
                   ),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16),
                     child: TextField(
                       decoration: InputDecoration(
                         border: const OutlineInputBorder(),
-                        labelText: 'Last Name*',
-                        errorText: _viewModel.lastNameError,
+                        labelText: 'Your email*',
+                        errorText: _viewModel.emailError,
                         errorStyle: const TextStyle(
                           color: Colors.red,
                         ),
                       ),
                       onChanged: (value) {
-                        _viewModel.onValueChanged(
-                          fieldName: 'lastName',
+                        _viewModel.onTextChanged(
+                          fieldName: 'email',
                           newValue: value,
                         );
                       },
@@ -101,14 +88,111 @@ class _ExamplePageState extends State<ExamplePage> {
                     child: TextField(
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Email',
+                        labelText: 'Career',
                       ),
                       onChanged: (value) {
-                        _viewModel.onValueChanged(
-                          fieldName: 'email',
+                        _viewModel.onTextChanged(
+                          fieldName: 'career',
                           newValue: value,
                         );
                       },
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const Text('Salary expectation'),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 100,
+                              child: Text(
+                                'US\$ ${_viewModel.salaryExpectation.toString()}',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: SliderTheme(
+                                data: const SliderThemeData(
+                                  showValueIndicator:
+                                      ShowValueIndicator.onlyForContinuous,
+                                ),
+                                child: Slider(
+                                  value:
+                                      _viewModel.salaryExpectation.toDouble(),
+                                  min: 500,
+                                  max: 20000,
+                                  divisions: 15,
+                                  label:
+                                      _viewModel.salaryExpectation.toString(),
+                                  onChanged: (newValue) =>
+                                      _viewModel.onIncomeChanged(
+                                    newValue.toInt(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (_viewModel.salaryExpectationError != null)
+                          Text(
+                            _viewModel.salaryExpectationError!,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.red,
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Checkbox(
+                              value: _viewModel.acceptTerms,
+                              onChanged: (value) {
+                                _viewModel.onAcceptTermsChanged(value ?? false);
+                              },
+                            ),
+                            const Expanded(
+                              child: Text(
+                                'I accept the Terms and Conditions.',
+                              ),
+                            )
+                          ],
+                        ),
+                        if (_viewModel.acceptTermsError != null)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              _viewModel.acceptTermsError!,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.red,
+                              ),
+                            ),
+                          )
+                      ],
                     ),
                   ),
                 ),
@@ -116,11 +200,11 @@ class _ExamplePageState extends State<ExamplePage> {
                   SliverToBoxAdapter(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 216, 244, 249),
+                        color: const Color(0xFFBDE7EF),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      margin: const EdgeInsets.all(16.0),
-                      padding: const EdgeInsets.all(16.0),
+                      margin: const EdgeInsets.all(24.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -131,11 +215,15 @@ class _ExamplePageState extends State<ExamplePage> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          Text('First Name: ${_viewModel.firstName}'),
-                          const SizedBox(height: 14),
-                          Text('Last Name: ${_viewModel.lastName}'),
-                          const SizedBox(height: 14),
                           Text('Email: ${_viewModel.email}'),
+                          const SizedBox(height: 14),
+                          Text('Career: ${_viewModel.career}'),
+                          const SizedBox(height: 14),
+                          Text(
+                            'Salary expectation: ${_viewModel.salaryExpectation}',
+                          ),
+                          const SizedBox(height: 14),
+                          Text('Accepted terms: ${_viewModel.acceptTerms}'),
                           const SizedBox(height: 14),
                         ],
                       ),
