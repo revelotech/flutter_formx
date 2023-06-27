@@ -8,7 +8,7 @@ Flutter FormX is a package to make it easy to build, react to and validate forms
 
 ## Features
 
-![Working form gif](https://github.com/revelojobs/flutter_formx/raw/master/docs/static/FormX_example.png)
+![Working form gif](https://github.com/revelojobs/flutter_formx/raw/master/docs/static/FormX_example.gif)
 
 - Responsive state and form answer caching on current instance.
 - Form validation.
