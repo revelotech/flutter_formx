@@ -2,13 +2,13 @@
 
 [![pub package](https://img.shields.io/pub/v/flutter_formx?style=plastic&logo=flutter)](https://pub.dev/packages/flutter_formx)
 
-![Flutter FormX Logo](https://github.com/revelojobs/flutter_formx/raw/main/docs/static/FormX_Symbol96.png)
+![Flutter FormX Logo](https://raw.githubusercontent.com/revelojobs/flutter_formx/main/docs/static/FormX_Symbol96.png)
 
 Flutter FormX is a package to make it easy to build, react to and validate forms using [MobX](https://pub.dev/packages/mobx).
 
 ## Features
 
-![Working form gif](https://github.com/revelojobs/flutter_formx/raw/main/docs/static/FormX_example.gif)
+![Working form gif](https://raw.githubusercontent.com/revelojobs/flutter_formx/main/docs/static/FormX_example.gif)
 
 - Responsive state and form answer caching on current instance.
 - Form validation.
