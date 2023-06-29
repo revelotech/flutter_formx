@@ -1,12 +1,14 @@
-# flutter_formx
+# Flutter FormX
 
 [![pub package](https://img.shields.io/pub/v/flutter_formx?style=plastic&logo=flutter)](https://pub.dev/packages/flutter_formx)
 
-A Flutter package to make it easy to build, react to and validate forms using [MobX](https://pub.dev/packages/mobx).
+![Flutter FormX Logo](https://raw.githubusercontent.com/revelojobs/flutter_formx/main/docs/static/FormX_Symbol96.png)
+
+Flutter FormX is a package to make it easy to build, react to and validate forms using [MobX](https://pub.dev/packages/mobx).
 
 ## Features
 
-![Working form gif](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDFud3NwMndseW9oOHdybHdjMDFueXd1OHkxOWVyenozM3pyOTM2eiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/b9pjinlQTRQsFTVi9i/giphy.gif)
+![Working form gif](https://raw.githubusercontent.com/revelojobs/flutter_formx/main/docs/static/FormX_example.gif)
 
 - Responsive state and form answer caching on current instance.
 - Form validation.
@@ -50,35 +52,34 @@ flutter pub run build_runner build
     }
     ```
 
-
 4. As soon as the view is ready, make sure to call `setupForm` with a map of FormXFields (an entry for each of the inputs):
-- The keys of this map will be used to access each specific field and must be of the same type used on `FormX<Type>` such as String, enum, int etc.
-- Create FormXFields with the type of the input inside the `<>` and use the `FormXField.from` constructor.
-- When creating FormXFields you should pass its initial value, its validators and `onValidationError` (if needed) to log any errors when validating.
+   - The keys of this map will be used to access each specific field and must be of the same type used on `FormX<Type>` such as String, enum, int etc.
+   - Create FormXFields with the type of the input inside the `<>` and use the `FormXField.from` constructor.
+   - When creating FormXFields you should pass its initial value, its validators and `onValidationError` (if needed) to log any errors when validating.
 
-  Example:
-  ```dart
-  setupForm({
-    'firstName': FormXField<String?>.from(
-      value: null,
-      validators: [
-        RequiredFieldValidator(...),
-      ],
-      onValidationError: _logValidationError,
-    ),
-    'lastName': FormXField<String?>.from(
-      value: null,
-      validators: [
-        RequiredFieldValidator(...),
-      ],
-      onValidationError: _logValidationError,
-    ),
-    'email': FormXField<String?>.from(
-      value: null,
-      validators: const [],
-    ),
-  });
-  ```
+   Example:
+   ```dart
+   setupForm({
+     'firstName': FormXField<String?>.from(
+       value: null,
+       validators: [
+         RequiredFieldValidator(...),
+       ],
+       onValidationError: _logValidationError,
+     ),
+     'lastName': FormXField<String?>.from(
+       value: null,
+       validators: [
+         RequiredFieldValidator(...),
+       ],
+       onValidationError: _logValidationError,
+     ),
+     'email': FormXField<String?>.from(
+       value: null,
+       validators: const [],
+     ),
+   });
+   ```
 
 5. Access the fields values and errors in the UI using `getFieldValue<T>(key)` and `getFieldErrorMessage<T>(key)`, either with computed mobx getters or using the FormX's getters directly in the UI.
 
