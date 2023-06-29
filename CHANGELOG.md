@@ -1,4 +1,6 @@
 ## Changelog
+
+## v2.0.0
 - [Breaking change] Rename FormItem to FormXField 
 - [Breaking change] Expose the library file only
 - Improve documentation
