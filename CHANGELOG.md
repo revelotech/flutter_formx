@@ -1,4 +1,6 @@
 ## Changelog
+
+## v2.0.1
 - Fix image paths in README
 
 ## v2.0.0
