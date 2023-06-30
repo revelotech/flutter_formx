@@ -1,7 +1,8 @@
 ## Changelog
+- Fix image paths in README
 
 ## v2.0.0
-- [Breaking change] Rename FormItem to FormXField 
+- [Breaking change] Rename FormItem to FormXField
 - [Breaking change] Expose the library file only
 - Improve documentation
 - Fix example project setup
