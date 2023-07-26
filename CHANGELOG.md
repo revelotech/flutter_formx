@@ -1,4 +1,5 @@
 ## Changelog
+- Fix strings with only blank spaces being validated by required field validator
 
 ## v2.0.1
 - Fix image paths in README
