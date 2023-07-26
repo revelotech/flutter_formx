@@ -17,7 +17,7 @@ class RequiredFieldValidator extends Validator {
     );
 
     if (value == null) return errorResult;
-    if (value is String && value.isEmpty) return errorResult;
+    if (value is String && value.trim().isEmpty) return errorResult;
 
     return result(
       isValid: true,
