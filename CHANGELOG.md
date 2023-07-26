@@ -1,4 +1,6 @@
 ## Changelog
+
+## v2.1.0
 - Fix strings with only blank spaces being validated by required field validator
 
 ## v2.0.1
