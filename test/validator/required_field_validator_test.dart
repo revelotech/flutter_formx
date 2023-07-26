@@ -27,6 +27,15 @@ void main() {
   });
 
   test(
+      'when validate is called with string with only white spaces then it should return invalid result',
+      () async {
+    final result = await validator.validate('                 ');
+
+    expect(result.isValid, false);
+    expect(result.errorMessage, errorMessage);
+  });
+
+  test(
       'when validate is called with non-null object then it should return valid result',
       () async {
     final today = DateTime.now();
