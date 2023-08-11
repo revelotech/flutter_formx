@@ -11,7 +11,7 @@ class ExamplePageViewModel extends _ExamplePageViewModelBase
   ExamplePageViewModel();
 }
 
-abstract class _ExamplePageViewModelBase with Store, FormX<String> {
+abstract class _ExamplePageViewModelBase with Store, FormXMobX<String> {
   _ExamplePageViewModelBase();
 
   @alwaysNotify

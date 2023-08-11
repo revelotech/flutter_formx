@@ -4,9 +4,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'formx_test.mocks.dart';
+import 'formx_mobx_test.mocks.dart';
 
-class FormXTest with FormX<String> {}
+class FormXMobXTest with FormXMobX<String> {}
 
 class FirstValidator extends Validator<String?> {
   @override
@@ -35,7 +35,7 @@ void main() {
         .thenAnswer((_) async => ValidatorResult.success());
   });
 
-  FormXTest instantiate() => FormXTest();
+  FormXMobXTest instantiate() => FormXMobXTest();
 
   group('when setupForm is called', () {
     test('then it should setup inputMap with all the information', () {
@@ -91,7 +91,7 @@ void main() {
   });
 
   group('when user wants to update form field', () {
-    late FormXTest testClass;
+    late FormXMobXTest testClass;
 
     setUp(() {
       testClass = instantiate();
@@ -140,7 +140,7 @@ void main() {
   });
 
   group('when user wants to update and validate form field', () {
-    late FormXTest testClass;
+    late FormXMobXTest testClass;
 
     setUp(() {
       testClass = instantiate();
@@ -304,7 +304,7 @@ void main() {
   });
 
   group('when validateForm is called', () {
-    late FormXTest testClass;
+    late FormXMobXTest testClass;
 
     setUp(() {
       testClass = instantiate();
