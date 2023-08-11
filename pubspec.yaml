@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   mobx: ^2.1.0
+  bloc: ^8.0.0
 
 dev_dependencies:
   flutter_test:
