@@ -1,9 +1,10 @@
 import 'package:flutter_formx/src/form/formx.dart';
 import 'package:flutter_formx/src/form/formx_field.dart';
+import 'package:flutter_formx/src/form/formx_state.dart';
 import 'package:mobx/mobx.dart';
 
 /// MobX implementation of [FormX]
-mixin FormXMobX<T> implements FormX<T> {
+mixin FormXMobX<T> implements FormX<T>, FormXState<T> {
   /// MobX implementation of [FormX.inputMap].
   /// This is an observable map of fields
   @override

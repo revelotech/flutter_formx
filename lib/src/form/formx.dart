@@ -15,12 +15,6 @@ import 'package:flutter_formx/src/form/formx_field.dart';
 /// value [isFormValid] to show a submit button as enabled or disabled and verify the status of the
 /// form.
 abstract class FormX<T> {
-  /// The map of fields, along with all of their properties
-  final Map<T, FormXField> inputMap = {};
-
-  /// The computed value of the form's validation, true if all fields are valid, false otherwise
-  bool get isFormValid;
-
   /// Sets up the form with the given inputs
   ///
   /// This method should be called when starting the viewModel and it already validates the form
@@ -46,10 +40,4 @@ abstract class FormX<T> {
   /// it doesn't add errors messages to the fields, but updates the computed variable [isFormValid]
   /// which can be used to show a submit button as enabled or disabled
   Future<bool> validateForm({bool softValidation = false});
-
-  /// Returns the value of the field
-  V getFieldValue<V>(dynamic key);
-
-  /// Returns the error message of the field
-  String? getFieldErrorMessage(dynamic key);
 }
