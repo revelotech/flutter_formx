@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_formx/src/form/cubit/formx_cubit_state.dart';
-import 'package:flutter_formx/src/form/form_x_field.dart';
 import 'package:flutter_formx/src/form/formx.dart';
+import 'package:flutter_formx/src/form/formx_field.dart';
 
 /// Bloc implementation of [FormX]
 class FormXCubit<T> extends Cubit<FormXCubitState> implements FormX<T> {

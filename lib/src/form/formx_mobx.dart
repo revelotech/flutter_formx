@@ -1,4 +1,4 @@
-import 'package:flutter_formx/src/form/form_x_field.dart';
+import 'package:flutter_formx/src/form/formx_field.dart';
 import 'package:mobx/mobx.dart';
 
 import 'formx.dart';

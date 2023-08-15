@@ -1,4 +1,4 @@
-import 'package:flutter_formx/src/form/form_x_field.dart';
+import 'package:flutter_formx/src/form/formx_field.dart';
 
 /// [FormX] is a helper class to handle forms. [T] stands for the type used to identify the fields
 /// such as an enum or a string to later access each of its fields.
