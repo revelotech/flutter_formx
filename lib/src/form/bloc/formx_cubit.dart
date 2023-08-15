@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_formx/src/form/cubit/formx_cubit_state.dart';
+import 'package:flutter_formx/src/form/bloc/formx_cubit_state.dart';
 import 'package:flutter_formx/src/form/formx.dart';
 import 'package:flutter_formx/src/form/formx_field.dart';
 
