@@ -1,6 +1,6 @@
 import 'package:flutter_formx/src/form/formx_field.dart';
 
-/// [FormXState] is a mixin that should be used by a class that
+/// [FormXState] is an abstract class that should be implemented by a class that
 /// will hold the form state.
 abstract class FormXState<T> {
 
