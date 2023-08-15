@@ -1,7 +1,6 @@
+import 'package:flutter_formx/src/form/formx.dart';
 import 'package:flutter_formx/src/form/formx_field.dart';
 import 'package:mobx/mobx.dart';
-
-import 'formx.dart';
 
 /// MobX implementation of [FormX]
 mixin FormXMobX<T> implements FormX<T> {
