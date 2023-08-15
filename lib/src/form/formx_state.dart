@@ -3,7 +3,6 @@ import 'package:flutter_formx/src/form/formx_field.dart';
 /// [FormXState] is an abstract class that should be implemented by a class that
 /// will hold the form state.
 abstract class FormXState<T> {
-
   /// The map of fields, along with all of their properties
   final Map<T, FormXField> inputMap = {};
 
