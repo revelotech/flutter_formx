@@ -4,15 +4,17 @@ import 'package:flutter_formx_example/custom_validators/checked_validator.dart';
 import 'package:flutter_formx_example/custom_validators/salary_validator.dart';
 import 'package:mobx/mobx.dart';
 
-part 'example_page_view_model.g.dart';
+part 'mobx_implementation_page_view_model.g.dart';
 
-class ExamplePageViewModel extends _ExamplePageViewModelBase
-    with _$ExamplePageViewModel {
-  ExamplePageViewModel();
+class MobXImplementationPageViewModel
+    extends _MobXImplementationPageViewModelBase
+    with _$MobXImplementationPageViewModel {
+  MobXImplementationPageViewModel();
 }
 
-abstract class _ExamplePageViewModelBase with Store, FormXMobX<String> {
-  _ExamplePageViewModelBase();
+abstract class _MobXImplementationPageViewModelBase
+    with Store, FormXMobX<String> {
+  _MobXImplementationPageViewModelBase();
 
   @alwaysNotify
   bool showSuccessInfo = false;
