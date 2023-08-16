@@ -30,7 +30,6 @@ class _ExamplePageState extends State<ExamplePage> {
         body: Observer(
           builder: (context) {
             return CustomScrollView(
-              //TODO: improve this UI
               slivers: [
                 const SliverAppBar(
                   backgroundColor: Color(0xFF0C152C),
@@ -53,22 +52,80 @@ class _ExamplePageState extends State<ExamplePage> {
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pushNamed('mobx'),
-                      child: const Text('MobX implementation'),
-                    ),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pushNamed('bloc'),
-                      child: const Text('Bloc implementation'),
-                    ),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(24.0),
+                        child: Text(
+                          'Flutter FormX supports these architectures:',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24.0,
+                          vertical: 12,
+                        ),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(8),
+                          clipBehavior: Clip.hardEdge,
+                          elevation: 1,
+                          type: MaterialType.card,
+                          child: InkWell(
+                            onTap: () =>
+                                Navigator.of(context).pushNamed('mobx'),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF0C152C),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              height: 100,
+                              child: const Center(
+                                child: Text(
+                                  'MobX implementation',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24.0,
+                          vertical: 12,
+                        ),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(8),
+                          clipBehavior: Clip.hardEdge,
+                          elevation: 1,
+                          type: MaterialType.card,
+                          child: InkWell(
+                            onTap: () =>
+                                Navigator.of(context).pushNamed('bloc'),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF0C152C),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              height: 100,
+                              child: const Center(
+                                child: Text(
+                                  'Bloc implementation',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
