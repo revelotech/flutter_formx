@@ -6,7 +6,7 @@ import 'package:flutter_formx/src/form/formx_field.dart';
 /// Bloc implementation of [FormX]
 class FormXCubit<T> extends Cubit<FormXCubitState<T>> implements FormX<T> {
   /// When FormXCubit is instantiated, it emits the initial state of the form.
-  FormXCubit() : super(FormXCubitState());
+  FormXCubit() : super(const FormXCubitState());
 
   /// Bloc implementation of [FormX.setupForm].
   @override
@@ -21,10 +21,10 @@ class FormXCubit<T> extends Cubit<FormXCubitState<T>> implements FormX<T> {
   /// Bloc implementation of [FormX.updateAndValidateField].
   @override
   Future<void> updateAndValidateField(
-      dynamic newValue,
-      T type, {
-        bool softValidation = false,
-      }) async {
+    dynamic newValue,
+    T type, {
+    bool softValidation = false,
+  }) async {
     final inputMap = _cloneStateMap;
     inputMap[type] = await inputMap[type]!
         .updateValue(newValue)
@@ -46,9 +46,9 @@ class FormXCubit<T> extends Cubit<FormXCubitState<T>> implements FormX<T> {
     final inputMap = _cloneStateMap;
     await Future.forEach(inputMap.keys, (type) async {
       inputMap[type] =
-      await inputMap[type]!.validateItem(softValidation: softValidation);
+          await inputMap[type]!.validateItem(softValidation: softValidation);
     });
-    emit(FormXCubitState(inputMap));
+    emit(FormXCubitState<T>(inputMap));
     return state.isFormValid;
   }
 }
