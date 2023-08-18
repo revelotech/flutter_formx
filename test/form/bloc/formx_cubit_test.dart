@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:fake_async/fake_async.dart';
 import 'package:flutter_formx/flutter_formx.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,6 +23,8 @@ class SecondValidator extends Validator<String?> {
 void main() {
   late MockFirstValidator firstValidator;
   late MockSecondValidator secondValidator;
+  late Map<String, FormXField<String>> testForm;
+  late Map<String, FormXField<String>> resultForm;
 
   setUp(() {
     firstValidator = MockFirstValidator();
@@ -34,6 +37,71 @@ void main() {
   });
 
   FormXCubit<String> instantiate() => FormXCubit<String>();
+
+  blocTest(
+    'when setupForm is called then it should emit a softly validated form',
+    build: () => instantiate(),
+    setUp: () {
+      testForm = {
+        'a': FormXField<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
+      };
+
+      resultForm = Map<String, FormXField<String>>.from(testForm);
+    },
+    act: (cubit) async {
+      await cubit.setupForm(testForm);
+      for (var entry in resultForm.entries) {
+        resultForm[entry.key] = await entry.value.validateItem();
+      }
+    },
+    expect: () => [
+      // pre form validation
+      FormXCubitState(testForm),
+      // post form validation
+      FormXCubitState(resultForm),
+    ],
+  );
+
+  blocTest(
+    'when updateAndValidateField is called then it should emit new state with updated FormXField',
+    build: () => instantiate(),
+    setUp: () async {
+      final validator = RequiredFieldValidator('error');
+      testForm = {
+        'a': FormXField<String>.from(value: '', validators: [validator]),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
+      };
+
+      resultForm = {
+        'a': FormXField<String>.from(value: '123', validators: [validator]),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
+      };
+    },
+    act: (cubit) async {
+      await cubit.setupForm(testForm);
+
+      for (var entry in testForm.entries) {
+        testForm[entry.key] =
+            await entry.value.validateItem(softValidation: true);
+      }
+
+      for (var entry in resultForm.entries) {
+        resultForm[entry.key] = await entry.value.validateItem();
+      }
+      await cubit.updateAndValidateField('123', 'a');
+    },
+    skip: 1,
+    expect: () => [
+      // validated state after setup
+      FormXCubitState(testForm),
+      // validated and updated state
+      FormXCubitState(resultForm),
+    ],
+  );
 
   group('when setupForm is called', () {
     test('then it should setup inputMap with all the information', () {
@@ -140,10 +208,10 @@ void main() {
   group('when user wants to update and validate form field', () {
     late FormXCubit<String> testClass;
 
-    setUp(() {
+    setUp(() async {
       testClass = instantiate();
 
-      testClass.setupForm({
+      await testClass.setupForm({
         'a': FormXField<String>.from(
           value: '',
           validators: [
