@@ -333,6 +333,10 @@ class EmailValidator extends Validator<String?> {
 > **Note**<br/>
 > We recommend that you avoid implementing more than one validation in each validator. If the field must be required and a valid email, add two validators, such as [RequiredValidator(), EmailValidator()]. This way you can reuse the email validator if this field ever becomes optional.
 
+## Expanding the library
+
+Feel free to expand the library and make it compatible with other state management solutions like Riverpod, Provider, GetX, etc. When doing that, keep in mind you'll need to implement both `formx.dart` and `formx_state.dart` and still use `formx_field.dart` in your implementation. Also, know you can count on us to help you with that! Just open an issue or PR and we'll be happy to help.
+
 ## Testing
 
 See [example/test](https://github.com/revelojobs/flutter_formx/tree/main/test/form) for testing examples.
