@@ -35,7 +35,7 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
             ),
             'career': FormXField.from(
               value: '',
-              validators: [],
+              validators: const [],
             ),
             'salaryExpectation': FormXField<int>.from(
               value: 3100,
