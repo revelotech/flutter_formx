@@ -1,14 +1,12 @@
 ## MobX Requirements
 
-This library is designed to work with both [MobX](https://pub.dev/packages/mobx)/[MobX Code generation](https://pub.dev/packages/mobx_codegen) and [Bloc](https://pub.dev/packages/bloc) as its state management solutions. It does not support Riverpod, Provider or GetX as of yet.
-
-If using MobX, make sure to include both dependencies in your project and run build runner once everything is set:
+If using MobX, make sure to include both dependencies and build_runner in your project and run build_runner once everything is set:
 
 ```yml
 dependencies:
   mobx: <version>
   mobx_codegen: <version>
-
+  build_runner: <version>
 ```
 
 Running build runner:

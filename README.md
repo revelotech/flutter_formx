@@ -4,11 +4,12 @@
 
 ![Flutter FormX Logo](https://raw.githubusercontent.com/revelojobs/flutter_formx/main/doc/static/FormX_Symbol96.png)
 
-Flutter FormX is a package to make it easy to build, react to and validate forms using [MobX](https://pub.dev/packages/mobx) and [Bloc](https://pub.dev/packages/bloc).
+Flutter FormX is an extensible package to make it easy to build, react to and validate forms using [MobX](https://pub.dev/packages/mobx) and [Bloc](https://pub.dev/packages/bloc).
 
 - [Features](#features)
-- [MobX usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/mobx)
-- [Bloc usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/bloc)
+- [Supported state management solutions](#supported-state-management-solutions)
+- **[MobX usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/mobx)**
+- **[Bloc usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/bloc)**
 - [Validators](#validators)
 - [Testing](#testing)
 
@@ -20,6 +21,9 @@ Flutter FormX is a package to make it easy to build, react to and validate forms
 - Form validation.
 - Abstract ValidationResult and Validator classes to help you integrate with form builder and make your own validations.
 
+## Supported state management solutions
+
+This library is designed to work with both [MobX](https://pub.dev/packages/mobx)/[MobX Code generation](https://pub.dev/packages/mobx_codegen) and [Bloc](https://pub.dev/packages/bloc) as its state management solutions. It does not support Riverpod, Provider or GetX as of yet.
 
 ## Validators
 You can create any kind of validator needed specifically for your needs and according to the field type you have. We've included the `RequiredFieldValidator`, but feel free to create more in your project as you need.
