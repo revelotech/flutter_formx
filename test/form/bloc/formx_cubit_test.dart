@@ -157,17 +157,20 @@ void main() {
       expect: () => [
         // validated state after setup
         FormXCubitState(testForm),
-        // validated and updated states, one by one
+        // validated and updated states
+        // verify change in 'a'
         FormXCubitState({
           'a': resultForm['a']!,
           'b': testForm['b']!,
           'c': testForm['c']!,
         }),
+        // verify change in 'a' and 'b'
         FormXCubitState({
           'a': resultForm['a']!,
           'b': resultForm['b']!,
           'c': testForm['c']!,
         }),
+        // verify form fully updated and validated
         FormXCubitState(resultForm),
       ],
     );
