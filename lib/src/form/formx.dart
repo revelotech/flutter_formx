@@ -7,13 +7,9 @@ import 'package:flutter_formx/src/form/formx_field.dart';
 /// validators.
 ///
 /// The second step is to call [updateAndValidateField] or [updateField] to update the value of
-/// each field once it's changed on the UI and present its value on screen by using either the
-/// helper functions such as [getFieldValue] or [getFieldErrorMessage] or by accessing the inputMap
-/// directly.
+/// each field once it's changed on the UI.
 ///
-/// The third and final step is to call [validateForm] to validate all fields and use the computed
-/// value [isFormValid] to show a submit button as enabled or disabled and verify the status of the
-/// form.
+/// The third and last step is to call [validateForm] to validate all fields.
 abstract class FormX<T> {
   /// Sets up the form with the given inputs
   ///
