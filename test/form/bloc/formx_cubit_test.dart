@@ -225,7 +225,7 @@ void main() {
     });
 
     blocTest(
-      'then it should emit new state with updated FormXField',
+      'then it should emit new state with updated and validated FormXField',
       build: instantiate,
       setUp: () async {
         final validator = RequiredFieldValidator('error');
@@ -424,13 +424,15 @@ void main() {
       });
     });
 
+    Map<String, FormXField<String>> intermediateResult = {};
     blocTest(
-      'then it should emit new state with updated FormXField',
+      'then it should emit new state with validated FormXFields',
       build: instantiate,
       setUp: () async {
+        final requiredFieldValidator = RequiredFieldValidator('error');
         testForm = {
-          'a':
-              FormXField<String>.from(value: '1', validators: [firstValidator]),
+          'a': FormXField<String>.from(
+              value: '1', validators: [requiredFieldValidator]),
           'b': FormXField<String>.from(
             value: '2',
             validators: [secondValidator],
@@ -438,9 +440,11 @@ void main() {
           'c': FormXField<String>.from(value: '3', validators: const []),
         };
 
+        intermediateResult = Map.from(testForm);
+
         resultForm = {
-          'a':
-              FormXField<String>.from(value: '1', validators: [firstValidator]),
+          'a': FormXField<String>.from(
+              value: '', validators: [requiredFieldValidator]),
           'b': FormXField<String>.from(
             value: '2',
             validators: [secondValidator],
@@ -450,15 +454,25 @@ void main() {
       },
       act: (cubit) async {
         await cubit.setupForm(testForm);
+
+        // simulate expected result soft validation
+        for (var entry in intermediateResult.entries) {
+          intermediateResult[entry.key] = await entry.value.validateItem();
+        }
+
+        intermediateResult['a'] = intermediateResult['a']!.updateValue('');
+        cubit.updateField('', 'a');
         // simulate expected result soft validation
         for (var entry in resultForm.entries) {
           resultForm[entry.key] = await entry.value.validateItem();
         }
+
         await cubit.validateForm();
       },
-      skip: 1,
+      skip: 2,
       expect: () => [
         // validated and updated state
+        FormXCubitState(intermediateResult),
         FormXCubitState(resultForm),
       ],
     );
