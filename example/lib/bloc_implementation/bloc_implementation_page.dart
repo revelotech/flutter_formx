@@ -167,7 +167,7 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
                                     onChanged: (value) => context
                                         .read<FormXCubit<String>>()
                                         .updateAndValidateField(
-                                          value,
+                                          value.toInt(),
                                           'salaryExpectation',
                                         ),
                                   ),
