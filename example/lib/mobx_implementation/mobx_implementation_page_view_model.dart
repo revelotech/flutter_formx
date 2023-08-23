@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_formx/flutter_formx.dart';
 import 'package:flutter_formx_example/custom_validators/checked_validator.dart';
 import 'package:flutter_formx_example/custom_validators/salary_validator.dart';
