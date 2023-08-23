@@ -17,9 +17,9 @@ abstract class FormX<T> {
   /// without applying any error messages.
   Future<void> setupForm(Map<T, FormXField> inputs);
 
-  /// Updates the value of the field and validates it, updating the computed variable [isFormValid].
+  /// Updates the value of the field and validates it, updating the value of [FormXState.isFormValid].
   /// When [softValidation] is true, it doesn't add errors messages to the fields, but updates the
-  /// computed variable [isFormValid] which can be used to show a submit button as enabled or disabled
+  /// value of [FormXState.isFormValid] which can be used to show a submit button as enabled or disabled
   Future<void> updateAndValidateField(
     dynamic newValue,
     T type, {
@@ -27,13 +27,13 @@ abstract class FormX<T> {
   });
 
   /// Updates the value of the field without validating it, this does not update the
-  /// computed variable [isFormValid]
+  /// value of [FormXState.isFormValid]
   void updateField(dynamic newValue, T type);
 
   /// Validates all fields in the form
   ///
   /// Returns bool indicating if the form is valid and when [softValidation] is true,
-  /// it doesn't add errors messages to the fields, but updates the computed variable [isFormValid]
+  /// it doesn't add errors messages to the fields, but updates the value of [FormXState.isFormValid]
   /// which can be used to show a submit button as enabled or disabled
   Future<bool> validateForm({bool softValidation = false});
 }

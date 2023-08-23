@@ -5,13 +5,13 @@ import 'package:mobx/mobx.dart';
 
 /// MobX implementation of [FormX]
 mixin FormXMobX<T> implements FormX<T>, FormXState<T> {
-  /// MobX implementation of [FormX.inputMap].
+  /// MobX implementation of [FormXState.inputMap].
   /// This is an observable map of fields
   @override
   @observable
   final Map<T, FormXField> inputMap = <T, FormXField>{}.asObservable();
 
-  /// MobX implementation of [FormX.isFormValid].
+  /// MobX implementation of [FormXState.isFormValid].
   @override
   @computed
   bool get isFormValid => inputMap.values.every((element) => element.isValid);
@@ -54,11 +54,11 @@ mixin FormXMobX<T> implements FormX<T>, FormXState<T> {
     return isFormValid;
   }
 
-  /// MobX implementation of [FormX.getFieldValue].
+  /// MobX implementation of [FormXState.getFieldValue].
   @override
   V getFieldValue<V>(dynamic key) => inputMap[key]?.value as V;
 
-  /// MobX implementation of [FormX.getFieldErrorMessage].
+  /// MobX implementation of [FormXState.getFieldErrorMessage].
   @override
   String? getFieldErrorMessage(dynamic key) => inputMap[key]?.errorMessage;
 }
