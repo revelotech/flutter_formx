@@ -2,16 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_formx/src/form/bloc/formx_cubit_state.dart';
 import 'package:flutter_formx/src/form/formx.dart';
 import 'package:flutter_formx/src/form/formx_field.dart';
+import 'package:flutter_formx/src/form/formx_state.dart';
 
 /// Bloc implementation of [FormX]
-class FormXCubit<T> extends Cubit<FormXCubitState<T>> implements FormX<T> {
+class FormXCubit<T> extends Cubit<FormXState<T>> implements FormX<T> {
   /// When FormXCubit is instantiated, it emits the initial state of the form.
-  FormXCubit() : super(const FormXCubitState());
+  FormXCubit() : super(const FormXState());
 
   /// Bloc implementation of [FormX.setupForm].
   @override
   Future<void> setupForm(Map<T, FormXField> inputs) {
-    emit(FormXCubitState<T>(inputs));
+    emit(FormXState<T>(inputs));
     return validateForm(softValidation: true);
   }
 
@@ -29,7 +30,7 @@ class FormXCubit<T> extends Cubit<FormXCubitState<T>> implements FormX<T> {
     inputMap[type] = await inputMap[type]!
         .updateValue(newValue)
         .validateItem(softValidation: softValidation);
-    emit(FormXCubitState(inputMap));
+    emit(FormXState(inputMap));
   }
 
   /// Bloc implementation of [FormX.updateField].
@@ -37,7 +38,7 @@ class FormXCubit<T> extends Cubit<FormXCubitState<T>> implements FormX<T> {
   void updateField(dynamic newValue, T type) {
     final inputMap = _cloneStateMap;
     inputMap[type] = inputMap[type]!.updateValue(newValue);
-    emit(FormXCubitState(inputMap));
+    emit(FormXState(inputMap));
   }
 
   /// Bloc implementation of [FormX.validateForm].
@@ -48,7 +49,7 @@ class FormXCubit<T> extends Cubit<FormXCubitState<T>> implements FormX<T> {
       inputMap[type] =
           await inputMap[type]!.validateItem(softValidation: softValidation);
     });
-    emit(FormXCubitState<T>(inputMap));
+    emit(FormXState<T>(inputMap));
     return state.isFormValid;
   }
 }
