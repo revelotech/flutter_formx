@@ -1,4 +1,6 @@
 ## Changelog
+
+## v3.0.0
 - Add Bloc implementation
 
 ## v2.1.0
