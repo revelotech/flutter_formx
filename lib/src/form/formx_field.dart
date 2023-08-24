@@ -1,11 +1,12 @@
 import 'dart:ui';
 
+import 'package:equatable/equatable.dart';
 import 'package:flutter_formx/src/validator/validator.dart';
 import 'package:flutter_formx/src/validator/validator_result.dart';
 
 /// [FormXField] is an immutable class used by FormX to handle each field in the form,
 /// where [V] stands for the type used as the value of the form field.
-class FormXField<V> {
+class FormXField<V> extends Equatable {
   /// The value of the field, typed V
   final V? value;
 
@@ -88,21 +89,11 @@ class FormXField<V> {
       );
 
   @override
-  int get hashCode => Object.hash(
+  List<Object?> get props => [
         value,
         validators,
         errorMessage,
         isValid,
         onValidationError,
-      );
-
-  @override
-  bool operator ==(Object other) {
-    return other is FormXField &&
-        other.value == value &&
-        other.validators == validators &&
-        other.errorMessage == errorMessage &&
-        other.isValid == isValid &&
-        other.onValidationError == onValidationError;
-  }
+      ];
 }

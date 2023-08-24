@@ -4,7 +4,14 @@
 
 ![Flutter FormX Logo](https://raw.githubusercontent.com/revelojobs/flutter_formx/main/doc/static/FormX_Symbol96.png)
 
-Flutter FormX is a package to make it easy to build, react to and validate forms using [MobX](https://pub.dev/packages/mobx).
+Flutter FormX is an extensible package to make it easy to build, react to and validate forms using [MobX](https://pub.dev/packages/mobx) and [Bloc](https://pub.dev/packages/bloc).
+
+- [Features](#features)
+- [Supported state management solutions](#supported-state-management-solutions)
+- **[MobX usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/mobx)**
+- **[Bloc usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/bloc)**
+- [Validators](#validators)
+- [Testing](#testing)
 
 ## Features
 
@@ -14,105 +21,9 @@ Flutter FormX is a package to make it easy to build, react to and validate forms
 - Form validation.
 - Abstract ValidationResult and Validator classes to help you integrate with form builder and make your own validations.
 
-## Requirements
+## Supported state management solutions
 
-This library is designed to work with [MobX](https://pub.dev/packages/mobx) and [MobX Code generation](https://pub.dev/packages/mobx_codegen) as its state management provider. It does not support BLoC, Provider or GetX as of yet.
-
-Make sure to include both dependencies on your project and run build runner once everything is set:
-
-```yml
-dependencies:
-  mobx: <version>
-  mobx_codegen: <version>
-
-```
-
-Running build runner:
-```
-flutter pub run build_runner build
-```
-
-## Usage
-
-1. Add the `flutter_formx` package to your [pubspec dependencies](https://pub.dev/packages/flutter_formx/install).
-
-2. Import `flutter_formx`.
-    ```dart
-    import 'package:flutter_formx/flutter_formx.dart';
-    ```
-
-3. Apply the mixin to your mobx store, specifying the type of the keys that will be used to retrieve each form field.
-    ```dart
-    class ExamplePageViewModel extends _ExamplePageViewModelBase with _$ExamplePageViewModel {
-      ExamplePageViewModel();
-    }
-
-    abstract class _ExamplePageViewModelBase with Store, FormX<String> {
-      _ExamplePageViewModelBase();
-    }
-    ```
-
-4. As soon as the view is ready, make sure to call `setupForm` with a map of FormXFields (an entry for each of the inputs):
-   - The keys of this map will be used to access each specific field and must be of the same type used on `FormX<Type>` such as String, enum, int etc.
-   - Create FormXFields with the type of the input inside the `<>` and use the `FormXField.from` constructor.
-   - When creating FormXFields you should pass its initial value, its validators and `onValidationError` (if needed) to log any errors when validating.
-
-   Example:
-   ```dart
-   setupForm({
-     'firstName': FormXField<String?>.from(
-       value: null,
-       validators: [
-         RequiredFieldValidator(...),
-       ],
-       onValidationError: _logValidationError,
-     ),
-     'lastName': FormXField<String?>.from(
-       value: null,
-       validators: [
-         RequiredFieldValidator(...),
-       ],
-       onValidationError: _logValidationError,
-     ),
-     'email': FormXField<String?>.from(
-       value: null,
-       validators: const [],
-     ),
-   });
-   ```
-
-5. Access the fields values and errors in the UI using `getFieldValue<T>(key)` and `getFieldErrorMessage<T>(key)`, either with computed mobx getters or using the FormX's getters directly in the UI.
-
-    ```dart
-    /// using computed mobx getters on the store
-    @computed
-    String? get firstName => getFieldValue<String?>('firstName');
-
-    @computed
-    String? get firstNameError => getFieldErrorMessage('firstName');
-
-    /// using directly in your Widget (make sure to wrap it in an Observer if you want to observe to the changes)
-    Text(
-      'First Name: ${getFieldValue<String?>('email')}',
-    ),
-    ```
-
-6. Update any field in the form using the inbuilt `updateAndValidateField` and `updateField` methods when the input is updated on your Widget.
-    ```dart
-    Future<void> updateFirstName(String? newValue) async {
-      await updateAndValidateField(newValue, 'firstName');
-    }
-    ```
-
-7. Quick tip: always validate your entire form before submitting information to the server.
-    ```dart
-    @action
-    Future<void> submitForm() async {
-      if (await validateForm()) {
-        // submit form
-      }
-    }
-    ```
+This library is designed to work with both [MobX](https://pub.dev/packages/mobx)/[MobX Code generation](https://pub.dev/packages/mobx_codegen) and [Bloc](https://pub.dev/packages/bloc) as its state management solutions. It does not support Riverpod, Provider or GetX as of yet.
 
 ## Validators
 You can create any kind of validator needed specifically for your needs and according to the field type you have. We've included the `RequiredFieldValidator`, but feel free to create more in your project as you need.
@@ -154,7 +65,11 @@ class EmailValidator extends Validator<String?> {
 ```
 
 > **Note**<br/>
-> We recommend avoiding implementing more than one validation in each validator. If the field must be required and a valid email, add two validators, such as [RequiredValidator(), EmailValidator()]. This way you can reuse the email validator if this field ever becomes optional.
+> We recommend that you avoid implementing more than one validation in each validator. If the field must be required and a valid email, add two validators, such as [RequiredValidator(), EmailValidator()]. This way you can reuse the email validator if this field ever becomes optional.
+
+## Expanding the library
+
+Feel free to expand the library and make it compatible with other state management solutions like Riverpod, Provider, GetX, etc. When doing that, keep in mind you'll need to implement both `formx.dart` and `formx_state.dart` and still use `formx_field.dart` in your implementation. Also, know you can count on us to help you with that! Just open an issue or PR and we'll be happy to help.
 
 ## Testing
 
