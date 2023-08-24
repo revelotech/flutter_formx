@@ -1,9 +1,9 @@
 import 'package:flutter_formx/src/form/formx_field.dart';
 
-class FormX<T> {
+class FormXVanilla<T> {
   final Map<T, FormXField> inputMap;
 
-  const FormX([this.inputMap = const {}]);
+  const FormXVanilla([this.inputMap = const {}]);
 
   V getFieldValue<V>(dynamic key) => inputMap[key]?.value as V;
 
@@ -11,31 +11,31 @@ class FormX<T> {
 
   bool get isFormValid => inputMap.values.every((element) => element.isValid);
 
-  static Future<FormX> setupForm<T>(Map<T, FormXField> inputs) {
-    return FormX(inputs).validateForm(softValidation: true);
+  static Future<FormXVanilla<T>> setupForm<T>(Map<T, FormXField> inputs) {
+    return FormXVanilla<T>(inputs).validateForm(softValidation: true);
   }
 
-  Future<FormX> updateAndValidateField(newValue, type, {bool softValidation = false}) async {
+  Future<FormXVanilla<T>> updateAndValidateField(newValue, type, {bool softValidation = false}) async {
     final inputMap = _cloneStateMap;
     inputMap[type] =
         await inputMap[type]!.updateValue(newValue).validateItem(softValidation: softValidation);
 
-    return FormX(inputMap);
+    return FormXVanilla(inputMap);
   }
 
-  FormX<T> updateField(newValue, type) {
+  FormXVanilla<T> updateField(newValue, type) {
     final inputMap = _cloneStateMap;
     inputMap[type] = inputMap[type]!.updateValue(newValue);
-    return FormX(inputMap);
+    return FormXVanilla(inputMap);
   }
 
-  Future<FormX> validateForm({bool softValidation = false}) async {
+  Future<FormXVanilla<T>> validateForm({bool softValidation = false}) async {
     final inputMap = _cloneStateMap;
     await Future.forEach(inputMap.keys, (type) async {
       inputMap[type] = await inputMap[type]!.validateItem(softValidation: softValidation);
     });
 
-    return FormX(inputMap);
+    return FormXVanilla(inputMap);
   }
 
   Map<T, FormXField> get _cloneStateMap => Map<T, FormXField>.from(inputMap);
