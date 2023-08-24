@@ -1,6 +1,6 @@
 name: flutter_formx
 description: Flutter FormX provides an easy way of dealing with forms and their states without creating a lot of boilerplate code.
-version: 2.1.0
+version: 3.0.0
 homepage: https://github.com/revelojobs/flutter_formx
 repository: https://github.com/revelojobs/flutter_formx
 issue_tracker: https://github.com/revelojobs/flutter_formx/issues
