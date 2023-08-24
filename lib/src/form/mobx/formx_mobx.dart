@@ -1,33 +1,53 @@
 import 'package:flutter_formx/src/form/formx_field.dart';
 import 'package:flutter_formx/src/form/formx_interface.dart';
+import 'package:flutter_formx/src/form/formx_state.dart';
 import 'package:flutter_formx/src/form/vanilla/formx.dart';
 import 'package:mobx/mobx.dart';
 
 /// MobX implementation of [FormX]
 mixin FormXMobX<T> implements FormXInterface<T> {
-  @observable
-  FormX<T> formX = FormX<T>();
+  final Observable<FormX<T>> _formX = Observable(FormX.empty());
+
+  FormXState<T> get state => _formX.value.state;
+
+  bool get isFormValid => state.isFormValid;
 
   @override
-  void setupForm(Map<T, FormXField> inputs) async {
-    formX = await FormX.setupForm(inputs);
+  Future<void> setupForm(Map<T, FormXField> inputs) async {
+    Action(() {
+      _formX.value = FormX.setupForm(inputs);
+    })();
+    final validatedForm = await _formX.value.validateForm(softValidation: true);
+    Action(() {
+      _formX.value = validatedForm;
+    })();
   }
 
   @override
-  @action
   Future<void> updateAndValidateField(newValue, type, {bool softValidation = false}) async {
-    formX = await formX.updateAndValidateField(newValue, type, softValidation: softValidation);
+    final validatedField = await _formX.value.updateAndValidateField(
+        newValue, type, softValidation: softValidation);
+    Action(() async {
+      _formX.value = validatedField;
+    })();
   }
 
   @override
-  @action
   void updateField(newValue, type) {
-    formX = formX.updateField(newValue, type);
+    Action(() {
+      _formX.value = _formX.value.updateField(newValue, type);
+    })();
   }
 
   @override
-  @action
   Future<void> validateForm({bool softValidation = false}) async {
-    formX = await formX.validateForm(softValidation: softValidation);
+    final validatedForm = await _formX.value.validateForm(softValidation: softValidation);
+    Action(() async {
+      _formX.value = validatedForm;
+    })();
   }
+
+  V getFieldValue<V>(dynamic key) => state.getFieldValue(key);
+
+  String? getFieldErrorMessage(dynamic key) => state.getFieldErrorMessage(key);
 }

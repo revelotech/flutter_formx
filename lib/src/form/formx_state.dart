@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_formx/src/form/formx_field.dart';
 
 /// [FormXState] is an abstract class that should be implemented by a class that
@@ -9,7 +10,7 @@ import 'package:flutter_formx/src/form/formx_field.dart';
 ///
 /// You can also use the computed value [FormXState.isFormValid] to show a submit button as
 /// enabled or disabled and verify the status of the form.
-class FormXState<T> {
+class FormXState<T> extends Equatable {
   final Map<T, FormXField> inputMap;
 
   const FormXState([this.inputMap = const {}]);
@@ -20,5 +21,6 @@ class FormXState<T> {
 
   bool get isFormValid => inputMap.values.every((element) => element.isValid);
 
-
+  @override
+  List<Object?> get props => [inputMap];
 }
