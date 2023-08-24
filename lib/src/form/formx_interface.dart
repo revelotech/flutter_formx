@@ -11,17 +11,17 @@ import 'package:flutter_formx/src/form/formx_state.dart';
 /// each field once it's changed on the UI.
 ///
 /// The third and last step is to call [validateForm] to validate all fields.
-abstract class FormX<T> {
+abstract class FormXInterface<T> {
   /// Sets up the form with the given inputs
   ///
   /// This method should be called when starting the viewModel and it already validates the form
   /// without applying any error messages.
-  Future<FormXState> setupForm(Map<T, FormXField> inputs);
+  void setupForm(Map<T, FormXField> inputs);
 
   /// Updates the value of the field and validates it, updating the value of [FormXState.isFormValid].
   /// When [softValidation] is true, it doesn't add errors messages to the fields, but updates the
   /// value of [FormXState.isFormValid] which can be used to show a submit button as enabled or disabled
-  Future<FormXState> updateAndValidateField(
+  Future<void> updateAndValidateField(
     dynamic newValue,
     T type, {
     bool softValidation = false,
@@ -29,12 +29,12 @@ abstract class FormX<T> {
 
   /// Updates the value of the field without validating it, this does not update the
   /// value of [FormXState.isFormValid]
-  FormXState updateField(dynamic newValue, T type);
+  void updateField(dynamic newValue, T type);
 
   /// Validates all fields in the form
   ///
   /// Returns bool indicating if the form is valid and when [softValidation] is true,
   /// it doesn't add errors messages to the fields, but updates the value of [FormXState.isFormValid]
   /// which can be used to show a submit button as enabled or disabled
-  Future<FormXState> validateForm({bool softValidation = false});
+  Future<void> validateForm({bool softValidation = false});
 }

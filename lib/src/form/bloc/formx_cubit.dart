@@ -1,23 +1,19 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_formx/src/form/bloc/formx_cubit_state.dart';
-import 'package:flutter_formx/src/form/formx.dart';
 import 'package:flutter_formx/src/form/formx_field.dart';
-import 'package:flutter_formx/src/form/formx_state.dart';
+import 'package:flutter_formx/src/form/formx_interface.dart';
+import 'package:flutter_formx/src/form/vanilla/formx.dart';
 
 /// Bloc implementation of [FormX]
-class FormXCubit<T> extends Cubit<FormXState<T>> implements FormX<T> {
+class FormXCubit<T> extends Cubit<FormX<T>> implements FormXInterface<T> {
   /// When FormXCubit is instantiated, it emits the initial state of the form.
-  FormXCubit() : super(const FormXState());
+  FormXCubit() : super(const FormX());
 
   /// Bloc implementation of [FormX.setupForm].
   @override
   Future<void> setupForm(Map<T, FormXField> inputs) {
-    emit(FormXState<T>(inputs));
+    emit(FormX<T>(inputs));
     return validateForm(softValidation: true);
   }
-
-  Map<T, FormXField> get _cloneStateMap =>
-      Map<T, FormXField>.from(state.inputMap);
 
   /// Bloc implementation of [FormX.updateAndValidateField].
   @override
@@ -26,30 +22,23 @@ class FormXCubit<T> extends Cubit<FormXState<T>> implements FormX<T> {
     T type, {
     bool softValidation = false,
   }) async {
-    final inputMap = _cloneStateMap;
-    inputMap[type] = await inputMap[type]!
-        .updateValue(newValue)
-        .validateItem(softValidation: softValidation);
-    emit(FormXState(inputMap));
+    final newState =
+        await state.updateAndValidateField(newValue, type, softValidation: softValidation);
+    emit(newState);
   }
 
   /// Bloc implementation of [FormX.updateField].
   @override
   void updateField(dynamic newValue, T type) {
-    final inputMap = _cloneStateMap;
-    inputMap[type] = inputMap[type]!.updateValue(newValue);
-    emit(FormXState(inputMap));
+    final newState = state.updateField(newValue, type);
+    emit(newState);
   }
 
   /// Bloc implementation of [FormX.validateForm].
   @override
   Future<bool> validateForm({bool softValidation = false}) async {
-    final inputMap = _cloneStateMap;
-    await Future.forEach(inputMap.keys, (type) async {
-      inputMap[type] =
-          await inputMap[type]!.validateItem(softValidation: softValidation);
-    });
-    emit(FormXState<T>(inputMap));
+    final newState = await state.validateForm(softValidation: softValidation);
+    emit(newState);
     return state.isFormValid;
   }
 }
