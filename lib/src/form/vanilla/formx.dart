@@ -5,13 +5,11 @@ class FormX<T> {
   late FormXState<T> state;
 
   factory FormX.empty() => FormX<T>._();
+  factory FormX.setupForm(Map<T, FormXField> inputs) => FormX<T>._(inputs);
+  //TODO: pensar sobre isso
 
   FormX._([Map<T, FormXField<dynamic>>? inputMap]) {
     state = FormXState<T>(inputMap ?? {});
-  }
-
-  static FormX<T> setupForm<T>(Map<T, FormXField> inputs) {
-    return FormX<T>._(inputs);
   }
 
   Future<FormX<T>> updateAndValidateField(newValue, type, {bool softValidation = false}) async {

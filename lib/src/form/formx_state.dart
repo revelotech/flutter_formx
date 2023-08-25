@@ -11,16 +11,18 @@ import 'package:flutter_formx/src/form/formx_field.dart';
 /// You can also use the computed value [FormXState.isFormValid] to show a submit button as
 /// enabled or disabled and verify the status of the form.
 class FormXState<T> extends Equatable {
-  final Map<T, FormXField> inputMap;
+  final Map<T, FormXField> _inputMap;
 
-  const FormXState([this.inputMap = const {}]);
+  const FormXState([this._inputMap = const {}]);
 
-  V getFieldValue<V>(dynamic key) => inputMap[key]?.value as V;
+  Map<T, FormXField> get inputMap => Map.unmodifiable(_inputMap);
 
-  String? getFieldErrorMessage(dynamic key) => inputMap[key]?.errorMessage;
+  V getFieldValue<V>(T key) => _inputMap[key]?.value as V;
 
-  bool get isFormValid => inputMap.values.every((element) => element.isValid);
+  String? getFieldErrorMessage(T key) => _inputMap[key]?.errorMessage;
+
+  bool get isFormValid => _inputMap.values.every((element) => element.isValid);
 
   @override
-  List<Object?> get props => [inputMap];
+  List<Object?> get props => [_inputMap];
 }

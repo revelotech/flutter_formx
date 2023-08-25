@@ -47,7 +47,7 @@ mixin FormXMobX<T> implements FormXInterface<T> {
     })();
   }
 
-  V getFieldValue<V>(dynamic key) => state.getFieldValue(key);
+  V getFieldValue<V>(T key) => state.getFieldValue(key);
 
-  String? getFieldErrorMessage(dynamic key) => state.getFieldErrorMessage(key);
+  String? getFieldErrorMessage(T key) => state.getFieldErrorMessage(key);
 }
