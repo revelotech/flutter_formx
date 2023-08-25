@@ -4,47 +4,28 @@ import 'package:flutter_formx_example/custom_validators/checked_validator.dart';
 import 'package:flutter_formx_example/custom_validators/salary_validator.dart';
 import 'package:mobx/mobx.dart';
 
-part 'mobx_implementation_page_view_model.g.dart';
-
-class MobxImplementationPageViewModel
-    extends _MobXImplementationPageViewModelBase
-    with _$MobXImplementationPageViewModel {
-  MobxImplementationPageViewModel();
-}
-
-abstract class _MobXImplementationPageViewModelBase
-    with Store, FormXMobX<String> {
-  _MobXImplementationPageViewModelBase();
+class VanillaImplementationPageViewModel {
 
   @alwaysNotify
   bool showSuccessInfo = false;
 
-  @observable
   String? validationError;
 
-  @computed
   String? get email => getFieldValue<String?>('email');
 
-  @computed
   String? get emailError => getFieldErrorMessage('email');
 
-  @computed
   String? get career => getFieldValue<String?>('career');
 
-  @computed
   int get salaryExpectation => getFieldValue<int>('salaryExpectation');
 
-  @computed
   String? get salaryExpectationError =>
       getFieldErrorMessage('salaryExpectation');
 
-  @computed
   bool get acceptTerms => getFieldValue<bool>('acceptTerms');
 
-  @computed
   String? get acceptTermsError => getFieldErrorMessage('acceptTerms');
 
-  @computed
   bool get isSubmitButtonEnabled => isFormValid;
 
   void onViewReady() {

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_formx/src/form/formx_field.dart';
+import 'package:flutter_formx/src/form/core/formx_field.dart';
 
 /// [FormXState] is an abstract class that should be implemented by a class that
 /// will hold the form state.

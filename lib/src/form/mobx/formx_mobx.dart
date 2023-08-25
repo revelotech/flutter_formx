@@ -1,7 +1,7 @@
 import 'package:flutter_formx/src/form/core/formx.dart';
-import 'package:flutter_formx/src/form/formx_field.dart';
-import 'package:flutter_formx/src/form/formx_interface.dart';
-import 'package:flutter_formx/src/form/formx_state.dart';
+import 'package:flutter_formx/src/form/core/formx_field.dart';
+import 'package:flutter_formx/src/form/core/formx_interface.dart';
+import 'package:flutter_formx/src/form/core/formx_state.dart';
 import 'package:mobx/mobx.dart';
 
 /// MobX implementation of [FormX]

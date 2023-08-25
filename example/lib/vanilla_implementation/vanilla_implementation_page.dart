@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_formx_example/vanilla_implementation/vanilla_implementation_page_view_model.dart';
+import 'package:flutter_formx_example/mobx_implementation/mobx_implementation_page_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class MobXImplementationPage extends StatefulWidget {
-  const MobXImplementationPage({super.key});
+class VanillaImplementationPage extends StatefulWidget {
+  const VanillaImplementationPage({super.key});
 
   @override
-  State<MobXImplementationPage> createState() => _MobXImplementationPageState();
+  State<VanillaImplementationPage> createState() => _VanillaImplementationPageState();
 }
 
-class _MobXImplementationPageState extends State<MobXImplementationPage> {
+class _VanillaImplementationPageState extends State<VanillaImplementationPage> {
   late VanillaImplementationPageViewModel _viewModel;
 
   @override

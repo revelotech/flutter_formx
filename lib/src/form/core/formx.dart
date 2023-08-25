@@ -1,5 +1,5 @@
-import 'package:flutter_formx/src/form/formx_field.dart';
-import 'package:flutter_formx/src/form/formx_state.dart';
+import 'package:flutter_formx/src/form/core/formx_field.dart';
+import 'package:flutter_formx/src/form/core/formx_state.dart';
 
 class FormX<T> {
   late FormXState<T> state;

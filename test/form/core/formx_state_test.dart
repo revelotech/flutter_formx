@@ -3,32 +3,30 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'formx_cubit_state_test.mocks.dart';
+import 'formx_state_test.mocks.dart';
 
 class TestValidator extends Validator<String?> {
   @override
-  Future<ValidatorResult> validate(String? value) =>
-      Future.value(ValidatorResult.success());
+  Future<ValidatorResult> validate(String? value) => Future.value(ValidatorResult.success());
 }
 
 @GenerateMocks([TestValidator])
 void main() {
   late MockTestValidator testValidator;
-  late Map<String, FormXField<String>> testMap;
+  final Map<String, FormXField<String>> testMap = {
+    'a': FormXField<String>.from(value: 'abc', validators: const []),
+    'b': FormXField<String>.from(value: '', validators: const []),
+    'c': FormXField<String>.from(value: '', validators: const []),
+  };
 
   setUp(() {
     testValidator = MockTestValidator();
-    testMap = {
-      'a': FormXField<String>.from(value: 'abc', validators: const []),
-      'b': FormXField<String>.from(value: '', validators: [testValidator]),
-      'c': FormXField<String>.from(value: '', validators: const []),
-    };
 
-    when(testValidator.validate(any))
-        .thenAnswer((_) async => ValidatorResult.success());
+    when(testValidator.validate(any)).thenAnswer((_) async => ValidatorResult.success());
   });
 
-  FormXState instantiate() => FormXState(testMap);
+  FormXState instantiate([Map<String, FormXField<String>>? inputMap]) =>
+      FormXState(inputMap ?? testMap);
 
   group('when getFieldValue is called', () {
     test('then it should return the value', () {
@@ -47,25 +45,30 @@ void main() {
   });
 
   group('when getFieldErrorMessage is called', () {
-    test('when getFieldErrorMessage is called then it should return it',
-        () async {
+    test('when getFieldErrorMessage is called then it should return it', () async {
       when(testValidator.validate('')).thenAnswer(
         (_) async => const ValidatorResult(
           isValid: false,
           errorMessage: 'mandatory field error',
         ),
       );
-      final testClass = instantiate();
 
-      testClass.inputMap['b'] = await testClass.inputMap['b']!.validateItem();
+      final fieldA = await FormXField<String>.from(
+        value: 'abc',
+        validators: const [],
+      ).validateItem();
+      final fieldB = await FormXField<String>.from(
+        value: '',
+        validators: [testValidator],
+      ).validateItem();
+
+      final testClass = instantiate({'a': fieldA, 'b': fieldB});
 
       expect(testClass.getFieldErrorMessage('a'), null);
       expect(testClass.getFieldErrorMessage('b'), 'mandatory field error');
     });
 
-    test(
-        'when getFieldErrorMessage is called with invalid key then it should return null',
-        () {
+    test('when getFieldErrorMessage is called with invalid key then it should return null', () {
       final testClass = instantiate();
 
       expect(testClass.getFieldErrorMessage('d'), null);
@@ -74,12 +77,16 @@ void main() {
 
   group('when isFormValid is called', () {
     test('and form is valid then it should return true', () async {
-      final testClass = instantiate();
+      final fieldA = await FormXField<String>.from(
+        value: 'abc',
+        validators: const [],
+      ).validateItem();
+      final fieldB = await FormXField<String>.from(
+        value: '',
+        validators: const [],
+      ).validateItem();
 
-      testClass.inputMap['a'] = await testClass.inputMap['a']!.validateItem();
-      testClass.inputMap['b'] =
-          await testClass.inputMap['b']!.updateValue('cde').validateItem();
-      testClass.inputMap['c'] = await testClass.inputMap['c']!.validateItem();
+      final testClass = instantiate({'a': fieldA, 'b': fieldB});
 
       expect(testClass.isFormValid, true);
     });
@@ -91,11 +98,17 @@ void main() {
           errorMessage: 'mandatory field error',
         ),
       );
-      final testClass = instantiate();
 
-      testClass.inputMap['a'] = await testClass.inputMap['a']!.validateItem();
-      testClass.inputMap['b'] = await testClass.inputMap['b']!.validateItem();
-      testClass.inputMap['c'] = await testClass.inputMap['c']!.validateItem();
+      final fieldA = await FormXField<String>.from(
+        value: 'abc',
+        validators: const [],
+      ).validateItem();
+      final fieldB = await FormXField<String>.from(
+        value: '',
+        validators: [testValidator],
+      ).validateItem();
+
+      final testClass = instantiate({'a': fieldA, 'b': fieldB});
 
       expect(testClass.isFormValid, false);
     });
