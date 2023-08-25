@@ -55,7 +55,7 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
       child: Builder(builder: (context) {
         return Scaffold(
           backgroundColor: const Color(0xFFF9FDFE),
-          body: BlocBuilder<FormXCubit<String>, FormXCubitState>(
+          body: BlocBuilder<FormXCubit<String>, FormXState>(
             builder: (context, state) {
               return CustomScrollView(
                 slivers: [
