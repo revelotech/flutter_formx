@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_formx_example/bloc_implementation/bloc_implementation_page.dart';
 import 'package:flutter_formx_example/mobx_implementation/mobx_implementation_page.dart';
+import 'package:flutter_formx_example/vanilla_implementation/vanilla_implementation_page.dart';
 
 class ExamplePage extends StatefulWidget {
   const ExamplePage({super.key});
@@ -22,6 +23,7 @@ class _ExamplePageState extends State<ExamplePage> {
       routes: {
         'mobx': (context) => const MobXImplementationPage(),
         'bloc': (context) => const BlocImplementationPage(),
+        'vanilla': (context) => const VanillaImplementationPage(),
       },
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -114,6 +116,34 @@ class _ExamplePageState extends State<ExamplePage> {
                             child: const Center(
                               child: Text(
                                 'Bloc implementation',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0,
+                        vertical: 12,
+                      ),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(8),
+                        clipBehavior: Clip.hardEdge,
+                        elevation: 1,
+                        type: MaterialType.card,
+                        child: InkWell(
+                          onTap: () => Navigator.of(context).pushNamed('vanilla'),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF0C152C),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            height: 100,
+                            child: const Center(
+                              child: Text(
+                                'Vanilla implementation',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),

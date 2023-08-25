@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_formx_example/vanilla_implementation/vanilla_implementation_page_view_model.dart';
+import 'package:flutter_formx_example/mobx_implementation/mobx_implementation_page_view_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class MobXImplementationPage extends StatefulWidget {
@@ -11,11 +11,11 @@ class MobXImplementationPage extends StatefulWidget {
 }
 
 class _MobXImplementationPageState extends State<MobXImplementationPage> {
-  late VanillaImplementationPageViewModel _viewModel;
+  late MobXImplementationPageViewModel _viewModel;
 
   @override
   void initState() {
-    _viewModel = VanillaImplementationPageViewModel()..onViewReady();
+    _viewModel = MobXImplementationPageViewModel()..onViewReady();
     super.initState();
   }
 

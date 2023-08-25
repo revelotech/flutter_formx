@@ -2,34 +2,25 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_formx/flutter_formx.dart';
 import 'package:flutter_formx_example/custom_validators/checked_validator.dart';
 import 'package:flutter_formx_example/custom_validators/salary_validator.dart';
-import 'package:mobx/mobx.dart';
 
 class VanillaImplementationPageViewModel {
+  final ValueNotifier<FormX<String>> formX = ValueNotifier(FormX());
 
-  @alwaysNotify
-  bool showSuccessInfo = false;
+  ValueNotifier<bool> showSuccessInfo = ValueNotifier(false);
 
-  String? validationError;
+  ValueNotifier<String?> validationError = ValueNotifier(null);
 
-  String? get email => getFieldValue<String?>('email');
+  late ValueNotifier<FormXState<String>> state;
 
-  String? get emailError => getFieldErrorMessage('email');
-
-  String? get career => getFieldValue<String?>('career');
-
-  int get salaryExpectation => getFieldValue<int>('salaryExpectation');
-
-  String? get salaryExpectationError =>
-      getFieldErrorMessage('salaryExpectation');
-
-  bool get acceptTerms => getFieldValue<bool>('acceptTerms');
-
-  String? get acceptTermsError => getFieldErrorMessage('acceptTerms');
-
-  bool get isSubmitButtonEnabled => isFormValid;
+  VanillaImplementationPageViewModel() {
+    state = ValueNotifier(formX.value.state);
+    formX.addListener(() {
+      state.value = formX.value.state;
+    });
+  }
 
   void onViewReady() {
-    setupForm({
+    formX.value = FormX.setupForm({
       'email': FormXField<String?>.from(
         value: null,
         validators: [
@@ -59,31 +50,29 @@ class VanillaImplementationPageViewModel {
     });
   }
 
-  @action
   void onTextChanged({
     required String fieldName,
     String? newValue,
-  }) {
-    updateAndValidateField(newValue, fieldName);
+  }) async {
+    formX.value = await formX.value.updateAndValidateField(newValue, fieldName);
   }
 
-  @action
-  void onIncomeChanged(int newValue) {
-    updateAndValidateField(newValue, 'salaryExpectation');
+  void onIncomeChanged(int newValue) async {
+    formX.value = await formX.value.updateAndValidateField(newValue, 'salaryExpectation');
   }
 
-  @action
-  void onAcceptTermsChanged(bool newValue) {
-    updateAndValidateField(newValue, 'acceptTerms');
+  void onAcceptTermsChanged(bool newValue) async {
+    formX.value = await formX.value.updateAndValidateField(newValue, 'acceptTerms');
   }
 
-  @action
-  void submitForm() {
-    validateForm();
-    if (isFormValid) {
-      showSuccessInfo = true;
+  Future<void> submitForm() async {
+    validationError.value = null;
+
+    formX.value = await formX.value.validateForm();
+    if (formX.value.state.isFormValid) {
+      showSuccessInfo.value = true;
     } else {
-      validationError = 'Validation error!';
+      validationError.value = 'Validation error!';
     }
   }
 

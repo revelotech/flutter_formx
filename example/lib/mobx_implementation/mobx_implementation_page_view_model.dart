@@ -6,10 +6,10 @@ import 'package:mobx/mobx.dart';
 
 part 'mobx_implementation_page_view_model.g.dart';
 
-class MobxImplementationPageViewModel
+class MobXImplementationPageViewModel
     extends _MobXImplementationPageViewModelBase
     with _$MobXImplementationPageViewModel {
-  MobxImplementationPageViewModel();
+  MobXImplementationPageViewModel();
 }
 
 abstract class _MobXImplementationPageViewModelBase
