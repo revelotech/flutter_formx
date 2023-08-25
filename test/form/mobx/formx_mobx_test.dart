@@ -42,7 +42,7 @@ void main() {
       fakeAsync((async) {
         final testClass = instantiate();
 
-        expect(testClass.inputMap.length, 0);
+        expect(testClass.state.inputMap.length, 0);
 
         testClass.setupForm({
           'a': FormXField<String>.from(value: '', validators: const []),
@@ -52,8 +52,8 @@ void main() {
 
         async.elapse(const Duration(seconds: 1));
 
-        expect(testClass.inputMap.length, 3);
-        expect(testClass.inputMap.keys.toList(), ['a', 'b', 'c']);
+        expect(testClass.state.inputMap.length, 3);
+        expect(testClass.state.inputMap.keys.toList(), ['a', 'b', 'c']);
 
         expect(testClass.isFormValid, true);
       });
@@ -80,12 +80,12 @@ void main() {
         async.elapse(const Duration(seconds: 1));
         expect(testClass.isFormValid, false);
 
-        expect(testClass.inputMap['a']!.errorMessage, null);
-        expect(testClass.inputMap['a']!.isValid, true);
-        expect(testClass.inputMap['b']!.errorMessage, null);
-        expect(testClass.inputMap['b']!.isValid, false);
-        expect(testClass.inputMap['c']!.errorMessage, null);
-        expect(testClass.inputMap['c']!.isValid, true);
+        expect(testClass.state.inputMap['a']!.errorMessage, null);
+        expect(testClass.state.inputMap['a']!.isValid, true);
+        expect(testClass.state.inputMap['b']!.errorMessage, null);
+        expect(testClass.state.inputMap['b']!.isValid, false);
+        expect(testClass.state.inputMap['c']!.errorMessage, null);
+        expect(testClass.state.inputMap['c']!.isValid, true);
       });
     });
   });
@@ -110,20 +110,20 @@ void main() {
     });
 
     test('then it should update the correct field with the new value', () {
-      expect(testClass.inputMap['a']!.value, '');
+      expect(testClass.state.inputMap['a']!.value, '');
       testClass.updateField(
         '123',
         'a',
       );
       expect(
-        testClass.inputMap['a']!.value,
+        testClass.state.inputMap['a']!.value,
         '123',
       );
     });
 
     test('then it should not validate field', () {
       expect(
-        testClass.inputMap['a']!.errorMessage,
+        testClass.state.inputMap['a']!.errorMessage,
         null,
       );
 
@@ -132,7 +132,7 @@ void main() {
         'a',
       );
       expect(
-        testClass.inputMap['a']!.errorMessage,
+        testClass.state.inputMap['a']!.errorMessage,
         null,
       );
       verifyNever(firstValidator.validate('123456'));
@@ -160,13 +160,13 @@ void main() {
 
     test('then it should update the correct field with the new value',
         () async {
-      expect(testClass.inputMap['a']!.value, '');
+      expect(testClass.state.inputMap['a']!.value, '');
       await testClass.updateAndValidateField(
         '123',
         'a',
       );
       expect(
-        testClass.inputMap['a']!.value,
+        testClass.state.inputMap['a']!.value,
         '123',
       );
     });
@@ -175,7 +175,7 @@ void main() {
         () {
       fakeAsync((async) {
         expect(
-          testClass.inputMap['a']!.errorMessage,
+          testClass.state.inputMap['a']!.errorMessage,
           null,
         );
 
@@ -185,7 +185,7 @@ void main() {
         );
         async.elapse(const Duration(milliseconds: 200));
         expect(
-          testClass.inputMap['a']!.errorMessage,
+          testClass.state.inputMap['a']!.errorMessage,
           null,
         );
       });
@@ -211,7 +211,7 @@ void main() {
           );
           async.elapse(const Duration(milliseconds: 200));
 
-          expect(testClass.inputMap['a']!.errorMessage, null);
+          expect(testClass.state.inputMap['a']!.errorMessage, null);
           // Form is valid
           expect(testClass.isFormValid, true);
 
@@ -232,7 +232,7 @@ void main() {
           async.elapse(const Duration(milliseconds: 200));
           // error is not updated
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             null,
           );
           // form is now invalid because there is an error, even though it won't show in the UI
@@ -252,7 +252,7 @@ void main() {
           );
 
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             null,
           );
 
@@ -262,7 +262,7 @@ void main() {
           );
           async.elapse(const Duration(milliseconds: 200));
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             'invalid string',
           );
         });
@@ -285,7 +285,7 @@ void main() {
             ),
           );
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             null,
           );
 
@@ -295,7 +295,7 @@ void main() {
           );
           async.elapse(const Duration(milliseconds: 200));
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             'mandatory field error',
           );
         });

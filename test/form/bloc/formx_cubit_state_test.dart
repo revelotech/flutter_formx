@@ -28,7 +28,7 @@ void main() {
         .thenAnswer((_) async => ValidatorResult.success());
   });
 
-  FormXCubitState instantiate() => FormXCubitState(testMap);
+  FormXState instantiate() => FormXState(testMap);
 
   group('when getFieldValue is called', () {
     test('then it should return the value', () {

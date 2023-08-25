@@ -1,4 +1,5 @@
 export 'src/form/bloc/formx_cubit.dart';
+export 'src/form/core/formx.dart';
 export 'src/form/formx_field.dart';
 export 'src/form/formx_state.dart';
 export 'src/form/mobx/formx_mobx.dart';
