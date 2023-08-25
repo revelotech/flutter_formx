@@ -195,21 +195,20 @@ void main() {
       test(
           'with soft validation then it should not update the error map with an '
           'error but isValid should be updated', () {
-        fakeAsync((async) {
+        fakeAsync((async) async {
           // setting up valid form
-          testClass.updateAndValidateField(
+          await testClass.updateAndValidateField(
             '12',
             'a',
           );
-          testClass.updateAndValidateField(
+          await testClass.updateAndValidateField(
             '123',
             'b',
           );
-          testClass.updateAndValidateField(
+          await testClass.updateAndValidateField(
             '1234',
             'c',
           );
-          async.elapse(const Duration(milliseconds: 200));
 
           expect(testClass.state.inputMap['a']!.errorMessage, null);
           // Form is valid

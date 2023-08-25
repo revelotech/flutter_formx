@@ -27,7 +27,7 @@ mixin FormXMobX<T> implements FormXInterface<T> {
   Future<void> updateAndValidateField(newValue, type, {bool softValidation = false}) async {
     final validatedField =
         await _formX.value.updateAndValidateField(newValue, type, softValidation: softValidation);
-    Action(() async {
+    Action(() {
       _formX.value = validatedField;
     })();
   }
@@ -42,7 +42,7 @@ mixin FormXMobX<T> implements FormXInterface<T> {
   @override
   Future<bool> validateForm({bool softValidation = false}) async {
     final validatedForm = await _formX.value.validateForm(softValidation: softValidation);
-    Action(() async {
+    Action(() {
       _formX.value = validatedForm;
     })();
     return state.isFormValid;
