@@ -44,7 +44,7 @@ void main() {
         () async {
       final testClass = instantiate();
 
-      expect(testClass.state.inputMap.length, 0);
+      expect(testClass.state.inputMap, {});
 
       final inputsMap = {
         'a': FormXField<String>.from(value: '', validators: const []),
@@ -68,7 +68,7 @@ void main() {
         'then it should setup inputMap with unvalidated information', () async {
       final testClass = instantiate();
 
-      expect(testClass.state.inputMap.length, 0);
+      expect(testClass.state.inputMap, {});
 
       final inputsMap = {
         'a': FormXField<String>.from(value: '', validators: const []),

@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_formx/src/form/core/formx_field.dart';
 import 'package:flutter_formx/src/form/core/formx_state.dart';
 
@@ -14,7 +15,7 @@ import 'package:flutter_formx/src/form/core/formx_state.dart';
 /// update the value of each field once it's changed on the UI.
 ///
 /// The third and last step is to call [validateForm] to validate all fields.
-class FormX<T> {
+class FormX<T> extends Equatable {
   /// This field holds the current FormXState
   late FormXState<T> state;
 
@@ -40,8 +41,11 @@ class FormX<T> {
   /// When [softValidation] is true, it doesn't add errors messages to the
   /// fields, but updates the value of [FormXState.isFormValid] which can be
   /// used to show a submit button as enabled or disabled
-  Future<FormX<T>> updateAndValidateField(newValue, type,
-      {bool softValidation = false}) async {
+  Future<FormX<T>> updateAndValidateField(
+    newValue,
+    type, {
+    bool softValidation = false,
+  }) async {
     final inputMap = _cloneStateMap;
     inputMap[type] = await inputMap[type]!
         .updateValue(newValue)
@@ -76,4 +80,7 @@ class FormX<T> {
 
   Map<T, FormXField> get _cloneStateMap =>
       Map<T, FormXField>.from(state.inputMap);
+
+  @override
+  List<Object?> get props => [state];
 }

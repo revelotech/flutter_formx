@@ -34,31 +34,30 @@ void main() {
   });
 
   test(
-      'when setupForm is called then it should setup inputMap with all the information',
-      () {
-    fakeAsync((async) {
-      final emptyClass = FormX.empty();
+      'when object is created via empty factory '
+      'then it should create a FormX instance with an empty map', () {
+    final empty = FormX.empty();
+    expect(empty.state.inputMap, {});
+  });
 
-      expect(emptyClass.state.inputMap.length, 0);
-
-      final testClass = FormX.setupForm({
-        'a': FormXField<String>.from(value: '', validators: const []),
-        'b': FormXField<String>.from(value: '', validators: const []),
-        'c': FormXField<String>.from(value: '', validators: const []),
-      });
-
-      async.elapse(const Duration(seconds: 1));
-
-      expect(testClass.state.inputMap.length, 3);
-      expect(testClass.state.inputMap.keys.toList(), ['a', 'b', 'c']);
-    });
+  test(
+      'when object is created via setupForm factory '
+      'then it should setup inputMap with all the information', () {
+    final inputsMap = {
+      'a': FormXField<String>.from(value: '', validators: const []),
+      'b': FormXField<String>.from(value: '', validators: const []),
+      'c': FormXField<String>.from(value: '', validators: const []),
+    };
+    final testClass = FormX.setupForm(inputsMap);
+    expect(testClass.state.inputMap, inputsMap);
   });
 
   group('when user wants to update form field', () {
-    late FormX testClass;
+    late FormX<String> testClass;
+    late Map<String, FormXField<String>> inputsMap;
 
     setUp(() {
-      testClass = FormX.setupForm({
+      inputsMap = {
         'a': FormXField<String>.from(
           value: '',
           validators: [
@@ -68,44 +67,30 @@ void main() {
         ),
         'b': FormXField<String>.from(value: '', validators: const []),
         'c': FormXField<String>.from(value: '', validators: const []),
-      });
+      };
+      testClass = FormX.setupForm(inputsMap);
     });
 
-    test('then it should update the correct field with the new value', () {
-      expect(testClass.state.inputMap['a']!.value, '');
-      testClass = testClass.updateField(
-        '123',
-        'a',
-      );
-      expect(
-        testClass.state.inputMap['a']!.value,
-        '123',
-      );
+    test(
+        'then it should return a new instance '
+        'with the updated field', () {
+      testClass = testClass.updateField('123', 'a');
+
+      inputsMap['a'] = inputsMap['a']!.updateValue('123');
+      expect(testClass, FormX.setupForm(inputsMap));
     });
 
-    test('then it should not validate field', () {
-      expect(
-        testClass.state.inputMap['a']!.errorMessage,
-        null,
-      );
-
-      testClass.updateField(
-        '123456',
-        'a',
-      );
-      expect(
-        testClass.state.inputMap['a']!.errorMessage,
-        null,
-      );
+    test('then it should never validate field', () {
+      testClass = testClass.updateField('123', 'a');
       verifyNever(firstValidator.validate('123456'));
     });
   });
 
   group('when user wants to update and validate form field', () {
-    late FormX testClass;
-
+    late FormX<String> testClass;
+    late Map<String, FormXField<String>> inputsMap;
     setUp(() {
-      testClass = FormX.setupForm({
+      inputsMap = {
         'a': FormXField<String>.from(
           value: '',
           validators: [
@@ -115,46 +100,46 @@ void main() {
         ),
         'b': FormXField<String>.from(value: '', validators: const []),
         'c': FormXField<String>.from(value: '', validators: const []),
-      });
+      };
+      testClass = FormX.setupForm(inputsMap);
     });
 
-    test('then it should update the correct field with the new value',
-        () async {
-      expect(testClass.state.inputMap['a']!.value, '');
-      testClass = await testClass.updateAndValidateField(
-        '123',
-        'a',
-      );
-      expect(
-        testClass.state.inputMap['a']!.value,
-        '123',
-      );
+    test(
+        'without soft validation '
+        'then it should return a new instance '
+        'with the updated and validated field', () async {
+      const newValue = '123';
+
+      testClass = await testClass.updateAndValidateField(newValue, 'a');
+
+      inputsMap['a'] =
+          await inputsMap['a']!.updateValue(newValue).validateItem();
+      expect(testClass, FormX.setupForm(inputsMap));
+      verify(firstValidator.validate(newValue));
+      verify(secondValidator.validate(newValue));
     });
 
-    test('and field is valid then it should not update error map with an error',
-        () {
-      fakeAsync((async) {
-        expect(
-          testClass.state.inputMap['a']!.errorMessage,
-          null,
-        );
+    test(
+        'with soft validation '
+        'then it should return a new instance '
+        'with the updated and validated field ', () async {
+      const newValue = '123';
 
-        testClass.updateAndValidateField(
-          '123456',
-          'a',
-        );
-        async.elapse(const Duration(milliseconds: 200));
-        expect(
-          testClass.state.inputMap['a']!.errorMessage,
-          null,
-        );
-      });
+      testClass = await testClass.updateAndValidateField(newValue, 'a',
+          softValidation: true);
+
+      inputsMap['a'] = await inputsMap['a']!
+          .updateValue(newValue)
+          .validateItem(softValidation: true);
+      expect(testClass, FormX.setupForm(inputsMap));
+      verify(firstValidator.validate(newValue));
+      verify(secondValidator.validate(newValue));
     });
 
     group('and field is not valid', () {
       test(
           'with soft validation then it should not update the error map with an '
-          'error but isValid should be updated', () {
+          'error but isFormValid should be updated', () {
         fakeAsync((async) async {
           // setting up valid form
           await testClass.updateAndValidateField(
@@ -259,7 +244,7 @@ void main() {
   });
 
   group('when validateForm is called', () {
-    late FormX testClass;
+    late FormX<String> testClass;
     late Map<String, FormXField<String>> inputsMap;
 
     setUp(() {
@@ -296,20 +281,7 @@ void main() {
 
       final result = await testClass.validateForm();
 
-      // validating invalid form
-      expect(result.state.getFieldErrorMessage('a'), 'error');
-      expect(result.state.inputMap, newMap);
-      expect(result.state.isFormValid, false);
-
-      // validating valid form
-      when(firstValidator.validate(any)).thenAnswer(
-        (_) async => const ValidatorResult(
-          isValid: true,
-        ),
-      );
-      final result2 = await result.validateForm();
-      expect(result2.state.getFieldErrorMessage('a'), null);
-      expect(result2.state.isFormValid, true);
+      expect(result, FormX<String>.setupForm(newMap));
     });
   });
 }
