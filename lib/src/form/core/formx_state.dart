@@ -13,14 +13,19 @@ import 'package:flutter_formx/src/form/core/formx_field.dart';
 class FormXState<T> extends Equatable {
   final Map<T, FormXField> _inputMap;
 
+  /// Creates a [FormXState] instance
   const FormXState([this._inputMap = const {}]);
 
+  /// Gets an unmodifiable instance of the inputMap
   Map<T, FormXField> get inputMap => Map.unmodifiable(_inputMap);
 
+  /// Gets a field value by its key
   V getFieldValue<V>(T key) => _inputMap[key]?.value as V;
 
+  /// Gets a field error message by its key. It will return null if the field is valid
   String? getFieldErrorMessage(T key) => _inputMap[key]?.errorMessage;
 
+  /// Returns true if all fields are valid
   bool get isFormValid => _inputMap.values.every((element) => element.isValid);
 
   @override

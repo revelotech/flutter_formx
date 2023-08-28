@@ -8,8 +8,10 @@ import 'package:mobx/mobx.dart';
 mixin FormXMobX<T> implements FormXInterface<T> {
   final Observable<FormX<T>> _formX = Observable(FormX.empty());
 
+  /// Returns the current FormXState from this instance
   FormXState<T> get state => _formX.value.state;
 
+  /// Returns the current validation status of the form from this instance's state
   bool get isFormValid => state.isFormValid;
 
   @override
@@ -48,7 +50,10 @@ mixin FormXMobX<T> implements FormXInterface<T> {
     return state.isFormValid;
   }
 
+  /// Gets a field value from the state by its key
   V getFieldValue<V>(T key) => state.getFieldValue(key);
 
+  /// Gets a field error message from the state by its key.
+  /// It will return null if the field is valid
   String? getFieldErrorMessage(T key) => state.getFieldErrorMessage(key);
 }
