@@ -1,20 +1,11 @@
 import 'package:flutter_formx/src/form/core/formx_field.dart';
 
-/// [FormX] is a helper class to handle forms. [T] stands for the type used to identify the fields
-/// such as an enum or a string to later access each of its fields.
-///
-/// The first step is to call [setupForm] with a map of the fields, their initial values and
-/// validators.
-///
-/// The second step is to call [updateAndValidateField] or [updateField] to update the value of
-/// each field once it's changed on the UI.
-///
-/// The third and last step is to call [validateForm] to validate all fields.
-abstract class FormXInterface<T> {
+/// Adapter for [FormX].
+/// The state management implementations should implement this class
+abstract class FormXAdapter<T> {
   /// Sets up the form with the given inputs
   ///
-  /// This method should be called when starting the viewModel and it already validates the form
-  /// without applying any error messages.
+  /// This method should be called when starting the form.
   void setupForm(Map<T, FormXField> inputs);
 
   /// Updates the value of the field and validates it, updating the value of [FormXState.isFormValid].

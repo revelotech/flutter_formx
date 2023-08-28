@@ -1,11 +1,11 @@
 import 'package:flutter_formx/src/form/core/formx.dart';
 import 'package:flutter_formx/src/form/core/formx_field.dart';
-import 'package:flutter_formx/src/form/core/formx_interface.dart';
+import 'package:flutter_formx/src/form/core/formx_adapter.dart';
 import 'package:flutter_formx/src/form/core/formx_state.dart';
 import 'package:mobx/mobx.dart';
 
 /// MobX implementation of [FormX]
-mixin FormXMobX<T> implements FormXInterface<T> {
+mixin FormXMobX<T> implements FormXAdapter<T> {
   final Observable<FormX<T>> _formX = Observable(FormX.empty());
 
   /// Returns the current FormXState from this instance
@@ -26,9 +26,10 @@ mixin FormXMobX<T> implements FormXInterface<T> {
   }
 
   @override
-  Future<void> updateAndValidateField(newValue, type, {bool softValidation = false}) async {
-    final validatedField =
-        await _formX.value.updateAndValidateField(newValue, type, softValidation: softValidation);
+  Future<void> updateAndValidateField(newValue, type,
+      {bool softValidation = false}) async {
+    final validatedField = await _formX.value
+        .updateAndValidateField(newValue, type, softValidation: softValidation);
     Action(() {
       _formX.value = validatedField;
     })();
@@ -43,7 +44,8 @@ mixin FormXMobX<T> implements FormXInterface<T> {
 
   @override
   Future<bool> validateForm({bool softValidation = false}) async {
-    final validatedForm = await _formX.value.validateForm(softValidation: softValidation);
+    final validatedForm =
+        await _formX.value.validateForm(softValidation: softValidation);
     Action(() {
       _formX.value = validatedForm;
     })();
