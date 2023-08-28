@@ -4,7 +4,7 @@ import 'package:flutter_formx/src/form/core/formx_field.dart';
 /// The state management implementations should implement this class
 abstract class FormXAdapter<T> {
   /// Implementations of this method should setup the form with the given inputs
-  void setupForm(Map<T, FormXField> inputs);
+  void setupForm(Map<T, FormXField> inputs, {bool applySoftValidation = true});
 
   /// Implementations of this method should call [FormX.updateAndValidateField]
   Future<void> updateAndValidateField(
