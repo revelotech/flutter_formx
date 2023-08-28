@@ -7,7 +7,8 @@ class VanillaImplementationPage extends StatefulWidget {
   const VanillaImplementationPage({super.key});
 
   @override
-  State<VanillaImplementationPage> createState() => _VanillaImplementationPageState();
+  State<VanillaImplementationPage> createState() =>
+      _VanillaImplementationPageState();
 }
 
 class _VanillaImplementationPageState extends State<VanillaImplementationPage> {
@@ -121,15 +122,21 @@ class _VanillaImplementationPageState extends State<VanillaImplementationPage> {
                               Expanded(
                                 child: SliderTheme(
                                   data: const SliderThemeData(
-                                    showValueIndicator: ShowValueIndicator.onlyForContinuous,
+                                    showValueIndicator:
+                                        ShowValueIndicator.onlyForContinuous,
                                   ),
                                   child: Slider(
-                                    value: state.getFieldValue('salaryExpectation').toDouble(),
+                                    value: state
+                                        .getFieldValue('salaryExpectation')
+                                        .toDouble(),
                                     min: 500,
                                     max: 20000,
                                     divisions: 15,
-                                    label: state.getFieldValue('salaryExpectation').toString(),
-                                    onChanged: (newValue) => _viewModel.onIncomeChanged(
+                                    label: state
+                                        .getFieldValue('salaryExpectation')
+                                        .toString(),
+                                    onChanged: (newValue) =>
+                                        _viewModel.onIncomeChanged(
                                       newValue.toInt(),
                                     ),
                                   ),
@@ -137,7 +144,8 @@ class _VanillaImplementationPageState extends State<VanillaImplementationPage> {
                               ),
                             ],
                           ),
-                          if (state.getFieldErrorMessage('salaryExpectation') != null)
+                          if (state.getFieldErrorMessage('salaryExpectation') !=
+                              null)
                             Text(
                               state.getFieldErrorMessage('salaryExpectation')!,
                               style: const TextStyle(
@@ -162,7 +170,8 @@ class _VanillaImplementationPageState extends State<VanillaImplementationPage> {
                               Checkbox(
                                 value: state.getFieldValue('acceptTerms'),
                                 onChanged: (value) {
-                                  _viewModel.onAcceptTermsChanged(value ?? false);
+                                  _viewModel
+                                      .onAcceptTermsChanged(value ?? false);
                                 },
                               ),
                               const Expanded(
@@ -193,55 +202,63 @@ class _VanillaImplementationPageState extends State<VanillaImplementationPage> {
                   SliverToBoxAdapter(
                     child: ValueListenableBuilder(
                       valueListenable: _viewModel.showSuccessInfo,
-                      builder: (context, showSuccessInfo, widget) => showSuccessInfo
-                          ? Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFBDE7EF),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              margin: const EdgeInsets.all(24.0),
-                              padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  const Text(
-                                    'Form results',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                      builder: (context, showSuccessInfo, widget) =>
+                          showSuccessInfo
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFBDE7EF),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  const SizedBox(height: 20),
-                                  Text('Email: ${state.getFieldValue('email')}'),
-                                  const SizedBox(height: 14),
-                                  Text('Career: ${state.getFieldValue('career')}'),
-                                  const SizedBox(height: 14),
-                                  Text(
-                                    'Salary expectation: ${state.getFieldValue('salaryExpectation')}',
+                                  margin: const EdgeInsets.all(24.0),
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      const Text(
+                                        'Form results',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Text(
+                                          'Email: ${state.getFieldValue('email')}'),
+                                      const SizedBox(height: 14),
+                                      Text(
+                                          'Career: ${state.getFieldValue('career')}'),
+                                      const SizedBox(height: 14),
+                                      Text(
+                                        'Salary expectation: ${state.getFieldValue('salaryExpectation')}',
+                                      ),
+                                      const SizedBox(height: 14),
+                                      Text(
+                                          'Accepted terms: ${state.getFieldValue('acceptTerms')}'),
+                                      const SizedBox(height: 14),
+                                    ],
                                   ),
-                                  const SizedBox(height: 14),
-                                  Text('Accepted terms: ${state.getFieldValue('acceptTerms')}'),
-                                  const SizedBox(height: 14),
-                                ],
-                              ),
-                            )
-                          : const SizedBox.shrink(),
+                                )
+                              : const SizedBox.shrink(),
                     ),
                   ),
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 40),
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, bottom: 40),
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
-                        onPressed: state.isFormValid ? _viewModel.submitForm : () {},
+                        onPressed:
+                            state.isFormValid ? _viewModel.submitForm : () {},
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4.0),
                           ),
                           minimumSize: const Size.fromHeight(48),
-                          backgroundColor:
-                              state.isFormValid ? const Color(0xFF0C152C) : Colors.grey,
+                          backgroundColor: state.isFormValid
+                              ? const Color(0xFF0C152C)
+                              : Colors.grey,
                         ),
                         child: const Text('Submit'),
                       ),

@@ -58,11 +58,13 @@ class VanillaImplementationPageViewModel {
   }
 
   void onIncomeChanged(int newValue) async {
-    formX.value = await formX.value.updateAndValidateField(newValue, 'salaryExpectation');
+    formX.value =
+        await formX.value.updateAndValidateField(newValue, 'salaryExpectation');
   }
 
   void onAcceptTermsChanged(bool newValue) async {
-    formX.value = await formX.value.updateAndValidateField(newValue, 'acceptTerms');
+    formX.value =
+        await formX.value.updateAndValidateField(newValue, 'acceptTerms');
   }
 
   Future<void> submitForm() async {

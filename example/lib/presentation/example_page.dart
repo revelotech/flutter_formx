@@ -134,7 +134,8 @@ class _ExamplePageState extends State<ExamplePage> {
                         elevation: 1,
                         type: MaterialType.card,
                         child: InkWell(
-                          onTap: () => Navigator.of(context).pushNamed('vanilla'),
+                          onTap: () =>
+                              Navigator.of(context).pushNamed('vanilla'),
                           child: Ink(
                             decoration: BoxDecoration(
                               color: const Color(0xFF0C152C),

@@ -38,7 +38,8 @@ class FormXCubit<T> extends Cubit<FormXState<T>> implements FormXAdapter<T> {
   /// Bloc implementation of [FormX.validateForm].
   @override
   Future<bool> validateForm({bool softValidation = false}) async {
-    final formX = await FormX.fromState(state).validateForm(softValidation: softValidation);
+    final formX = await FormX.fromState(state)
+        .validateForm(softValidation: softValidation);
     emit(formX.state);
     return state.isFormValid;
   }

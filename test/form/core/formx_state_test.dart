@@ -7,7 +7,8 @@ import 'formx_state_test.mocks.dart';
 
 class TestValidator extends Validator<String?> {
   @override
-  Future<ValidatorResult> validate(String? value) => Future.value(ValidatorResult.success());
+  Future<ValidatorResult> validate(String? value) =>
+      Future.value(ValidatorResult.success());
 }
 
 @GenerateMocks([TestValidator])
@@ -22,7 +23,8 @@ void main() {
   setUp(() {
     testValidator = MockTestValidator();
 
-    when(testValidator.validate(any)).thenAnswer((_) async => ValidatorResult.success());
+    when(testValidator.validate(any))
+        .thenAnswer((_) async => ValidatorResult.success());
   });
 
   FormXState instantiate([Map<String, FormXField<String>>? inputMap]) =>
@@ -45,7 +47,8 @@ void main() {
   });
 
   group('when getFieldErrorMessage is called', () {
-    test('when getFieldErrorMessage is called then it should return it', () async {
+    test('when getFieldErrorMessage is called then it should return it',
+        () async {
       when(testValidator.validate('')).thenAnswer(
         (_) async => const ValidatorResult(
           isValid: false,
@@ -68,7 +71,9 @@ void main() {
       expect(testClass.getFieldErrorMessage('b'), 'mandatory field error');
     });
 
-    test('when getFieldErrorMessage is called with invalid key then it should return null', () {
+    test(
+        'when getFieldErrorMessage is called with invalid key then it should return null',
+        () {
       final testClass = instantiate();
 
       expect(testClass.getFieldErrorMessage('d'), null);
