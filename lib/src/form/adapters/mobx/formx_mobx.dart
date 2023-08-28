@@ -22,8 +22,10 @@ mixin FormXMobX<T> implements FormXAdapter<T> {
   String? getFieldErrorMessage(T key) => state.getFieldErrorMessage(key);
 
   @override
-  Future<void> setupForm(Map<T, FormXField> inputs,
-      {bool applySoftValidation = true}) async {
+  Future<void> setupForm(
+    Map<T, FormXField> inputs, {
+    bool applySoftValidation = true,
+  }) async {
     Action(() {
       _formX.value = FormX.setupForm(inputs);
     })();

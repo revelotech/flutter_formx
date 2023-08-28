@@ -38,30 +38,55 @@ void main() {
   FormXMobXTest instantiate() => FormXMobXTest();
 
   group('when setupForm is called', () {
-    test('then it should setup inputMap with all the information', () {
-      fakeAsync((async) {
-        final testClass = instantiate();
+    test(
+        'and applySoftValidation is true '
+        'then it should setup inputMap with the validated information',
+        () async {
+      final testClass = instantiate();
 
-        expect(testClass.state.inputMap.length, 0);
+      expect(testClass.state.inputMap.length, 0);
 
-        testClass.setupForm({
-          'a': FormXField<String>.from(value: '', validators: const []),
-          'b': FormXField<String>.from(value: '', validators: const []),
-          'c': FormXField<String>.from(value: '', validators: const []),
-        });
+      final inputsMap = {
+        'a': FormXField<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
+      };
 
-        async.elapse(const Duration(seconds: 1));
+      await testClass.setupForm(inputsMap);
 
-        expect(testClass.state.inputMap.length, 3);
-        expect(testClass.state.inputMap.keys.toList(), ['a', 'b', 'c']);
+      final validatedMap = Map<String, FormXField<String>>.from(inputsMap);
+      for (final entry in validatedMap.entries) {
+        validatedMap[entry.key] = await entry.value.validateItem();
+      }
 
-        expect(testClass.isFormValid, true);
-      });
+      expect(testClass.state.inputMap, validatedMap);
+      expect(testClass.isFormValid, true);
     });
 
     test(
-        'and form is invalid then it should validate form and update isFormValid and not update errorMessage',
-        () {
+        'and applySoftValidation is false '
+        'then it should setup inputMap with unvalidated information', () async {
+      final testClass = instantiate();
+
+      expect(testClass.state.inputMap.length, 0);
+
+      final inputsMap = {
+        'a': FormXField<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
+      };
+
+      await testClass.setupForm(inputsMap, applySoftValidation: false);
+
+      expect(testClass.state.inputMap, inputsMap);
+      expect(testClass.isFormValid, false);
+    });
+
+    test(
+        'and form is invalid '
+        'then it should validate form '
+        'and update isFormValid '
+        'and not update errorMessage', () {
       fakeAsync((async) {
         when(firstValidator.validate(any)).thenAnswer(
           (_) async => const ValidatorResult(

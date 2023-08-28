@@ -10,8 +10,10 @@ class FormXCubit<T> extends Cubit<FormXState<T>> implements FormXAdapter<T> {
   FormXCubit() : super(const FormXState({}));
 
   @override
-  Future<void> setupForm(Map<T, FormXField> inputs,
-      {bool applySoftValidation = true}) async {
+  Future<void> setupForm(
+    Map<T, FormXField> inputs, {
+    bool applySoftValidation = true,
+  }) async {
     emit(FormXState<T>(inputs));
     if (applySoftValidation) await validateForm(softValidation: true);
   }

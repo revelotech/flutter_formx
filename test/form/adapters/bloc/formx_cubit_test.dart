@@ -40,7 +40,9 @@ void main() {
 
   group('when setupForm is called', () {
     blocTest(
-      'then it should emit a softly validated form',
+      'and applySoftValidation is true '
+      'then it should emit a configured form '
+      'and a softly validated form',
       build: instantiate,
       setUp: () {
         testForm = {
@@ -62,6 +64,25 @@ void main() {
         FormXState(testForm),
         // post form validation
         FormXState(resultForm),
+      ],
+    );
+
+    blocTest(
+      'and applySoftValidation is false '
+      'then it should only emit a configured form',
+      build: instantiate,
+      setUp: () {
+        testForm = {
+          'a': FormXField<String>.from(value: '', validators: const []),
+          'b': FormXField<String>.from(value: '', validators: const []),
+          'c': FormXField<String>.from(value: '', validators: const []),
+        };
+      },
+      act: (cubit) async =>
+          await cubit.setupForm(testForm, applySoftValidation: false),
+      expect: () => [
+        // pre form validation
+        FormXState(testForm),
       ],
     );
 
