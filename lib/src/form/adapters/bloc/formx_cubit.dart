@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter_formx/src/form/adapters/formx_adapter.dart';
 import 'package:flutter_formx/src/form/core/formx.dart';
 import 'package:flutter_formx/src/form/core/formx_field.dart';
-import 'package:flutter_formx/src/form/core/formx_adapter.dart';
 import 'package:flutter_formx/src/form/core/formx_state.dart';
 
 /// Bloc implementation of [FormX] with [FormXAdapter]
@@ -38,8 +38,7 @@ class FormXCubit<T> extends Cubit<FormXState<T>> implements FormXAdapter<T> {
   /// Bloc implementation of [FormX.validateForm].
   @override
   Future<bool> validateForm({bool softValidation = false}) async {
-    final formX = await FormX.fromState(state)
-        .validateForm(softValidation: softValidation);
+    final formX = await FormX.fromState(state).validateForm(softValidation: softValidation);
     emit(formX.state);
     return state.isFormValid;
   }
