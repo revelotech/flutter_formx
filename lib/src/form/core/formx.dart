@@ -17,7 +17,7 @@ import 'package:flutter_formx/src/form/core/formx_state.dart';
 /// The third and last step is to call [validateForm] to validate all fields.
 class FormX<T> extends Equatable {
   /// This field holds the current FormXState
-  late FormXState<T> state;
+  late final FormXState<T> state;
 
   /// Creates an empty FormX instance
   factory FormX.empty() => FormX<T>._();

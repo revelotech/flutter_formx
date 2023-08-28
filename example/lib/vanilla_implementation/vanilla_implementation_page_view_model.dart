@@ -4,7 +4,7 @@ import 'package:flutter_formx_example/custom_validators/checked_validator.dart';
 import 'package:flutter_formx_example/custom_validators/salary_validator.dart';
 
 class VanillaImplementationPageViewModel {
-  final ValueNotifier<FormX<String>> formX = ValueNotifier(FormX());
+  final ValueNotifier<FormX<String>> formX = ValueNotifier(FormX.empty());
 
   ValueNotifier<bool> showSuccessInfo = ValueNotifier(false);
 
