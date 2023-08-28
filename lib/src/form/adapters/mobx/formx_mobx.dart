@@ -14,6 +14,13 @@ mixin FormXMobX<T> implements FormXAdapter<T> {
   /// Returns the current validation status of the form from this instance's state
   bool get isFormValid => state.isFormValid;
 
+  /// Gets a field value from the state by its key
+  V getFieldValue<V>(T key) => state.getFieldValue(key);
+
+  /// Gets a field error message from the state by its key.
+  /// It will return null if the field is valid
+  String? getFieldErrorMessage(T key) => state.getFieldErrorMessage(key);
+
   @override
   Future<void> setupForm(Map<T, FormXField> inputs) async {
     Action(() {
@@ -51,11 +58,4 @@ mixin FormXMobX<T> implements FormXAdapter<T> {
     })();
     return state.isFormValid;
   }
-
-  /// Gets a field value from the state by its key
-  V getFieldValue<V>(T key) => state.getFieldValue(key);
-
-  /// Gets a field error message from the state by its key.
-  /// It will return null if the field is valid
-  String? getFieldErrorMessage(T key) => state.getFieldErrorMessage(key);
 }
