@@ -1,4 +1,5 @@
 ## Changelog
+- Fix state management content in README
 
 ## v3.0.0
 - [Breaking change] Add vanilla implementation - This change affects MobX implementations since we 
