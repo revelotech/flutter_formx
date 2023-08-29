@@ -41,11 +41,12 @@ class FormX<T> extends Equatable {
     state = FormXState<T>(inputMap ?? {});
   }
 
-  /// Updates the value of a field and validates it, returning a new state with
-  /// it. This method updates the value of [FormXState.isFormValid].
+  /// Returns a new FormX with the updated value of the field and validates it, 
+  /// updating the value of [FormXState.isFormValid].
+  ///
   /// When [softValidation] is true, it doesn't add errors messages to the
   /// fields, but updates the value of [FormXState.isFormValid] which can be
-  /// used to show a submit button as enabled or disabled
+  /// used to show a submit button as enabled or disabled.
   Future<FormX<T>> updateAndValidateField(
     newValue,
     type, {
