@@ -1,4 +1,6 @@
 ## Changelog
+
+## v3.0.0
 - [Breaking change] Add vanilla implementation - This change affects MobX implementations since we 
   have changed FormX<T> to be the vanilla implementation and applied the MobX implementation logic 
   in a new mixin FormXMobX<T>. Previous implementations of this should replace the FormX<T> usage 
