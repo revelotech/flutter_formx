@@ -41,20 +41,20 @@ mixin FormXMobX<T> implements FormXAdapter<T> {
   @override
   Future<void> updateAndValidateField(
     newValue,
-    type, {
+    key, {
     bool softValidation = false,
   }) async {
     final validatedField = await _formX.value
-        .updateAndValidateField(newValue, type, softValidation: softValidation);
+        .updateAndValidateField(newValue, key, softValidation: softValidation);
     Action(() {
       _formX.value = validatedField;
     })();
   }
 
   @override
-  void updateField(newValue, type) {
+  void updateField(newValue, key) {
     Action(() {
-      _formX.value = _formX.value.updateField(newValue, type);
+      _formX.value = _formX.value.updateField(newValue, key);
     })();
   }
 

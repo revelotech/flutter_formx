@@ -17,7 +17,7 @@ import 'package:flutter_formx/src/form/core/formx_state.dart';
 ///
 /// The third and last step is to call [validateForm] to validate all fields.
 ///
-/// This vanilla implementation doesn't handle state management, but every 
+/// This vanilla implementation doesn't handle state management, but every
 /// function returns this same immutable class with a new state. Please refer
 /// to the vanilla example or adapters to check how it can be managed.
 class FormX<T> extends Equatable {
@@ -41,7 +41,7 @@ class FormX<T> extends Equatable {
     state = FormXState<T>(inputMap ?? {});
   }
 
-  /// Returns a new FormX with the updated value of the field and validates it, 
+  /// Returns a new FormX with the updated value of the field and validates it,
   /// updating the value of [FormXState.isFormValid].
   ///
   /// When [softValidation] is true, it doesn't add errors messages to the
@@ -49,22 +49,23 @@ class FormX<T> extends Equatable {
   /// used to show a submit button as enabled or disabled.
   Future<FormX<T>> updateAndValidateField(
     newValue,
-    type, {
+    T key, {
     bool softValidation = false,
   }) async {
     final inputMap = _cloneStateMap;
-    inputMap[type] = await inputMap[type]!
+    inputMap[key] = await inputMap[key]!
         .updateValue(newValue)
         .validateItem(softValidation: softValidation);
 
     return FormX<T>._(inputMap);
   }
 
-  /// Updates the value of the field without validating it, this does not update the
-  /// value of [FormXState.isFormValid]
-  FormX<T> updateField(newValue, type) {
+  /// Returns a new instance of FormX with the new value of the field without
+  /// validating it, which means this will not update the value of
+  /// [FormXState.isFormValid].
+  FormX<T> updateField(newValue, T key) {
     final inputMap = _cloneStateMap;
-    inputMap[type] = inputMap[type]!.updateValue(newValue);
+    inputMap[key] = inputMap[key]!.updateValue(newValue);
     return FormX<T>._(inputMap);
   }
 
