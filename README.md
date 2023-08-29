@@ -8,8 +8,8 @@ Flutter FormX is an extensible package to make it easy to build, react to and va
 
 - [Features](#features)
 - [Supported state management solutions](#supported-state-management-solutions)
-- **[MobX usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/mobx)**
-- **[Bloc usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/bloc)**
+- **[MobX usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/adapters/mobx)**
+- **[Bloc usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/adapters/bloc)**
 - [Validators](#validators)
 - [Testing](#testing)
 
@@ -23,7 +23,11 @@ Flutter FormX is an extensible package to make it easy to build, react to and va
 
 ## Supported state management solutions
 
-This library is designed to work with both [MobX](https://pub.dev/packages/mobx)/[MobX Code generation](https://pub.dev/packages/mobx_codegen) and [Bloc](https://pub.dev/packages/bloc) as its state management solutions. It does not support Riverpod, Provider or GetX as of yet.
+This library is designed to work with both [MobX](https://pub.dev/packages/mobx)/[MobX Code generation](https://pub.dev/packages/mobx_codegen) and [Bloc](https://pub.dev/packages/bloc) as its state management solutions only.
+However, you can use the vanilla implementation to adapt FormX to your favorite state management solution.
+
+- [MobX usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/adapters/mobx)
+- [Bloc usage](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/adapters/bloc)
 
 ## Validators
 You can create any kind of validator needed specifically for your needs and according to the field type you have. We've included the `RequiredFieldValidator`, but feel free to create more in your project as you need.
@@ -69,7 +73,7 @@ class EmailValidator extends Validator<String?> {
 
 ## Expanding the library
 
-Feel free to expand the library and make it compatible with other state management solutions like Riverpod, Provider, GetX, etc. When doing that, keep in mind you'll need to implement both `formx.dart` and `formx_state.dart` and still use `formx_field.dart` in your implementation. Also, know you can count on us to help you with that! Just open an issue or PR and we'll be happy to help.
+Feel free to expand the library and make it compatible with other state management solutions. When doing that, keep in mind you'll need to implement both `formx.dart` and `formx_state.dart` and still use `formx_field.dart` in your implementation. Also, know you can count on us to help you with that! Just open an issue or PR and we'll be happy to help.
 
 ## Testing
 
