@@ -38,30 +38,55 @@ void main() {
   FormXMobXTest instantiate() => FormXMobXTest();
 
   group('when setupForm is called', () {
-    test('then it should setup inputMap with all the information', () {
-      fakeAsync((async) {
-        final testClass = instantiate();
+    test(
+        'and applySoftValidation is true '
+        'then it should setup inputMap with the validated information',
+        () async {
+      final testClass = instantiate();
 
-        expect(testClass.inputMap.length, 0);
+      expect(testClass.state.inputMap, {});
 
-        testClass.setupForm({
-          'a': FormXField<String>.from(value: '', validators: const []),
-          'b': FormXField<String>.from(value: '', validators: const []),
-          'c': FormXField<String>.from(value: '', validators: const []),
-        });
+      final inputsMap = {
+        'a': FormXField<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
+      };
 
-        async.elapse(const Duration(seconds: 1));
+      await testClass.setupForm(inputsMap);
 
-        expect(testClass.inputMap.length, 3);
-        expect(testClass.inputMap.keys.toList(), ['a', 'b', 'c']);
+      final validatedMap = Map<String, FormXField<String>>.from(inputsMap);
+      for (final entry in validatedMap.entries) {
+        validatedMap[entry.key] = await entry.value.validateItem();
+      }
 
-        expect(testClass.isFormValid, true);
-      });
+      expect(testClass.state.inputMap, validatedMap);
+      expect(testClass.isFormValid, true);
     });
 
     test(
-        'and form is invalid then it should validate form and update isFormValid and not update errorMessage',
-        () {
+        'and applySoftValidation is false '
+        'then it should setup inputMap with unvalidated information', () async {
+      final testClass = instantiate();
+
+      expect(testClass.state.inputMap, {});
+
+      final inputsMap = {
+        'a': FormXField<String>.from(value: '', validators: const []),
+        'b': FormXField<String>.from(value: '', validators: const []),
+        'c': FormXField<String>.from(value: '', validators: const []),
+      };
+
+      await testClass.setupForm(inputsMap, applySoftValidation: false);
+
+      expect(testClass.state.inputMap, inputsMap);
+      expect(testClass.isFormValid, false);
+    });
+
+    test(
+        'and form is invalid '
+        'then it should validate form '
+        'and update isFormValid '
+        'and not update errorMessage', () {
       fakeAsync((async) {
         when(firstValidator.validate(any)).thenAnswer(
           (_) async => const ValidatorResult(
@@ -80,12 +105,12 @@ void main() {
         async.elapse(const Duration(seconds: 1));
         expect(testClass.isFormValid, false);
 
-        expect(testClass.inputMap['a']!.errorMessage, null);
-        expect(testClass.inputMap['a']!.isValid, true);
-        expect(testClass.inputMap['b']!.errorMessage, null);
-        expect(testClass.inputMap['b']!.isValid, false);
-        expect(testClass.inputMap['c']!.errorMessage, null);
-        expect(testClass.inputMap['c']!.isValid, true);
+        expect(testClass.state.inputMap['a']!.errorMessage, null);
+        expect(testClass.state.inputMap['a']!.isValid, true);
+        expect(testClass.state.inputMap['b']!.errorMessage, null);
+        expect(testClass.state.inputMap['b']!.isValid, false);
+        expect(testClass.state.inputMap['c']!.errorMessage, null);
+        expect(testClass.state.inputMap['c']!.isValid, true);
       });
     });
   });
@@ -110,20 +135,20 @@ void main() {
     });
 
     test('then it should update the correct field with the new value', () {
-      expect(testClass.inputMap['a']!.value, '');
+      expect(testClass.state.inputMap['a']!.value, '');
       testClass.updateField(
         '123',
         'a',
       );
       expect(
-        testClass.inputMap['a']!.value,
+        testClass.state.inputMap['a']!.value,
         '123',
       );
     });
 
     test('then it should not validate field', () {
       expect(
-        testClass.inputMap['a']!.errorMessage,
+        testClass.state.inputMap['a']!.errorMessage,
         null,
       );
 
@@ -132,7 +157,7 @@ void main() {
         'a',
       );
       expect(
-        testClass.inputMap['a']!.errorMessage,
+        testClass.state.inputMap['a']!.errorMessage,
         null,
       );
       verifyNever(firstValidator.validate('123456'));
@@ -160,13 +185,13 @@ void main() {
 
     test('then it should update the correct field with the new value',
         () async {
-      expect(testClass.inputMap['a']!.value, '');
+      expect(testClass.state.inputMap['a']!.value, '');
       await testClass.updateAndValidateField(
         '123',
         'a',
       );
       expect(
-        testClass.inputMap['a']!.value,
+        testClass.state.inputMap['a']!.value,
         '123',
       );
     });
@@ -175,7 +200,7 @@ void main() {
         () {
       fakeAsync((async) {
         expect(
-          testClass.inputMap['a']!.errorMessage,
+          testClass.state.inputMap['a']!.errorMessage,
           null,
         );
 
@@ -185,7 +210,7 @@ void main() {
         );
         async.elapse(const Duration(milliseconds: 200));
         expect(
-          testClass.inputMap['a']!.errorMessage,
+          testClass.state.inputMap['a']!.errorMessage,
           null,
         );
       });
@@ -195,23 +220,22 @@ void main() {
       test(
           'with soft validation then it should not update the error map with an '
           'error but isValid should be updated', () {
-        fakeAsync((async) {
+        fakeAsync((async) async {
           // setting up valid form
-          testClass.updateAndValidateField(
+          await testClass.updateAndValidateField(
             '12',
             'a',
           );
-          testClass.updateAndValidateField(
+          await testClass.updateAndValidateField(
             '123',
             'b',
           );
-          testClass.updateAndValidateField(
+          await testClass.updateAndValidateField(
             '1234',
             'c',
           );
-          async.elapse(const Duration(milliseconds: 200));
 
-          expect(testClass.inputMap['a']!.errorMessage, null);
+          expect(testClass.state.inputMap['a']!.errorMessage, null);
           // Form is valid
           expect(testClass.isFormValid, true);
 
@@ -232,7 +256,7 @@ void main() {
           async.elapse(const Duration(milliseconds: 200));
           // error is not updated
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             null,
           );
           // form is now invalid because there is an error, even though it won't show in the UI
@@ -252,7 +276,7 @@ void main() {
           );
 
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             null,
           );
 
@@ -262,7 +286,7 @@ void main() {
           );
           async.elapse(const Duration(milliseconds: 200));
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             'invalid string',
           );
         });
@@ -285,7 +309,7 @@ void main() {
             ),
           );
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             null,
           );
 
@@ -295,7 +319,7 @@ void main() {
           );
           async.elapse(const Duration(milliseconds: 200));
           expect(
-            testClass.inputMap['a']!.errorMessage,
+            testClass.state.inputMap['a']!.errorMessage,
             'mandatory field error',
           );
         });

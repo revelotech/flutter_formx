@@ -6,7 +6,7 @@ repository: https://github.com/revelojobs/flutter_formx
 issue_tracker: https://github.com/revelojobs/flutter_formx/issues
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
+  sdk: '>=2.19.6 <4.0.0'
   flutter: ">=3.7.7"
 
 dependencies:

@@ -40,7 +40,9 @@ void main() {
 
   group('when setupForm is called', () {
     blocTest(
-      'then it should emit a softly validated form',
+      'and applySoftValidation is true '
+      'then it should emit a configured form '
+      'and a softly validated form',
       build: instantiate,
       setUp: () {
         testForm = {
@@ -59,9 +61,28 @@ void main() {
       },
       expect: () => [
         // pre form validation
-        FormXCubitState(testForm),
+        FormXState(testForm),
         // post form validation
-        FormXCubitState(resultForm),
+        FormXState(resultForm),
+      ],
+    );
+
+    blocTest(
+      'and applySoftValidation is false '
+      'then it should only emit a configured form',
+      build: instantiate,
+      setUp: () {
+        testForm = {
+          'a': FormXField<String>.from(value: '', validators: const []),
+          'b': FormXField<String>.from(value: '', validators: const []),
+          'c': FormXField<String>.from(value: '', validators: const []),
+        };
+      },
+      act: (cubit) async =>
+          await cubit.setupForm(testForm, applySoftValidation: false),
+      expect: () => [
+        // pre form validation
+        FormXState(testForm),
       ],
     );
 
@@ -156,22 +177,22 @@ void main() {
       skip: 1,
       expect: () => [
         // validated state after setup
-        FormXCubitState(testForm),
+        FormXState(testForm),
         // validated and updated states
         // verify change in 'a'
-        FormXCubitState({
+        FormXState({
           'a': resultForm['a']!,
           'b': testForm['b']!,
           'c': testForm['c']!,
         }),
         // verify change in 'a' and 'b'
-        FormXCubitState({
+        FormXState({
           'a': resultForm['a']!,
           'b': resultForm['b']!,
           'c': testForm['c']!,
         }),
         // verify form fully updated and validated
-        FormXCubitState(resultForm),
+        FormXState(resultForm),
       ],
     );
 
@@ -257,9 +278,9 @@ void main() {
       skip: 1,
       expect: () => [
         // validated state after setup
-        FormXCubitState(testForm),
+        FormXState(testForm),
         // validated and updated state
-        FormXCubitState(resultForm),
+        FormXState(resultForm),
       ],
     );
 
@@ -472,8 +493,8 @@ void main() {
       skip: 2,
       expect: () => [
         // validated and updated state
-        FormXCubitState(intermediateResult),
-        FormXCubitState(resultForm),
+        FormXState(intermediateResult),
+        FormXState(resultForm),
       ],
     );
 

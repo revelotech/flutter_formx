@@ -29,7 +29,7 @@ flutter pub run build_runner build
       ExamplePageViewModel();
     }
 
-    abstract class _ExamplePageViewModelBase with Store, FormX<String> {
+    abstract class _ExamplePageViewModelBase with Store, FormXMobX<String> {
       _ExamplePageViewModelBase();
     }
     ```

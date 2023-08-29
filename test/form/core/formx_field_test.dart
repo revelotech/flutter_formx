@@ -76,21 +76,48 @@ void main() {
       expect(result.isValid, true);
     });
 
-    test(
-        'and item is not valid then it should return an item with error message and isValid false',
-        () async {
-      when(firstValidator.validate('')).thenAnswer(
-        (_) async =>
-            const ValidatorResult(isValid: false, errorMessage: 'error'),
-      );
-      final item = instantiate(
-        validators: [firstValidator, secondValidator],
-      );
+    group('and item is not valid', () {
+      test(
+          'and soft validation is false '
+          'then it should return an invalid item with an error message',
+          () async {
+        when(firstValidator.validate('')).thenAnswer(
+          (_) async =>
+              const ValidatorResult(isValid: false, errorMessage: 'error'),
+        );
+        final item = instantiate(
+          validators: [firstValidator, secondValidator],
+        );
 
-      final result = await item.validateItem();
-      expect(result == item, false);
-      expect(result.errorMessage, 'error');
-      expect(result.isValid, false);
+        final result = await item.validateItem();
+        expect(result == item, false);
+        expect(result.errorMessage, 'error');
+        expect(result.isValid, false);
+      });
+
+      test(
+          'and soft validation is true '
+          'then it should return an invalid item without an error message',
+          () async {
+        when(firstValidator.validate('')).thenAnswer(
+          (_) async => const ValidatorResult(isValid: true),
+        );
+        final item = await instantiate(
+          validators: [firstValidator, secondValidator],
+        ).validateItem(softValidation: true);
+
+        expect(item.errorMessage, null);
+        expect(item.isValid, true);
+
+        when(firstValidator.validate('')).thenAnswer(
+          (_) async =>
+              const ValidatorResult(isValid: false, errorMessage: 'error'),
+        );
+
+        final result = await item.validateItem(softValidation: true);
+        expect(result.errorMessage, null);
+        expect(result.isValid, false);
+      });
     });
   });
 }

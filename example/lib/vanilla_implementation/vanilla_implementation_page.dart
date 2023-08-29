@@ -1,63 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_formx/flutter_formx.dart';
-import 'package:flutter_formx_example/custom_validators/checked_validator.dart';
-import 'package:flutter_formx_example/custom_validators/salary_validator.dart';
+import 'package:flutter_formx_example/vanilla_implementation/vanilla_implementation_page_view_model.dart';
 
-class BlocImplementationPage extends StatefulWidget {
-  const BlocImplementationPage({super.key});
+class VanillaImplementationPage extends StatefulWidget {
+  const VanillaImplementationPage({super.key});
 
   @override
-  State<BlocImplementationPage> createState() => _BlocImplementationPageState();
+  State<VanillaImplementationPage> createState() =>
+      _VanillaImplementationPageState();
 }
 
-class _BlocImplementationPageState extends State<BlocImplementationPage> {
-  bool showSuccessInfo = false;
+class _VanillaImplementationPageState extends State<VanillaImplementationPage> {
+  late VanillaImplementationPageViewModel _viewModel;
 
   @override
   void initState() {
+    _viewModel = VanillaImplementationPageViewModel()..onViewReady();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FormXCubit<String>()
-        ..setupForm(
-          {
-            'email': FormXField.from(
-              value: '',
-              validators: [
-                RequiredFieldValidator('Your email is required'),
-              ],
-            ),
-            'career': FormXField.from(
-              value: '',
-              validators: const [],
-            ),
-            'salaryExpectation': FormXField<int>.from(
-              value: 3100,
-              validators: [
-                SalaryValidator('You deserve a little more 😉'),
-              ],
-              onValidationError: _logValidationError,
-            ),
-            'acceptTerms': FormXField<bool>.from(
-              value: false,
-              validators: [
-                CheckedValidator('You must accept our Terms and Conditions'),
-              ],
-              onValidationError: _logValidationError,
-            ),
-          },
-        ),
-      child: Builder(builder: (context) {
-        return Scaffold(
-          backgroundColor: const Color(0xFFF9FDFE),
-          body: BlocBuilder<FormXCubit<String>, FormXState>(
-            builder: (context, state) {
-              return CustomScrollView(
+    return Scaffold(
+      backgroundColor: const Color(0xFFF9FDFE),
+      body: ValueListenableBuilder<FormXState<String>>(
+          valueListenable: _viewModel.state,
+          builder: (context, state, widget) => CustomScrollView(
                 slivers: [
                   const SliverAppBar(
                     backgroundColor: Color(0xFF0C152C),
@@ -103,12 +72,12 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
                             color: Colors.red,
                           ),
                         ),
-                        onChanged: (value) => context
-                            .read<FormXCubit<String>>()
-                            .updateAndValidateField(
-                              value,
-                              'email',
-                            ),
+                        onChanged: (value) {
+                          _viewModel.onTextChanged(
+                            fieldName: 'email',
+                            newValue: value,
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -120,12 +89,12 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
                           border: OutlineInputBorder(),
                           labelText: 'Career',
                         ),
-                        onChanged: (value) => context
-                            .read<FormXCubit<String>>()
-                            .updateAndValidateField(
-                              value,
-                              'career',
-                            ),
+                        onChanged: (value) {
+                          _viewModel.onTextChanged(
+                            fieldName: 'career',
+                            newValue: value,
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -163,13 +132,13 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
                                     min: 500,
                                     max: 20000,
                                     divisions: 15,
-                                    label: 'Salary Expectation',
-                                    onChanged: (value) => context
-                                        .read<FormXCubit<String>>()
-                                        .updateAndValidateField(
-                                          value.toInt(),
-                                          'salaryExpectation',
-                                        ),
+                                    label: state
+                                        .getFieldValue('salaryExpectation')
+                                        .toString(),
+                                    onChanged: (newValue) =>
+                                        _viewModel.onIncomeChanged(
+                                      newValue.toInt(),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -200,12 +169,10 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
                             children: [
                               Checkbox(
                                 value: state.getFieldValue('acceptTerms'),
-                                onChanged: (value) => context
-                                    .read<FormXCubit<String>>()
-                                    .updateAndValidateField(
-                                      value,
-                                      'acceptTerms',
-                                    ),
+                                onChanged: (value) {
+                                  _viewModel
+                                      .onAcceptTermsChanged(value ?? false);
+                                },
                               ),
                               const Expanded(
                                 child: Text(
@@ -232,40 +199,48 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
                       ),
                     ),
                   ),
-                  if (showSuccessInfo)
-                    SliverToBoxAdapter(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFBDE7EF),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        margin: const EdgeInsets.all(24.0),
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            const Text(
-                              'Form results',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            Text('Email: ${state.getFieldValue('email')}'),
-                            const SizedBox(height: 14),
-                            Text('Career: ${state.getFieldValue('career')}'),
-                            const SizedBox(height: 14),
-                            Text(
-                              'Salary expectation: ${state.getFieldValue('salaryExpectation')}',
-                            ),
-                            const SizedBox(height: 14),
-                            Text(
-                                'Accepted terms: ${state.getFieldValue('acceptTerms')}'),
-                            const SizedBox(height: 14),
-                          ],
-                        ),
-                      ),
+                  SliverToBoxAdapter(
+                    child: ValueListenableBuilder(
+                      valueListenable: _viewModel.showSuccessInfo,
+                      builder: (context, showSuccessInfo, widget) =>
+                          showSuccessInfo
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFBDE7EF),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  margin: const EdgeInsets.all(24.0),
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      const Text(
+                                        'Form results',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Text(
+                                          'Email: ${state.getFieldValue('email')}'),
+                                      const SizedBox(height: 14),
+                                      Text(
+                                          'Career: ${state.getFieldValue('career')}'),
+                                      const SizedBox(height: 14),
+                                      Text(
+                                        'Salary expectation: ${state.getFieldValue('salaryExpectation')}',
+                                      ),
+                                      const SizedBox(height: 14),
+                                      Text(
+                                          'Accepted terms: ${state.getFieldValue('acceptTerms')}'),
+                                      const SizedBox(height: 14),
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
                     ),
+                  ),
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: Container(
@@ -274,11 +249,8 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
                           left: 20, right: 20, bottom: 40),
                       alignment: Alignment.bottomCenter,
                       child: ElevatedButton(
-                        onPressed: state.isFormValid
-                            ? () => setState(() {
-                                  showSuccessInfo = true;
-                                })
-                            : () {},
+                        onPressed:
+                            state.isFormValid ? _viewModel.submitForm : () {},
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4.0),
@@ -293,15 +265,7 @@ class _BlocImplementationPageState extends State<BlocImplementationPage> {
                     ),
                   ),
                 ],
-              );
-            },
-          ),
-        );
-      }),
+              )),
     );
-  }
-
-  void _logValidationError() {
-    debugPrint('Validation error!');
   }
 }
