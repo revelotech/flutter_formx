@@ -26,5 +26,9 @@ abstract class FormXAdapter<T> {
   void updateField(dynamic newValue, T key);
 
   /// Implementations of this method should call [FormX.validateForm]
+  ///
+  /// When [softValidation] is true, it doesn't add errors messages to the
+  /// fields, but updates the value of [FormXState.isFormValid] which can be
+  /// used to show a submit button as enabled or disabled.
   Future<void> validateForm({bool softValidation = false});
 }
