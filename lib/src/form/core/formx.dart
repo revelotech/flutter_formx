@@ -77,9 +77,9 @@ class FormX<T> extends Equatable {
   /// enabled or disabled
   Future<FormX<T>> validateForm({bool softValidation = false}) async {
     final inputMap = _cloneStateMap;
-    await Future.forEach(inputMap.keys, (type) async {
-      inputMap[type] =
-          await inputMap[type]!.validateItem(softValidation: softValidation);
+    await Future.forEach(inputMap.keys, (key) async {
+      inputMap[key] =
+          await inputMap[key]!.validateItem(softValidation: softValidation);
     });
 
     return FormX<T>._(inputMap);
