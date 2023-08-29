@@ -39,8 +39,11 @@ mixin FormXMobX<T> implements FormXAdapter<T> {
   }
 
   @override
-  Future<void> updateAndValidateField(newValue, type,
-      {bool softValidation = false}) async {
+  Future<void> updateAndValidateField(
+    newValue,
+    type, {
+    bool softValidation = false,
+  }) async {
     final validatedField = await _formX.value
         .updateAndValidateField(newValue, type, softValidation: softValidation);
     Action(() {
