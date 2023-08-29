@@ -36,7 +36,7 @@ solution.
 
 ## Validators
 
-You can create any kind of validator needed specifically for your needs and according to the field
+You can create any kind of validator specifically for your needs and according to the field
 type you have. We've included the `RequiredFieldValidator`, but feel free to create more in your
 project as you need.
 
