@@ -30,8 +30,8 @@ class FormXCubit<T> extends Cubit<FormXState<T>> implements FormXAdapter<T> {
   }
 
   @override
-  void updateField(dynamic newValue, T type) {
-    final formX = FormX.fromState(state).updateField(newValue, type);
+  void updateField(dynamic newValue, T key) {
+    final formX = FormX.fromState(state).updateField(newValue, key);
     emit(formX.state);
   }
 
