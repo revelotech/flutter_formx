@@ -26,7 +26,7 @@ using [MobX](https://pub.dev/packages/mobx) and [Bloc](https://pub.dev/packages/
 ## Supported state management solutions
 
 This library has built-in adapters for both
-[MobX](https://pub.dev/packages/mobx)/[MobX Code generation](https://pub.dev/packages/mobx_codegen)
+[MobX](https://pub.dev/packages/mobx)
 and [Bloc](https://pub.dev/packages/bloc) as its state management solutions.
 However, you can use the vanilla implementation to adapt FormX to your favorite state management
 solution.
