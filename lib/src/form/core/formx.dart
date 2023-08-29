@@ -5,9 +5,9 @@ import 'package:flutter_formx/src/form/core/formx_state.dart';
 /// Vanilla implementation of [FormX].
 /// The state management implementations should hold one instance of this class.
 ///
-/// [FormX] is the core class to handle forms. [T] stands for the type used to
-/// identify the fields such as an enum or a string to later access each of its
-/// fields.
+/// [FormX] is the core class to handle forms. [T] stands for the type of the key
+/// used to identify the fields such as an enum or a string to later access each
+/// of its fields.
 ///
 /// The first step is to call [FormX.setupForm] with a map of the fields, their
 /// initial values and validators.
