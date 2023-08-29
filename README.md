@@ -84,8 +84,11 @@ class EmailValidator extends Validator<String?> {
 ## Expanding the library
 
 Feel free to expand the library and make it compatible with other state management solutions. When
-doing that, keep in mind you'll need to implement both `formx.dart` and `formx_state.dart` and still
-use `formx_field.dart` in your implementation. Also, know you can count on us to help you with that!
+doing that, keep in mind you'll need to
+implement [`FormXAdapter<T>`](https://github.com/revelotech/flutter_formx/blob/main/lib/src/form/adapters/formx_adapter.dart).
+If you don't know how to do it, please take a look at the
+other [adapters](https://github.com/revelotech/flutter_formx/tree/main/lib/src/form/adapters)'
+implementations. Also, know you can count on our support with that!
 Just open an issue or PR and we'll be happy to help.
 
 ## Testing
