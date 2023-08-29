@@ -3,8 +3,9 @@ import 'package:flutter_formx/src/form/core/formx_field.dart';
 import 'package:flutter_formx/src/form/core/formx_state.dart';
 
 /// Vanilla implementation of [FormX].
-/// The state management implementations should hold one instance of this class
-/// [FormX] is a helper class to handle forms. [T] stands for the type used to
+/// The state management implementations should hold one instance of this class.
+///
+/// [FormX] is the core class to handle forms. [T] stands for the type used to
 /// identify the fields such as an enum or a string to later access each of its
 /// fields.
 ///
@@ -15,6 +16,10 @@ import 'package:flutter_formx/src/form/core/formx_state.dart';
 /// update the value of each field once it's changed on the UI.
 ///
 /// The third and last step is to call [validateForm] to validate all fields.
+///
+/// This vanilla implementation doesn't handle state management, but every 
+/// function returns this same immutable class with a new state. Please refer
+/// to the vanilla example or adapters to check how it can be managed.
 class FormX<T> extends Equatable {
   /// This field holds the current FormXState
   late final FormXState<T> state;
