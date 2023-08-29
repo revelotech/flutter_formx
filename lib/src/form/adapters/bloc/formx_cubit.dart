@@ -21,11 +21,11 @@ class FormXCubit<T> extends Cubit<FormXState<T>> implements FormXAdapter<T> {
   @override
   Future<void> updateAndValidateField(
     dynamic newValue,
-    T type, {
+    T key, {
     bool softValidation = false,
   }) async {
     final formX = await FormX.fromState(state)
-        .updateAndValidateField(newValue, type, softValidation: softValidation);
+        .updateAndValidateField(newValue, key, softValidation: softValidation);
     emit(formX.state);
   }
 
