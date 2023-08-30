@@ -1,4 +1,6 @@
 ## Changelog
+
+## v3.0.1
 - Fix state management content in README
 
 ## v3.0.0
